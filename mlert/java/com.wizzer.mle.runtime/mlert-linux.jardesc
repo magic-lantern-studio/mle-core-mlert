@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="/home/msm/Projects/wz-mle-code/lib/java/runtime/mlert.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/com.wizzer.mle.runtime/mlert-linux.jardesc" exportErrors="false" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{MleOldEventDispatcher.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{MleEvent.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.scheduler{MleScheduler.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleActor.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{MlePropChangeEvent.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleSet.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.dpp{MleDppReader.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime{MleTitle.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{MleCue.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.util{MleHeapsortArray.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleMediaRef.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.dpp{MleDppException.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleStage.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.scheduler{MleTask.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.util{MlePriorityQueue.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{MleEventCallback.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{IMleEventCallback.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{MleEventManager.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{IMleEventListener.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.scheduler{MlePhase.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleCallbackId.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.dpp{MleDppLoader.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.util{MlePQ.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{IMlePropChangeListener.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleProp.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.util{MlePQElement.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.util{MleUnsigned.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleTables.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleCallback.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleProp.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleGroup.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.dpp{MleDppUtil.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleRole.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleRuntimeException.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.util{IMleElement.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.dpp{MleChunkReader.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleMediaRefConverter.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleSet.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleGroup.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleSize.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.dpp{MleActorGC.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleRole.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleScene.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.util{MleHeapArray.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleStage.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{MleScene.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleMediaRef.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleObject.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{MleEventDispatcher.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.event{MleCueSheet.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.dpp{MleDppModel.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.util{MleElementArray.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.core{IMleActor.java"/>
+        <javaElement handleIdentifier="=com.wizzer.mle.runtime/src&lt;com.wizzer.mle.runtime.dpp{MleDppInput.java"/>
+    </selectedElements>
+</jardesc>

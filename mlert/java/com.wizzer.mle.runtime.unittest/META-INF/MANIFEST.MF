@@ -1,0 +1,14 @@
+Manifest-Version: 2.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Magic Lantern Runtime Unittest Plug-in
+Bundle-SymbolicName: com.wizzer.mle.runtime.unittest;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: unittest.jar
+Bundle-Activator: com.wizzer.mle.runtime.unittest.UnittestPlugin
+Bundle-Vendor: Wizzer Works
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.junit
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="package" author="true" classpath="." destdir="doc" doctitle="Magic Lantern Runtime Library" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" overview="/home/msm/Projects/wz-mle-code/Core/mlert/java/com.wizzer.mle.runtime/src/overview-summary.html" packagenames="com.wizzer.mle.runtime.dpp,com.wizzer.mle.runtime.scheduler,com.wizzer.mle.runtime,com.wizzer.mle.runtime.util,com.wizzer.mle.runtime.event,com.wizzer.mle.runtime.core" source="1.8" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>

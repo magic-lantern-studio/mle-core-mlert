@@ -1,0 +1,7 @@
+-sourcepath com.wizzer.mle.runtime/src
+-d com.wizzer.mle.runtime.doc
+-overview com.wizzer.mle.runtime/src/overview-summary.html
+-plugintitle 'Magic Lantern Runtime Engine Library'
+-pluginid www.wizzer.mle.runtime.doc
+-version "1.0.0.0"
+-provider "Wizzer Works"

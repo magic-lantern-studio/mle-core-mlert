@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Magic Lantern SDK - Math Library</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h1>Magic Lantern SDK - Runtime Engine Library</h1>
+<p>The Magic Lantern Software Development Kit provides a runtime engine to facilitate 
+  title execution. In fact, if a title is not using the Magice Lantern Runtime 
+  Engine, then it is not a Magic Lantern title. The Runtime Engine controls the 
+  lifecycle of the title.</p>
+<p>The execution model that contols the sequencing of Magic Lantern titles is 
+  a cyclic process repeated once per frame. Each actor, role, set, and stage receives 
+  control of the processor, in that order. By default, on each frame, all of the 
+  actors execute before any of the roles; all of the roles execute before any 
+  of the sets, etc. This scheduling order is not strict, however, since an actor 
+  may explicitly pass control to its role and that role may explicitly pass control 
+  to its set. Programmers can also reorder or augment the scheduling.</p>
+<p> The idea behind tha actors-then-roles-then-sets-then-stage ordering is that 
+  first the interactivity is computed (actors), then the presentation is computed 
+  (roles), then the various resource controllers gain control (sets), then the 
+  entire frame presentation is created (stage).</p>
+<p>The Runtime Engine Library povides support for:</p>
+<ul>
+  <li>Interface and base classes for Actor, Role, Media Reference, Set, Stage 
+    and Prop title components,</li>
+  <li>Event dispatching,</li>
+  <li>Scheduling of title execution,</li>
+  <li>Reading and processing the Digital Playprint.</li>
+</ul>
+</body>
+</html>

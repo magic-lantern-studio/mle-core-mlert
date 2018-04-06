@@ -1,0 +1,2 @@
+-doclet com.ibm.malup.doclet.config.TOCDoclet
+-docletpath M:\JavaTOC\bin\TOCNavDoclet.jar
