@@ -44,10 +44,10 @@ libmlert_la_SOURCES = \
 	$(top_srcdir)/../../common/src/foundation/loadSet.cxx \
 	$(top_srcdir)/../../common/src/foundation/loaddwp.cxx \
 	$(top_srcdir)/../../common/src/input/MleKeyboardPolled.cxx \
-	$(top_srcdir)/../../../util/common/src/mlDebug.c \
-	$(top_srcdir)/../../../util/common/src/mlErrno.c \
-	$(top_srcdir)/../../../util/common/src/mlLogFile.c \
-	$(top_srcdir)/../../../util/common/src/mlExpandFilename.c
+	$(MLE_HOME)/Core/util/common/src/mlDebug.c \
+	$(MLE_HOME)/Core/util/common/src/mlErrno.c \
+	$(MLE_HOME)/Core/util/common/src/mlLogFile.c \
+	$(MLE_HOME)/Core/util/common/src/mlExpandFilename.c
 
 # Linker options libTestProgram
 libmlert_la_LDFLAGS = 
@@ -66,13 +66,13 @@ libmlert_la_CPPFLAGS = \
 	-I$(top_srcdir)/../../common/src/input \
 	-I$(top_srcdir)/../../common/include \
 	-I$(top_srcdir)/../../rehearsal/include \
-	-I$(top_srcdir)/../../../util/common/include \
-	-I$(top_srcdir)/../../../util/linux/include \
-	-I$(top_srcdir)/../../../math/common/include \
-	-I$(top_srcdir)/../../../math/linux/include \
-	-I$(top_srcdir)/../../../../DigitalWorkprint/lib/common/include \
-	-I$(top_srcdir)/../../../../DigitalWorkprint/lib/linux/include \
-	-I$(top_srcdir)/../../../../DigitalPlayprint/runtime/common/include \
-	-I$(top_srcdir)/../../../../DigitalPlayprint/runtime/linux/include \
-	-I$(top_srcdir)/../../../../ATK/common/include \
-	-I$(top_srcdir)/../../../../ATK/linux/include
+	-I$(MLE_HOME)/Core/util/common/include \
+	-I$(MLE_HOME)/Core/util/linux/include \
+	-I$(MLE_HOME)/Core/math/common/include \
+	-I$(MLE_HOME)/Core/math/linux/include \
+	-I$(MLE_HOME)/DigitalWorkprint/lib/common/include \
+	-I$(MLE_HOME)/DigitalWorkprint/lib/linux/include \
+	-I$(MLE_HOME)/DigitalPlayprint/runtime/common/include \
+	-I$(MLE_HOME)/DigitalPlayprint/runtime/linux/include \
+	-I$(MLE_HOME)/ATK/common/include \
+	-I$(MLE_HOME)/ATK/linux/include
