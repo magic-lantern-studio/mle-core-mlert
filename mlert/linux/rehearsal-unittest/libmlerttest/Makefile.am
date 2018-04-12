@@ -27,5 +27,5 @@ libmlerttest_la_CPPFLAGS = \
 	-DML_MATH_DEBUG=0 \
 	-DML_FIXED_POINT=0 \
 	-I$(top_srcdir)/include \
-	-I/opt/MagicLantern/include \
+	-I$(MLE_ROOT)/include \
 	-I$(GTEST_DIR)/googletest/include

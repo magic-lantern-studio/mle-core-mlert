@@ -23,9 +23,9 @@ exampleProgram_SOURCES = exampleProgram.cxx
 # Libraries for a.out
 exampleProgram_LDADD = $(top_srcdir)/libmlerttest/libmlerttest.la \
 	$(top_srcdir)/../rehearsal/libmlert/libmlert.la \
-	/opt/MagicLantern/lib/libDWP.a \
-	/opt/MagicLantern/lib/libmlutil.a \
-	/opt/MagicLantern/lib/libmlmath.a \
+	$(MLE_ROOT)/lib/libDWP.a \
+	$(MLE_ROOT)/lib/libmlutil.a \
+	$(MLE_ROOT)/lib/libmlmath.a \
 	$(GTEST_DIR)/googletest/libgtest.a -lX11 -ldl
 
 # Linker options for a.out
@@ -38,5 +38,5 @@ exampleProgram_CPPFLAGS = \
 	-DML_FIXED_POINT=0 \
 	-DMLE_REHEARSAL \
 	-I$(top_srcdir)/include \
-	-I/opt/MagicLantern/include \
+	-I$(MLE_ROOT)/include \
 	-I$(GTEST_DIR)/googletest/include

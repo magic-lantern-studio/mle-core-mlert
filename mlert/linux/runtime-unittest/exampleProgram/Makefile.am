@@ -23,9 +23,9 @@ exampleProgram_SOURCES = exampleProgram.cxx
 # Libraries for a.out
 exampleProgram_LDADD = $(top_srcdir)/libmlerttest/libmlerttest.la \
 	$(top_srcdir)/../runtime/libmlert/libmlert.la \
-	/opt/MagicLantern/lib/libplayprint.a \
-	/opt/MagicLantern/lib/libmlutil.a \
-	$(GTEST_DIR)/googletest/libgtest.a -ldl
+	$(MLE_ROOT)/lib/libplayprint.a \
+	$(MLE_ROOT)/lib/libmlutil.a \
+	$(GTEST_DIR)/libgtest.a -ldl
 
 # Linker options for a.out
 exampleProgram_LDFLAGS = \
@@ -37,5 +37,5 @@ exampleProgram_CPPFLAGS = \
 	-DML_FIXED_POINT=0 \
 	-DMLMATH_EXPORTS \
 	-I$(top_srcdir)/include \
-	-I/opt/MagicLantern/include \
+	-I$(MLE_ROOT)/include \
 	-I$(GTEST_DIR)/googletest/include
