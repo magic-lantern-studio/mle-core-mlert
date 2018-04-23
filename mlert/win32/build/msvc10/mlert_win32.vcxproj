@@ -474,9 +474,6 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\mle-core-util\util\common\src\mlDebug.c" />
-    <ClCompile Include="..\..\..\..\..\mle-core-util\util\common\src\mlErrno.c" />
-    <ClCompile Include="..\..\..\..\..\mle-core-util\util\common\src\mlLogFile.c" />
     <ClCompile Include="..\..\..\common\src\foundation\3danim.cxx">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='CDECL FloatDebug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='CDECL FloatDebug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>

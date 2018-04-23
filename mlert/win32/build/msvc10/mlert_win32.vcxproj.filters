@@ -95,15 +95,6 @@
     <ClCompile Include="..\..\..\common\src\foundation\MleObject.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mle-core-util\util\common\src\mlLogFile.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mle-core-util\util\common\src\mlErrno.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mle-core-util\util\common\src\mlDebug.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\common\src\foundation\mle\3danim.h">
