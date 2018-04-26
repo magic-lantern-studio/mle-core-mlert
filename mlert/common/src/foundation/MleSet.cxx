@@ -196,7 +196,10 @@ MleSet::poke(const char *property,MleDwpDataUnion *value)
 		return 1;
     }
 
-    value->m_datatype->get(value,(char *)this + member->getOffset());
+    //value->m_datatype->get(value,(char *)this + member->getOffset());
+	MlePropertyEntry *entry = member->getEntry();
+	// TBD: the following will probably not work without some munging of MleDwpDataUnion. Need testing.
+	entry->setProperty(this, entry->name, (unsigned char *)value);
 
     return 0;
 }

@@ -46,6 +46,7 @@
 
 #include "mle/DwpStrKeyDict.h"
 #include "mle/MleDsoLoader.h"
+#include "mle/MleProperty.h"
 
 #include "mle/MleRuntime.h"
 
@@ -73,14 +74,14 @@ class MLE_RUNTIME_API MleSetMember
 	 */
     const MleDwpDatatype *getType(void) const { return m_type; }
 
-	/**
-	 * Get the offset of this property into
+    /**
+     * Get the meta-data of this property for
      * the owning Set's data structure.  This is used to
-     * poke values directly into the memory location.
-	 *
-	 * @return The offset, in bytes, is returned.
-	 */
-    int getOffset(void) const { return m_offset; }
+     * poke values directly into the property.
+     *
+     * @return The property meta-data is returned.
+     */
+    MlePropertyEntry *getEntry(void) const { return m_entry; }
 
 	/**
 	 * Override operator new.
@@ -106,15 +107,15 @@ class MLE_RUNTIME_API MleSetMember
      * accessible.
 	 *
 	 * @param type A pointer to the member's data type.
-	 * @param offset The offset into the Set where the data
-	 * exists.
+	 * @param entry A pointer to the Set's meta-data; which can be used
+     * to access the property data.
 	 */
-    MleSetMember(const char *type,int offset);
+    MleSetMember(const char *type,MlePropertyEntry *entry);
     
 	/** Property data type. */
     const MleDwpDatatype *m_type;
-	/** Offset, in bytes, into Set instance. */
-    int m_offset;
+	/** Property meta-dta. */
+    MlePropertyEntry *m_entry;
     
     friend class MleSetClass;
 };
@@ -201,9 +202,10 @@ class MLE_RUNTIME_API MleSetClass : public MleDwpStrKeyDict
 	 *
 	 * @param name The name of the property.
 	 * @param type The property type.
-	 * @param offset The offset into the Set instance, in bytes.
+	 * @param entry A pointer to a property entry containing meta-data
+	 * such as the Set's setter and getter functions.
 	 */
-    void addMember(const char *name,const char *type,int offset);
+    void addMember(const char *name,const char *type,MlePropertyEntry *entry);
 
 	/**
 	 * Finds the member object of a given name.

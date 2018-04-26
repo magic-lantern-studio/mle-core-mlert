@@ -146,10 +146,10 @@ MleSetClass::createInstance(void) const
 	This function adds a new property type to the forum class.
 */
 void
-MleSetClass::addMember(const char *name,const char *type,int offset)
+MleSetClass::addMember(const char *name,const char *type,MlePropertyEntry *entry)
 {
 	/* Create the new member object. */
-	MleSetMember *member = new MleSetMember(type,offset);
+	MleSetMember *member = new MleSetMember(type,entry);
 
 	/* Put the new property into the dictionary. */
 	set(name,member);
@@ -282,7 +282,7 @@ MleSetClassDict::operator delete(void *p)
 	mlFree(p);
 }
 
-MleSetMember::MleSetMember(const char *t,int o)
+MleSetMember::MleSetMember(const char *t,MlePropertyEntry *e)
 {
 	m_type = MleDwpDatatype::findType(t);
 
@@ -292,7 +292,7 @@ MleSetMember::MleSetMember(const char *t,int o)
 		MLE_ASSERT(m_type!=NULL);
 	}
 	
-	m_offset = o;
+	m_entry = e;
 }
 
 void *

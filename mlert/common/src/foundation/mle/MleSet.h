@@ -197,10 +197,18 @@ class MleDwpDataUnion;
 //
 // This macro takes the unquoted set class name, the unquoted member
 // variable name, and the unquoted member variable type.
+#if 0
 #define mlRegisterSetMember(SET,MEMBER,TYPE) \
     MleSetClass::find(#SET)->addMember( \
 		#MEMBER,#TYPE,((char *)&((SET *)0)->MEMBER) - (char *)0)
-
+#else
+#define mlRegisterSetMember(SET,MEMBER,TYPE) \
+	MlePropertyEntry *entryFor##MEMBER = new MlePropertyEntry(); \
+	entryFor##MEMBER->name = #MEMBER; \
+	entryFor##MEMBER->getProperty = SET::getProperty; \
+	entryFor##MEMBER->setProperty = SET::setProperty; \
+    MleSetClass::find(#SET)->addMember(#MEMBER,#TYPE,entryFor##MEMBER)
+#endif
 #else /* MLE_REHEARSAL */
 
 // Make a dummy statement to avoid errors with the trailing semicolon.
