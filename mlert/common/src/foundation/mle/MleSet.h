@@ -151,11 +151,11 @@ class MleDwpDataUnion;
 #define MLE_SET_ABSTRACT_SOURCE(C,S) \
     int C::isa(const char *type) const { \
         if ( !strcmp(type,#C) ) return 1; \
-	else return S::isa(type); \
+        else return S::isa(type); \
     } \
     C *C::cast(MleSet *set) { \
-	MLE_ASSERT(set->isa(#C)); \
-	return (C *)set; \
+        MLE_ASSERT(set->isa(#C)); \
+        return (C *)set; \
     } \
     MleSet *_mlCreate##C(void) { return NULL; }
 
@@ -214,14 +214,28 @@ class MleDwpDataUnion;
 // Make a dummy statement to avoid errors with the trailing semicolon.
 #define MLE_SET_HEADER(C) \
   public: \
-    static C *cast(MleSet *forum) { return (C *)forum; } \
+    virtual int isa(const char *type) const; \
+    static C *cast(MleSet *set) { return (C *)set; } \
     friend class _mleDummy
-#define MLE_SET_ABSTRACT_HEADER(C) \
-	friend class _mleDummy
-#define MLE_SET_SOURCE(C,S) \
-    MleSet *_mlCreate##C(void) { return new C; }
-#define MLE_SET_ABSTRACT_SOURCE(C,S)
 
+#define MLE_SET_ABSTRACT_HEADER(C) \
+	virtual int isa(const char *type) const; \
+	static C *cast(MleSet *set) { return (C *)set; } \
+	friend class _mleDummy
+
+#define MLE_SET_SOURCE(C,S) \
+    int C::isa(const char *type) const { \
+        if ( !strcmp(type,#C) ) return 1; \
+        else return S::isa(type); \
+    } \
+    MleSet *_mlCreate##C(void) { return new C; }
+
+#define MLE_SET_ABSTRACT_SOURCE(C,S) \
+    int C::isa(const char *type) const { \
+        if ( !strcmp(type,#C) ) return 1; \
+        else return S::isa(type); \
+    } \
+	MleSet *_mlCreate##C(void) { return new C; }
 
 #endif /* MLE_REHEARSAL */
 
@@ -396,7 +410,9 @@ class MLE_RUNTIME_API MleSet : public MleObject
 
     // Instance name of a set.
     char *m_name;
-
+#else
+	// isa() returns nonzero if the instance is of the specified class.
+    virtual int isa(const char *type) const;
 #endif /* MLE_REHEARSAL */
 };
 

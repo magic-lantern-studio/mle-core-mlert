@@ -120,9 +120,17 @@ MleSet *_mlCreateMleSet(void)
     return new MleSet;
 }
 
-#ifdef MLE_REHEARSAL
 // Include system header files.
 #include <stdio.h>
+#include <string.h>
+
+int
+MleSet::isa(const char *type) const
+{
+    return !strcmp(type,"MleSet");
+}
+
+#ifdef MLE_REHEARSAL
 
 #include "mle/DwpDataUnion.h"
 #include "mle/DwpDatatype.h"
@@ -133,12 +141,6 @@ const char *
 MleSet::getTypeName(void) const
 {
     return "MleSet";
-}
-
-int
-MleSet::isa(const char *type) const
-{
-    return !strcmp(type,"MleSet");
 }
 
 void
@@ -317,6 +319,5 @@ MleSet::getRenderMode()
 {
     return(NULL);
 }
-
 
 #endif /* MLE_REHEARSAL */
