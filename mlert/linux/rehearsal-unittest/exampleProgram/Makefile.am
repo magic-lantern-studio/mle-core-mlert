@@ -39,4 +39,4 @@ exampleProgram_CPPFLAGS = \
 	-DMLE_REHEARSAL \
 	-I$(top_srcdir)/include \
 	-I$(MLE_ROOT)/include \
-	-I$(GTEST_DIR)/googletest/include
+	-I$(GTEST_DIR)/include

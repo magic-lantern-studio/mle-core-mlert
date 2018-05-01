@@ -28,4 +28,4 @@ libmlerttest_la_CPPFLAGS = \
 	-DML_FIXED_POINT=0 \
 	-I$(top_srcdir)/include \
 	-I$(MLE_ROOT)/include \
-	-I$(GTEST_DIR)/googletest/include
+	-I$(GTEST_DIR)/include
