@@ -175,7 +175,7 @@ class MleDwpDataUnion;
 // MleSet Rehearsal-only macro.
 //
 // This macro takes the unquoted set class and superclass names.
-#define mlRegisterSetClass(SET,SUPERCLASS) \
+#define mleRegisterSetClass(SET,SUPERCLASS) \
     static int _mlSetClassInited = 0; \
     if ( _mlSetClassInited ) return ; \
     _mlSetClassInited = 1; \
@@ -186,7 +186,7 @@ class MleDwpDataUnion;
 //
 // This macro takes the unquoted set class and superclass names and the
 // unquoted name of the editor
-#define mlRegisterSetClassWithEditors(SET,SUPERCLASS,EDITOR,CONTENT_EDITOR) \
+#define mleRegisterSetClassWithEditors(SET,SUPERCLASS,EDITOR,CONTENT_EDITOR) \
     static int _mlSetClassInited = 0; \
     if ( _mlSetClassInited ) return; \
     _mlSetClassInited = 1; \
@@ -198,11 +198,11 @@ class MleDwpDataUnion;
 // This macro takes the unquoted set class name, the unquoted member
 // variable name, and the unquoted member variable type.
 #if 0
-#define mlRegisterSetMember(SET,MEMBER,TYPE) \
+#define mleRegisterSetMember(SET,MEMBER,TYPE) \
     MleSetClass::find(#SET)->addMember( \
 		#MEMBER,#TYPE,((char *)&((SET *)0)->MEMBER) - (char *)0)
 #else
-#define mlRegisterSetMember(SET,MEMBER,TYPE) \
+#define mleRegisterSetMember(SET,MEMBER,TYPE) \
 	MlePropertyEntry *entryFor##MEMBER = new MlePropertyEntry(); \
 	entryFor##MEMBER->name = #MEMBER; \
 	entryFor##MEMBER->getProperty = SET::getProperty; \
