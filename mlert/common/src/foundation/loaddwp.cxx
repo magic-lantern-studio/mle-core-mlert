@@ -63,6 +63,7 @@
 #include "mle/MlePlayer.h"
 
 MLE_RUNTIME_API MlePlayer *_mlPlayer = NULL;
+#if 0
 MLE_RUNTIME_API MleDwpItem *_mlWorkprint =  NULL;
 
 MLE_RUNTIME_API MleDwpItem *mlLoadWorkprint(const char *filename)
@@ -76,6 +77,10 @@ MLE_RUNTIME_API MleDwpItem *mlLoadWorkprint(const char *filename)
 	_mlWorkprint = MleDwpItem::readAll(filename);
 	return _mlWorkprint;
 }
+#else
+// The following external reference is obtained from Digital Workprint library.
+extern MLE_DWP_API MleDwpItem *_mlWorkprint;
+#endif /* 0 */
 
 static void releaseItem(MleDwpItem *item)
 {

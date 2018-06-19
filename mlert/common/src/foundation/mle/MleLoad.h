@@ -300,11 +300,6 @@ extern MLE_RUNTIME_API void mlUnloadPlayprint(MleDppInput *dpp);
 //   workprint hierarchy.
 extern MLE_RUNTIME_API MleDwpItem *g_mlRehearsalWorkprint;
 
-// mlLoadWorkprint() is a rehearsal player call that loads the indicated
-//   workprint from the file system and roots the hierarchy at
-//   g_mlRehearsalWorkprint.  Zero is returned in the event of an error.
-extern MLE_RUNTIME_API MleDwpItem *mlLoadWorkprint(const char *filename);
-
 // mlSetLoadErrorCallback() sets up a callback that _mlLoadGroup 
 // calls when actor DSO's cannot be found.
 void MLE_RUNTIME_API mlSetLoadErrorCallback(void (*loadErrorCB)(MleDwpActor *wpActor));
