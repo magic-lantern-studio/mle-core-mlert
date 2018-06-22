@@ -49,9 +49,17 @@
 #ifdef MLE_REHEARSAL
 #if defined(WIN32)
 #include <winsock2.h>
+#ifdef Q_OS_WIN
+// Qt platform on Windows.
+#endif
 #endif
 #if defined(sgi) || defined(__linux__)
+#ifdef Q_OS_UNIX
+// Qt platform on Unix
+#else
+// X11/Xt platform on Unix.
 #include <X11/Intrinsic.h>
+#endif
 #endif
 
 #include "mle/MleStageClass.h"
@@ -86,7 +94,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     /**
      * This static member variable holds the stage pointer.  This
      * currently restricts each process to a single stage.
-	 */
+     */
     static MleStage *g_theStage;
 
   // Declare member functions.
@@ -99,34 +107,34 @@ class MLE_RUNTIME_API MleStage : public MleObject
     MleStage();
 
     /**
-	 * Destructor.
-	 */
+     * Destructor.
+     */
     virtual ~MleStage();
 
-	/**
-	 * Override operator new.
-	 *
-	 * @param tSize The size, in bytes, to allocate.
-	 */
-	void* operator new(size_t tSize);
+    /**
+     * Override operator new.
+     *
+     * @param tSize The size, in bytes, to allocate.
+     */
+    void* operator new(size_t tSize);
 
-	/**
-	 * Override operator delete.
-	 *
-	 * @param p A pointer to the memory to delete.
-	 */
+    /**
+     * Override operator delete.
+     *
+     * @param p A pointer to the memory to delete.
+     */
     void  operator delete(void *p);
 
     /**
-	 * @brief Get the size of the stage.
-	 *
-	 * @param width A pointer to the width of the stage.
-	 * @param height A pointer to the height of the stage.
-	 *
+     * @brief Get the size of the stage.
+     *
+     * @param width A pointer to the width of the stage.
+     * @param height A pointer to the height of the stage.
+     *
      * @return The size of stage's window is returned. Magic Lantern 1.0
      * supports one window per stage: this is the
      * default window.
-	 */
+     */
     virtual void getSize(int *width,int *height);
 
 #ifdef MLE_REHEARSAL
@@ -184,7 +192,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // (such as picking) than occurs in title play.
     virtual void setEditing(int mode);
 
-	// getEditing() returns current editing state.
+    // getEditing() returns current editing state.
     virtual int getEditing(void) const;
 
     // edit() does any updates that are required during editing,
@@ -199,14 +207,23 @@ class MLE_RUNTIME_API MleStage : public MleObject
     virtual int setSize(int width,int height);
 
 #if defined(sgi) || defined(__linux__)
-	// getWindow() returns an X window for the stage, if possible.
+#ifdef Q_OS_UNIX
+    // getWindow() returns a Qt window for the stage, if possible.
+    // This window may be reparented for tools.
+    //virtual QtStageWindow* getWindow(void);
+#else
+    // getWindow() returns an X window for the stage, if possible.
     // This window may be reparented for tools.
     virtual Window getWindow(void);
 
     virtual Display* getDisplay(void);
 #endif
+#endif
 #if defined(WIN32)
-	virtual HWND getWindow(void);
+#ifdef Q_OS_WIN
+#else
+    virtual HWND getWindow(void);
+#endif
 #endif
 
     virtual void setOffscreen(int flag);
@@ -235,45 +252,50 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // setPickCallback() installs a function that is called when an
     // actor/role is selected.
     void setPickCallback(void (*pickCB)(MleActor *actor,
-		void *clientData), void *clientData = NULL);
+    void *clientData), void *clientData = NULL);
 
     // setPickCallback() installs a function that is called when an
     // actor/role is unselected.
     void setUnpickCallback(void (*unpickCB)(MleActor *actor,
-		void *clientData), void *clientData = NULL);
+    void *clientData), void *clientData = NULL);
 
     // setOpenCallback() installs a function that is called when an
     // actor/role is opened, e.g. with a double-click.
     void setOpenCallback(void (*openCB)(MleActor *actor,
-		void *clientData), void *clientData = NULL);
+    void *clientData), void *clientData = NULL);
 
     // setLaunchCallback() installs a function that is called when
     // an actor/role is launched, e.g. with an alt + double-click.
     void setLaunchCallback(void (*launchCB)(MleActor *actor,
-		void *clientData), void *clientData = NULL);
+    void *clientData), void *clientData = NULL);
 
     void setStartManipCallback(void (*manipCB)(MleActor *actor,
-		void *clientData), void *clientData = NULL);
+    void *clientData), void *clientData = NULL);
 
-	// setManipCallback() installs a function that is called when an
+    // setManipCallback() installs a function that is called when an
     // actor/role is manipulated.
     void setManipCallback(void (*manipCB)(MleActor *actor,
-		void *clientData), void *clientData = NULL);
+    void *clientData), void *clientData = NULL);
 
     void setFinishManipCallback(void (*manipCB)(MleActor *actor,
-		void *clientData), void *clientData = NULL);
+    void *clientData), void *clientData = NULL);
 
 #if defined(sgi) || defined(__linux__)
+#ifdef Q_OS_UNIX
+    //void setRightMouseCallback(void (*rightMouseCB)(QEvent* e,
+    //                           void* clientData), void* clientData = NULL);
+#else
     void setRightMouseCallback(void (*rightMouseCB)(XEvent* e,
-		void* clientData), void* clientData = NULL);
+                               void* clientData), void* clientData = NULL);
+#endif
 #endif /* sgi */
 #if defined(WIN32)
-	void setRightMouseCallback(void (*rightMouseCB)(MSG* e,
-		void* clientData), void* clientData = NULL);
+    void setRightMouseCallback(void (*rightMouseCB)(MSG* e,
+                               void* clientData), void* clientData = NULL);
 #endif /* WIN32 */
 
     // Getting the file descriptor
-	// XXX - this should be an abstract method, but
+    // XXX - this should be an abstract method, but
     // this class doesn't like being abstract.
     virtual int getFD();
 
@@ -331,12 +353,21 @@ class MLE_RUNTIME_API MleStage : public MleObject
     virtual void showDecoration(int onOff);
 
 #if defined(sgi) || defined(__linux__)
+#ifdef Q_OS_UNIX
+    // Reparent window - tools call this to reparent the player window
+    // to a window passed in from the tools
+    //virtual void reparentWindow(QtStageWindow* parentWindow);
+#else
     // Reparent window - tools call this to reparent the player window
     // to a window passed in from the tools
     virtual void reparentWindow(Window parentWindow);
+#endif
 #endif /* sgi */
 #if defined(WIN32)
-	virtual void reparentWindow(HWND parentWindow);
+#ifdef Q_OS_WIN
+#else
+    virtual void reparentWindow(HWND parentWindow);
+#endif
 #endif /* WIN32 */
     
     // Recalculates the clipping planes if auto clipping planes enabled.
@@ -360,10 +391,17 @@ class MLE_RUNTIME_API MleStage : public MleObject
     void (*manipCB)(MleActor *actor,void *clientData);
     void (*finishManipCB)(MleActor *actor,void *clientData);
 #if defined(sgi) || defined(__linux__)
+#ifdef Q_OS_UNIX
+    void (*rightMouseCB)(QEvent* e,void *clientData);
+#else
     void (*rightMouseCB)(XEvent* e,void *clientData);
+#endif
 #endif /* sgi */
 #if defined(WIN32)
+#ifdef Q_OS_WIN
+#else
 	void (*rightMouseCB)(MSG* e,void *clientData);
+#endif
 #endif
     void *m_pickClientData;
     void *m_unpickClientData;
@@ -375,17 +413,24 @@ class MLE_RUNTIME_API MleStage : public MleObject
     void *m_cameraClientData;
     void *m_rightMouseClientData;
 
-	 // Editing mode.
+    // Editing mode.
     int m_editMode;
 
     // Stage class.
     const MleStageClass *m_stageClass;
 
 #if defined(sgi) || defined(__linux__)
+#ifdef Q_OS_UNIX
+    //static int checkForDoubleClick(QButtonEvent* event);
+#else
     static int checkForDoubleClick(XButtonEvent* event);
+#endif
 #endif /* sgi */
 #if defined(WIN32)
-	static int checkForDoubleClick(MSG* event);
+#ifdef Q_OS_WIN
+#else
+    static int checkForDoubleClick(MSG* event);
+#endif
 #endif /* WIN32 */
 
   private:
@@ -434,7 +479,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
 #define MLE_STAGE_PROPERTY_SOURCE()                                                      \
   public:                                                                                \
     static void getProperty(MleObject *object, const char *name, unsigned char **value); \
-	static void setProperty(MleObject *object, const char *name, unsigned char *value);
+    static void setProperty(MleObject *object, const char *name, unsigned char *value);
 
 
 #ifdef MLE_REHEARSAL
@@ -465,8 +510,8 @@ class MLE_RUNTIME_API MleStage : public MleObject
 	else return S::isa(type); \
     } \
     C *C::cast(MleStage *stage) { \
-		MLE_ASSERT(stage->isa(#C)); \
-		return (C *)stage; \
+        MLE_ASSERT(stage->isa(#C)); \
+        return (C *)stage; \
     } \
     MleStage *_mlCreate##C(void) { return new C; }
 
@@ -518,10 +563,10 @@ class MLE_RUNTIME_API MleStage : public MleObject
 		#MEMBER,#TYPE,((char *)&((STAGE *)0)->MEMBER) - (char *)0)
 #else
 #define mleRegisterStageMember(STAGE,MEMBER,TYPE) \
-	MlePropertyEntry *entryFor##MEMBER = new MlePropertyEntry(); \
-	entryFor##MEMBER->name = #MEMBER; \
-	entryFor##MEMBER->getProperty = STAGE::getProperty; \
-	entryFor##MEMBER->setProperty = STAGE::setProperty; \
+    MlePropertyEntry *entryFor##MEMBER = new MlePropertyEntry(); \
+    entryFor##MEMBER->name = #MEMBER; \
+    entryFor##MEMBER->getProperty = STAGE::getProperty; \
+    entryFor##MEMBER->setProperty = STAGE::setProperty; \
     MleStageClass::find(#STAGE)->addMember(#MEMBER,#TYPE,entryFor##MEMBER)
 #endif
 #else /* MLE_REHEARSAL */
@@ -534,7 +579,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     static C *cast(MleStage *stage) { return (C *) stage; } \
     friend class _mleDummy
 #define MLE_STAGE_ABSTRACT_HEADER(C) \
-	friend class _mleDummy
+    friend class _mleDummy
 #define MLE_STAGE_SOURCE(C,S) \
     MleStage *_mlCreate##C(void) { return new C; }
 #define MLE_STAGE_ABSTRACT_SOURCE(C,S)
