@@ -41,8 +41,8 @@ libmlert_la_SOURCES = \
 	$(top_srcdir)/../../common/src/foundation/MleSetClass.cxx \
 	$(top_srcdir)/../../common/src/foundation/MleStage.cxx \
 	$(top_srcdir)/../../common/src/foundation/MleStageClass.cxx \
-	$(top_srcdir)/../../common/src/foundation/loadSet.cxx \
 	$(top_srcdir)/../../common/src/foundation/loaddwp.cxx \
+	$(top_srcdir)/../../common/src/foundation/loadSet.cxx \
 	$(top_srcdir)/../../common/src/input/MleKeyboardPolled.cxx \
 	$(MLE_HOME)/Core/util/common/src/mlDebug.c \
 	$(MLE_HOME)/Core/util/common/src/mlErrno.c \
@@ -72,7 +72,5 @@ libmlert_la_CPPFLAGS = \
 	-I$(MLE_HOME)/Core/math/linux/include \
 	-I$(MLE_HOME)/DigitalWorkprint/lib/common/include \
 	-I$(MLE_HOME)/DigitalWorkprint/lib/linux/include \
-	-I$(MLE_HOME)/DigitalPlayprint/runtime/common/include \
-	-I$(MLE_HOME)/DigitalPlayprint/runtime/linux/include \
 	-I$(MLE_HOME)/ATK/common/include \
 	-I$(MLE_HOME)/ATK/linux/include
