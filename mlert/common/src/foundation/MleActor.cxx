@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -69,10 +69,10 @@ MleActor::MleActor(void)
     // variable initialization
     m_role = NULL;
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
     m_name = NULL;
     m_actorClass = NULL;
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 }
 
 
@@ -94,10 +94,10 @@ MleActor::~MleActor()
 	    delete curRole;
     }
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
     this->unregisterInstance();
     if (m_name) mlFree(m_name);
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 }
 
 // This is the virtual init function that is called after property values
@@ -141,7 +141,7 @@ MleActor *_mleCreateMleActor(void)
     return new MleActor;
 }
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 const char *
 MleActor::getTypeName(void) const
 {
@@ -159,9 +159,9 @@ MleActor::initClass(void)
 {
     new MleActorClass("MleActor",_mleCreateMleActor,"");
 }
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 // Include Digital Workprint header files.
 #include "mle/DwpDataUnion.h"
 #include "mle/DwpDatatype.h"
@@ -318,13 +318,13 @@ MleActor::setPropDataset(const char *propDatasetName, void *data)
     return status;
 }
 
-#endif	/* MLE_REHEARSAL */
+#endif	/* MLE_DIGITAL_WORKPRINT */
 
 // Transformation support.
 
-//   This is compiled MLE_REHEARSAL in this defining class, but subclasses
+//   This is compiled MLE_DIGITAL_WORKPRINT in this defining class, but subclasses
 //   may reimplement the same interface exposed for the runtime.
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 // Include system header files.
 #include <math.h>
 
@@ -754,4 +754,4 @@ MleActor::getTransform(MlTransform& t)
 	}
 }
 
-#endif /* MLE_REHEARSAL transformations */
+#endif /* MLE_DIGITAL_WORKPRINT transformations */

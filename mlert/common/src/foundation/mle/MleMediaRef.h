@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@
 #ifndef __MLE_MEDIAREF_H_
 #define __MLE_MEDIAREF_H_
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 // Include system header files.
 #include <string.h>	// Used for isa().
 
@@ -55,13 +55,13 @@
 
 // Include Rehearsal Player/Tools header files.
 #include "mle/MleMediaRefClass.h"
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 // Header file for reference conversion from file (override with
 // subclass to get URL conversion).
 #include "mle/MleMediaRefConverter.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 // This macro should be placed in the class declaration of any subclass
 // of MleMediaRef.  It defines some basic functions needed by every subclass.
@@ -91,7 +91,8 @@
 	MleMediaRefClass::add(#C,_mlCreate##C); \
     }
 
-#else /* Runtime Player */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // Make a dummy statement to avoid errors with the trailing semicolon.
 #define MLE_MEDIAREF_HEADER(C) \
@@ -101,7 +102,7 @@
 #define MLE_MEDIAREF_SOURCE(C,S) \
     MleMediaRef *_mlCreate##C(void); MleMediaRef *_mlCreate##C(void) { return new C; }
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 
 typedef struct MLE_RUNTIME_API _MleMediaLoadReference
@@ -232,7 +233,7 @@ class MLE_RUNTIME_API MleMediaRef
 	 */
     void deleteConverter(void);
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
   public:
     // Media reference identity.
     // getTypeName() returns the class name of a media ref instance.
@@ -250,10 +251,10 @@ class MLE_RUNTIME_API MleMediaRef
     // This constant is reserved for accessing the rehearsal target
     // information from the Digital Workprint.
     static const char *g_rehearsal;
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 };
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 typedef char* MlMediaRef;
 
@@ -264,14 +265,15 @@ typedef char* MlMediaRef;
 
 #define MLE_NO_MEDIA NULL
 
-#else  /* ! MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 /* Mastering (these definitions will be used for all target machines) */
 
 typedef signed long MlMediaRef;
 #define MLE_NO_MEDIA -1
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 
 #endif /* __MLE_MEDIAREF_H_ */

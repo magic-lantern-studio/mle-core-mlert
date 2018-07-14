@@ -93,7 +93,7 @@
 class MleRole;
 class MleActor;
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 // Include system header files.
 #include <string.h>	// Used for isa().
@@ -209,7 +209,9 @@ class MleDwpDataUnion;
 	entryFor##MEMBER->setProperty = SET::setProperty; \
     MleSetClass::find(#SET)->addMember(#MEMBER,#TYPE,entryFor##MEMBER)
 #endif
-#else /* MLE_REHEARSAL */
+
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // Make a dummy statement to avoid errors with the trailing semicolon.
 #define MLE_SET_HEADER(C) \
@@ -237,7 +239,7 @@ class MleDwpDataUnion;
     } \
 	MleSet *_mlCreate##C(void) { return new C; }
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 /**
  * @brief Base class for Sets
@@ -330,7 +332,7 @@ class MLE_RUNTIME_API MleSet : public MleObject
 	 */
     virtual void attach(MleRole* parent, MleRole* child);
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
   public:
 
     // Set identity.
@@ -410,10 +412,14 @@ class MLE_RUNTIME_API MleSet : public MleObject
 
     // Instance name of a set.
     char *m_name;
-#else
+
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
+
 	// isa() returns nonzero if the instance is of the specified class.
     virtual int isa(const char *type) const;
-#endif /* MLE_REHEARSAL */
+
+#endif /* MLE_DIGITAL_PLAYPRINT */
 };
 
 #endif /* __MLE_SET_H_ */

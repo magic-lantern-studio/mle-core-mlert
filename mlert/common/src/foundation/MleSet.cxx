@@ -69,10 +69,10 @@ void MleSet::setProperty(MleObject *object, const char *name, unsigned char *val
 MleSet::MleSet(void)
   : MleObject()
 {
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
     m_name = NULL;
     m_setClass = NULL;
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 }
 
 

@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -49,10 +49,10 @@
 #include "mle/MlePtrContainer.h"
 #include "mle/MleActor.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 #include "mle/MleGroupClass.h"
 #include "mle/DwpGroup.h"
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 
 /**
@@ -131,7 +131,7 @@ class MLE_RUNTIME_API MleGroup : public MlePtrContainer<MleActor*>
 	 */
     void  operator delete(void *p);
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
     // Get the type of the group -- rehearsal time only.
     virtual const char *getTypeName(void) const;
@@ -151,7 +151,7 @@ class MLE_RUNTIME_API MleGroup : public MlePtrContainer<MleActor*>
     static MleDwpStrKeyDict* getInstanceRegistry()  { return &g_instanceRegistry; }
     virtual void registerInstance(const char* name);
     virtual void unregisterInstance();
-  
+
     // Load the group from the relevant item in the DWP.
     // Use different binding types depending on whether the DWP is 
     // a playprint or workprint.  In the workprint, we use the WP struct.
@@ -161,7 +161,8 @@ class MLE_RUNTIME_API MleGroup : public MlePtrContainer<MleActor*>
     // Load by name.
     virtual MleGroup* load(const char* id);
 
-#else /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
     /**
      * @brief Load the group from the Digital Playprint.
@@ -171,9 +172,9 @@ class MLE_RUNTIME_API MleGroup : public MlePtrContainer<MleActor*>
      */
     virtual MleGroup* load( const int indexToPpTOC );
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
   protected:
 
@@ -188,11 +189,11 @@ class MLE_RUNTIME_API MleGroup : public MlePtrContainer<MleActor*>
 	// The name of the group.
     char* m_name;
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 };
 
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 // This macro should be placed in the class declaration of any subclass
 // of MleGroup.  It defines some basic functions needed by every subclass.
@@ -246,7 +247,8 @@ class MLE_RUNTIME_API MleGroup : public MlePtrContainer<MleActor*>
     SUPERCLASS::initClass(); \
     new MleGroupClass(#GROUP,_mlCreate##GROUP,#SUPERCLASS, #EDITOR, #CONTENT_EDITOR)
 
-#else /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // Null macros for non-rehearsal - see above for description.
 
@@ -256,6 +258,6 @@ class MLE_RUNTIME_API MleGroup : public MlePtrContainer<MleActor*>
 #define MLE_GROUP_SOURCE(C,S) \
 	MleGroup *_mlCreate##C(void) { return new C; }
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 #endif /* __MLE_GROUP_H_ */

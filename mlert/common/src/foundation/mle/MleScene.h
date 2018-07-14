@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -49,12 +49,12 @@
 #include "mle/MlePtrContainer.h"
 #include "mle/MleGroup.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 #include "mle/MleSceneClass.h"
 #include "mle/DwpScene.h"
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 // This macro should be placed in the class declaration of any subclass
 // of MleScene.  It defines some basic functions needed by every subclass.
 // The single argument is the unquoted class name.  Be aware that
@@ -107,7 +107,8 @@
     SUPERCLASS::initClass(); \
     new MleSceneClass(#SCENE,_mlCreate##SCENE,#SUPERCLASS, #EDITOR, #CONTENT_EDITOR)
 
-#else /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // Null macros for non-rehearsal - see above for description.
 
@@ -117,7 +118,7 @@
 #define MLE_SCENE_SOURCE(C,S) \
     MleScene *_mlCreate##C(void) { return new C; }
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 /**
  * MleScene is the base class for runtime scenes.  
@@ -203,7 +204,7 @@ class MLE_RUNTIME_API MleScene : public MlePtrContainer<MleGroup*>
 	 */
     void  operator delete(void *p);
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
     // Get the type of the scene -- rehearsal time only.
     virtual const char *getTypeName(void) const;
@@ -245,7 +246,8 @@ class MLE_RUNTIME_API MleScene : public MlePtrContainer<MleGroup*>
     // changes.
     virtual MleScene* changeCurrentScene( const char *id );
 
-#else /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
     /**
      * @brief Load the specified scene.
@@ -270,7 +272,7 @@ class MLE_RUNTIME_API MleScene : public MlePtrContainer<MleGroup*>
      */
     virtual MleScene* changeCurrentScene( const int indexToPpTOC );
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
     /**
      * @brief Set the caller as the current scene.
@@ -337,7 +339,7 @@ class MLE_RUNTIME_API MleScene : public MlePtrContainer<MleGroup*>
      */
     virtual MleScene* changeCurrentScene( MleScene *newScene );
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
   protected:
 
     // The scene instance registry.
@@ -351,7 +353,7 @@ class MLE_RUNTIME_API MleScene : public MlePtrContainer<MleGroup*>
     // Instance name of a scene.
     char *m_name;
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 };
 
 #endif /* __MLE_SCENE_H_ */

@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -56,12 +56,12 @@
 #define TEMPLATE
 #include "mle/MlePtrArray.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 #ifdef __linux__
 #include <string.h>
 #endif
 #include <mle/DwpStrKeyDict.h>
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 /**
  * @brief MlePtrContainer is a template container class that serves as the
@@ -174,7 +174,7 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
         return -1;
     }
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 	/**
      * @brief Get the container's name.
@@ -223,7 +223,7 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
     //	  virtual MleScene*	load( MleDwpScene* wpScene );	
     //	  virtual MleScene*	load(const char* id);
 
-#else /* MLE_REHEARSAL */
+#else /* MLE_DIGITAL_WORKPRINT */
 
     /**
 	 * @brief Find the element in the container.
@@ -242,12 +242,12 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
 
   protected:
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
     // Instance name of a scene.
     char* m_name;
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 };
 

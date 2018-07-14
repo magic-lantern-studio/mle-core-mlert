@@ -55,6 +55,7 @@ libmlert_la_LDFLAGS =
 libmlert_la_CPPFLAGS = \
 	-DMLE_NOT_DLL \
 	-DMLE_INTERNAL \
+	-DMLE_DIGITAL_WORKPRINT \
 	-DML_MATH_DEBUG=0 \
 	-DML_FIXED_POINT=0 \
 	-I$(top_srcdir)/include \

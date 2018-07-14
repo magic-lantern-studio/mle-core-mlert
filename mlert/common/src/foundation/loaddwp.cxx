@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -55,35 +55,21 @@
 #include "mle/DwpScene.h"
 #include "mle/DwpMediaRef.h"
 #include "mle/DwpFinder.h"
+#include "mle/DwpLoad.h"
 
 // Include Magic Lantern Runtime Engine header files.
 #include "mle/MleRuntime.h"
 
+#ifdef MLE_REHEARSAL
 // Include ATK header files.
 #include "mle/MlePlayer.h"
 
 MLE_RUNTIME_API MlePlayer *_mlPlayer = NULL;
-#if 0
-MLE_RUNTIME_API MleDwpItem *_mlWorkprint =  NULL;
-
-MLE_RUNTIME_API MleDwpItem *mlLoadWorkprint(const char *filename)
-{
-	MLE_ASSERT(filename);
-
-	// Set the flag to load DSOs when they are specified.
-	MleDwpDSOFile::setLoadOnSet(1);
-
-	// Read in the workprint.
-	_mlWorkprint = MleDwpItem::readAll(filename);
-	return _mlWorkprint;
-}
-#else
-// The following external reference is obtained from Digital Workprint library.
-extern MLE_DWP_API MleDwpItem *_mlWorkprint;
-#endif /* 0 */
+#endif /* MLE_REHEARSAL */
 
 static void releaseItem(MleDwpItem *item)
 {
+#ifdef MLE_REHEARSAL
 	if ( _mlPlayer )
 	{
 		// Find the root.
@@ -92,12 +78,15 @@ static void releaseItem(MleDwpItem *item)
 		
 		delete item;
 	}
+#endif /* MLE_REHEARSAL */
 }
 
 MleDwpGroup *_mlGetWorkprintGroup(const char *id)
 {
+#ifdef MLE_REHEARSAL
 	if ( _mlPlayer )
 		_mlWorkprint = _mlPlayer->sendGetWorkprintGroup(id);
+#endif /* MLE_REHEARSAL */
 
 	MLE_ASSERT(_mlWorkprint);
 #if defined(WIN32)
@@ -115,8 +104,10 @@ void _mlReleaseWorkprintGroup(MleDwpItem *group)
 
 MleDwpScene *_mlGetWorkprintScene(const char *id)
 {
+#ifdef MLE_REHEARSAL
 	if ( _mlPlayer )
 		_mlWorkprint = _mlPlayer->sendGetWorkprintScene(id);
+#endif /* MLE_REHEARSAL */
 
 	MLE_ASSERT(_mlWorkprint);
 #if defined(WIN32)
@@ -134,6 +125,7 @@ void _mlReleaseWorkprintScene(MleDwpItem *scene)
 
 MleDwpMediaRef *_mlGetWorkprintMediaRef(const char *id)
 {
+#ifdef MLE_REHEARSAL
 	if ( _mlPlayer )
 	{
 		_mlWorkprint = _mlPlayer->sendGetWorkprintMediaRef(id);
@@ -142,6 +134,7 @@ MleDwpMediaRef *_mlGetWorkprintMediaRef(const char *id)
 		if ( _mlWorkprint == NULL )
 			return NULL;
 	}
+#endif /* MLE_REHEARSAL */
 
 	MLE_ASSERT(_mlWorkprint);
 #if defined(WIN32)
@@ -159,6 +152,7 @@ void _mlReleaseWorkprintMediaRef(MleDwpMediaRef *mediaRef)
 
 MleDwpSet *_mlGetWorkprintSet(const char *id)
 {
+#ifdef MLE_REHEARSAL
 	if ( _mlPlayer )
 	{
 		_mlWorkprint = _mlPlayer->sendGetWorkprintSet(id);
@@ -167,6 +161,7 @@ MleDwpSet *_mlGetWorkprintSet(const char *id)
 		if ( _mlWorkprint == NULL )
 			return NULL;
 	}
+#endif /* MLE_REHEARSAL */
 
 	MLE_ASSERT(_mlWorkprint);
 #if defined(WIN32)
@@ -181,4 +176,3 @@ void _mlReleaseWorkprintSet(MleDwpItem *set)
 {
 	releaseItem(set);
 }
-
