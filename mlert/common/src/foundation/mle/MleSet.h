@@ -376,6 +376,10 @@ class MLE_RUNTIME_API MleSet : public MleObject
     virtual void registerInstance(const char* name);
     virtual void unregisterInstance();
 
+#endif /* MLE_DIGITAL_WORKPRINT */
+
+#ifdef MLE_REHEARSAL
+
     // Support for picking - x,y in window coords
     virtual MleActor* pick(int x, int y);
 
@@ -397,6 +401,10 @@ class MLE_RUNTIME_API MleSet : public MleObject
     // Global render mode.
     virtual void setRenderMode(char* mode);
     virtual char* getRenderMode();
+
+#endif /* MLE_REHEARSAL */
+
+#ifdef MLE_DIGITAL_WORKPRINT
 
   protected:
 

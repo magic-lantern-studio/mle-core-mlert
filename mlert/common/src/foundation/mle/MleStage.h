@@ -185,7 +185,10 @@ class MLE_RUNTIME_API MleStage : public MleObject
 			 fd_set *exceptfds,
 			 struct timeval *userTimeOut);
 #endif /* __linux__ */
-    
+
+#endif /* MLE_DIGITAL_WORKPRINT */
+
+#ifdef MLE_REHEARSAL
     // Editing mode.
 
     // setEditing() enables or disables editing mode.  Editing
@@ -376,7 +379,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // effect actor transform.
     virtual void recalcAutoClipPlanes();
 
-#endif /* MLE_DIGITAL_WORKPRINT */
+#endif /* MLE_REHEARSAL */
 
 #ifdef MLE_REHEARSAL
     // Define state for rehearsal interfaces.

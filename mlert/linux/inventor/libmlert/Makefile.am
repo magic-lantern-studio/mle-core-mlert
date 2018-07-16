@@ -27,6 +27,7 @@ libmlert_la_SOURCES = \
 	$(top_srcdir)/../../common/src/foundation/MleMediaRefClass.cxx \
 	$(top_srcdir)/../../common/src/foundation/MleMonitor.cxx \
 	$(top_srcdir)/../../common/src/foundation/MleNotifier.cxx \
+	$(top_srcdir)/../../common/src/foundation/MleObject.cxx \
 	$(top_srcdir)/../../common/src/foundation/MlePq.cxx \
 	$(top_srcdir)/../../common/src/foundation/MlePtrArray.cxx \
 	$(top_srcdir)/../../common/src/foundation/MlePtrDict.cxx \

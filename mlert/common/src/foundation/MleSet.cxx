@@ -78,7 +78,7 @@ MleSet::MleSet(void)
 
 MleSet::~MleSet(void)
 {
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
     unregisterInstance();
     if (m_name)
 		mlFree(m_name);
@@ -130,7 +130,7 @@ MleSet::isa(const char *type) const
     return !strcmp(type,"MleSet");
 }
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 #include "mle/DwpDataUnion.h"
 #include "mle/DwpDatatype.h"
@@ -252,6 +252,10 @@ MleSet::unregisterInstance(void)
 		}
     }
 }
+
+#endif /* MLE_DIGITAL_WORKPRINT */
+
+#ifdef MLE_REHEARSAL
 
 MleActor*
 MleSet::pick(int /* x */, int /* y*/)

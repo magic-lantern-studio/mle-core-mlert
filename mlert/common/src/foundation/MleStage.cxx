@@ -230,10 +230,6 @@ MleStage::setName(char *newName)
     m_name = strdup(newName);
 }
 
-#endif /* MLE_DIGITAL_WORKPRINT */
-
-#ifdef MLE_REHEARSAL
-
 #if defined(__linux__)
 // X event handling: each stage does its own event handling; this
 // is so that particular stages, such as ones that use inventor,
@@ -244,9 +240,9 @@ int MleStage::doSelect(int nfds, fd_set *readfds, fd_set *writefds,
     // Default is to just call select.
     return select(nfds, readfds, writefds, exceptfds, userTimeOut);
 }
-#endif
+#endif /* __linux__ */
 
-#endif /* MLE_REHEARSAL event handling */
+#endif /* MLE_DIGITAL_WORKPRINT*/
 
 // Define editing functions
 // This is all conditionally compiled under rehearsal.
