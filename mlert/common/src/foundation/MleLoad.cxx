@@ -140,7 +140,8 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
         /* Try loading the DSO */
         if ( mlLoadDSO(wpa->getActorClass()) )
         {
-            printf("***** ERROR loading DSO for %s.\n",acname);
+            printf("MleLoad: ERROR loading DSO for %s.\n",acname);
+            fflush(stdout);
             return NULL;
         }
 

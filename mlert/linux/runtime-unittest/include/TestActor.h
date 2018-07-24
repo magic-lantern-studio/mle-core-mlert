@@ -56,6 +56,7 @@ class TestActor : public MleActor
     MLE_ACTOR_PROPERTY(int, id, getIdProperty, setIdProperty)
     MLE_ACTOR_DYNAMIC_PROPERTY(char *, text, getTextProperty, setTextProperty)
     MLE_ACTOR_ARRAY_PROPERTY(int, age, getAgeProperty, setAgeProperty)
+	MLE_ACTOR_ARRAY_PROPERTY(float, length, getLengthProperty, setLengthProperty)
 
   public:
 

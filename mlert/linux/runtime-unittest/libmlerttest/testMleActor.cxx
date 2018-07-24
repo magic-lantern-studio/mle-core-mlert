@@ -110,6 +110,7 @@ TEST(MleActorTest, TestActorProperties) {
     EXPECT_TRUE(tActor->idIsOfType("int"));
     EXPECT_TRUE(tActor->textIsOfType("char *"));
     EXPECT_TRUE(tActor->ageIsOfArrayType("int"));
+    EXPECT_TRUE(tActor->lengthIsOfArrayType("float"));
     EXPECT_FALSE(tActor->idIsOfType("bool"));
 
     // Testing id property.
@@ -149,6 +150,23 @@ TEST(MleActorTest, TestActorProperties) {
     EXPECT_EQ(57,bday);
 
     EXPECT_EQ(4,ages->size());
+
+    // Testing length array property.
+    MleArray<float> inchworms(3);
+    inchworms[0] = 6.25;
+    inchworms[1] = 8;
+    inchworms[2] = 10.333; // "Record of the band".
+    tActor->setLengthProperty(inchworms);
+    EXPECT_FLOAT_EQ(6.25f,tActor->length[0]);
+    EXPECT_FLOAT_EQ(8.0f,tActor->length[1]);
+    EXPECT_FLOAT_EQ(10.333f,tActor->length[2]);
+    MleArray<float> *lengths = (MleArray<float> *)tActor->getLengthProperty();
+    float length = (*lengths)[0];
+    EXPECT_FLOAT_EQ(6.25f,length);
+    length = (*lengths)[1];
+    EXPECT_FLOAT_EQ(8.0f,length);
+    length = (*lengths)[2];
+    EXPECT_FLOAT_EQ(10.333f,length);
 
     // Testing global actor property callbacks.
     MleRTPropertyEntry *idEntry = &mlRTActorProperties[0];

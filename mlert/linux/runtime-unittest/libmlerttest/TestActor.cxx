@@ -47,7 +47,12 @@ MLE_ACTOR_SOURCE(TestActor,MleActor)
 
 TestActor::TestActor()
   : id(0), text(NULL)
-{}
+{
+	length.resize(1);
+	length[0] = 1.0f;
+	length[1] = 1.0f;
+	length[2] = 1.0f;
+}
 
 
 TestActor::~TestActor()
@@ -71,6 +76,11 @@ TestActor:: getProperty(MleObject *object, const char *name, unsigned char **val
         const MleArray<int> *age;
         age = ((TestActor *)object)->getAgeProperty();
         *((MleArray<int> *)value) = *age;
+    } else if (strcmp("length",name) == 0)
+    {
+        const MleArray<float> *length;
+        length = ((TestActor *)object)->getLengthProperty();
+        *((MleArray<float> *)value) = *length;
     } else
     {
         // TBD: log warning.
@@ -93,6 +103,9 @@ TestActor::setProperty(MleObject *object, const char *name, unsigned char *value
     } else if (strcmp("age",name) == 0)
     {
         ((TestActor *)object)->setAgeProperty(*((MleArray<int> *)value));
+    } else if (strcmp("length",name) == 0)
+    {
+        ((TestActor *)object)->setLengthProperty(*((MleArray<float> *)value));
     } else {
         // TBD: log warning.
         cout << "***** ERROR: Unknown TestActor property: " << name << endl;

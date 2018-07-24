@@ -43,9 +43,9 @@
 
 // Include system header files.
 #include <string.h>
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 #include <stdio.h>
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 // Include Magic Lantern header files.
 #include "mle/MleActor.h"
@@ -165,6 +165,12 @@ MleActor::initClass(void)
 // Include Digital Workprint header files.
 #include "mle/DwpDataUnion.h"
 #include "mle/DwpDatatype.h"
+#include "mle/DwpFloatArray.h"
+#include "mle/DwpIntArray.h"
+#include "mle/DwpScalarArray.h"
+#include "mle/DwpVector3Array.h"
+#include "math/scalar.h"
+#include "math/vector.h"
 
 #if defined(WIN32)
 // Make sure that the registry can be shared if the library is
@@ -249,7 +255,7 @@ MleActor::poke(const char *property,MleDwpDataUnion *value)
 	const MleActorMember *member = m_actorClass->findMember(property);
 	if ( member == NULL )
 	{
-		printf("property %s not present on %s.\n",
+		printf("MleActor: property %s not present on %s.\n",
 			property,getTypeName());
 		return 1;
 	}
@@ -259,17 +265,43 @@ MleActor::poke(const char *property,MleDwpDataUnion *value)
 
 	if (value->m_datatype != member->getType())
 	{
-	    printf("type mismatch in setting property %s on %s (%s and %s).\n",
-		property,getTypeName(),
-		value->m_datatype->getName(),
-		member->getType()->getName());
+        printf("MleActor: type mismatch in setting property %s on %s (%s and %s).\n",
+               property, getTypeName(),
+               value->m_datatype->getName(),
+               member->getType()->getName());
 	    return 1;
 	}
 
 	//value->m_datatype->get(value,(char *)this + member->getOffset());
 	MlePropertyEntry *entry = member->getEntry();
-	// TBD: the following will probably not work without some munging of MleDwpDataUnion. Need testing.
-	entry->setProperty(this, entry->name, (unsigned char *)value);
+	unsigned char *pvalue;
+	if (member->getType()->isa(MleDwpFloatArray::typeId)) {
+		const MleDwpFloatArray *dwpFloatArray = (MleDwpFloatArray *)member->getType();
+		MleArray<float> array;
+		dwpFloatArray->get(value, &array);
+		pvalue = (unsigned char *)&array;
+	} else if (member->getType()->isa(MleDwpIntArray::typeId)) {
+		const MleDwpIntArray *dwpIntArray = (MleDwpIntArray *)member->getType();
+		MleArray<int> array;
+		dwpIntArray->get(value, &array);
+		pvalue = (unsigned char *)&array;
+	} else if (member->getType()->isa(MleDwpScalarArray::typeId)) {
+		const MleDwpScalarArray *dwpScalarArray = (MleDwpScalarArray *)member->getType();
+		MleArray<MlScalar> array;
+		dwpScalarArray->get(value, &array);
+		pvalue = (unsigned char *)&array;
+	} else if (member->getType()->isa(MleDwpVector3Array::typeId)) {
+		const MleDwpVector3Array *dwpVec3Array = (MleDwpVector3Array *)member->getType();
+		MleArray<MlVector3> array;
+		dwpVec3Array->get(value, &array);
+		pvalue = (unsigned char *)&array;
+	} else
+		// This should work for anonymous data types (i.e. int, float, etc.)
+		pvalue = (unsigned char *)value;
+
+	// Set value from DWP into Actor property. Note: other data types may need to be
+	// translated in addition to arrays.
+	entry->setProperty(this, entry->name, pvalue);
 
 	return 0;
 }
