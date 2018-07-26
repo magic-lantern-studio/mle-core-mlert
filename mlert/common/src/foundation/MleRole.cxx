@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -51,12 +51,12 @@
 
 
 // Declare creation function used by runtime engine.
-#ifndef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_PLAYPRINT
 extern MleRole *_mleCreateMleRole(MleActor *actor)
 {
     return new MleRole(actor);
 }
-#endif /* ! MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 
 void MleRole::init(void)
@@ -105,7 +105,7 @@ MleRole::addChild(MleRole * /* child */)
 }
 
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 const char *
 MleRole::getTypeName(void) const
@@ -126,4 +126,4 @@ MleRole::setIdentifier(const char* /*id*/)
 {
 }
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */

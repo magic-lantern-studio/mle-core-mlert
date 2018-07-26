@@ -46,27 +46,28 @@
 #define __MLE_STAGE_H_
 
 // Include system header files.
-#ifdef MLE_REHEARSAL
 #if defined(WIN32)
 #include <winsock2.h>
 #ifdef Q_OS_WIN
 // Qt platform on Windows.
-#endif
-#endif
-#if defined(sgi) || defined(__linux__)
+#endif /* Q_OS_WIN */
+#endif /* WIN32 */
+#if defined(__linux__)
 #ifdef Q_OS_UNIX
 // Qt platform on Unix
 #else
 // X11/Xt platform on Unix.
 #include <X11/Intrinsic.h>
 #endif
-#endif
+#endif /* __linux__ */
 
+#ifdef MLE_DIGITAL_WORKPRINT
+// Include Magic Lantern Runtime Engine header files.
 #include "mle/MleStageClass.h"
 
 class MleSet;
 class MleDwpDataUnion;
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 
 // Include Magic Lantern header files.
@@ -137,7 +138,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
      */
     virtual void getSize(int *width,int *height);
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
     // This section defines rehearsal interfaces.
     // It typically includes entry points for tools.
 
@@ -174,7 +175,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // new name.
     virtual void setName(char *newName);
 
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
     // Event handling: each stage does its own event handling; this
     // is so that particular stages, such as ones that use inventor,
     // can control the select blocking in the main loop.
@@ -183,8 +184,11 @@ class MLE_RUNTIME_API MleStage : public MleObject
 			 fd_set *writefds,
 			 fd_set *exceptfds,
 			 struct timeval *userTimeOut);
-#endif
-    
+#endif /* __linux__ */
+
+#endif /* MLE_DIGITAL_WORKPRINT */
+
+#ifdef MLE_REHEARSAL
     // Editing mode.
 
     // setEditing() enables or disables editing mode.  Editing
@@ -206,7 +210,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // (for example, if the stage does not support changing its size).
     virtual int setSize(int width,int height);
 
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
 #ifdef Q_OS_UNIX
     // getWindow() returns a Qt window for the stage, if possible.
     // This window may be reparented for tools.
@@ -218,13 +222,13 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
     virtual Display* getDisplay(void);
 #endif
-#endif
+#endif /* __linux__ */
 #if defined(WIN32)
 #ifdef Q_OS_WIN
 #else
     virtual HWND getWindow(void);
 #endif
-#endif
+#endif /* WIN32 */
 
     virtual void setOffscreen(int flag);
     
@@ -280,7 +284,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     void setFinishManipCallback(void (*manipCB)(MleActor *actor,
     void *clientData), void *clientData = NULL);
 
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
 #ifdef Q_OS_UNIX
     //void setRightMouseCallback(void (*rightMouseCB)(QEvent* e,
     //                           void* clientData), void* clientData = NULL);
@@ -288,7 +292,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     void setRightMouseCallback(void (*rightMouseCB)(XEvent* e,
                                void* clientData), void* clientData = NULL);
 #endif
-#endif /* sgi */
+#endif /* __linux__ */
 #if defined(WIN32)
     void setRightMouseCallback(void (*rightMouseCB)(MSG* e,
                                void* clientData), void* clientData = NULL);
@@ -352,7 +356,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
     virtual void showDecoration(int onOff);
 
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
 #ifdef Q_OS_UNIX
     // Reparent window - tools call this to reparent the player window
     // to a window passed in from the tools
@@ -362,7 +366,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // to a window passed in from the tools
     virtual void reparentWindow(Window parentWindow);
 #endif
-#endif /* sgi */
+#endif /* __linux__ */
 #if defined(WIN32)
 #ifdef Q_OS_WIN
 #else
@@ -390,19 +394,19 @@ class MLE_RUNTIME_API MleStage : public MleObject
     void (*startManipCB)(MleActor *actor,void *clientData);
     void (*manipCB)(MleActor *actor,void *clientData);
     void (*finishManipCB)(MleActor *actor,void *clientData);
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
 #ifdef Q_OS_UNIX
     void (*rightMouseCB)(QEvent* e,void *clientData);
 #else
     void (*rightMouseCB)(XEvent* e,void *clientData);
 #endif
-#endif /* sgi */
+#endif /* __linux__ */
 #if defined(WIN32)
 #ifdef Q_OS_WIN
 #else
 	void (*rightMouseCB)(MSG* e,void *clientData);
 #endif
-#endif
+#endif /* WIN32 */
     void *m_pickClientData;
     void *m_unpickClientData;
     void *m_openClientData;
@@ -416,16 +420,13 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // Editing mode.
     int m_editMode;
 
-    // Stage class.
-    const MleStageClass *m_stageClass;
-
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
 #ifdef Q_OS_UNIX
     //static int checkForDoubleClick(QButtonEvent* event);
 #else
     static int checkForDoubleClick(XButtonEvent* event);
 #endif
-#endif /* sgi */
+#endif /* _linux__ */
 #if defined(WIN32)
 #ifdef Q_OS_WIN
 #else
@@ -433,12 +434,18 @@ class MLE_RUNTIME_API MleStage : public MleObject
 #endif
 #endif /* WIN32 */
 
+#endif /* MLE_REHEARSAL */
+
+#ifdef MLE_DIGITAL_WORKPRINT
+    // Stage class.
+    const MleStageClass *m_stageClass;
+
   private:
 
     // Instance name of a stage.
     char *m_name;
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 };
 
 
@@ -482,7 +489,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     static void setProperty(MleObject *object, const char *name, unsigned char *value);
 
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 #include <string.h>
 
@@ -569,7 +576,9 @@ class MLE_RUNTIME_API MleStage : public MleObject
     entryFor##MEMBER->setProperty = STAGE::setProperty; \
     MleStageClass::find(#STAGE)->addMember(#MEMBER,#TYPE,entryFor##MEMBER)
 #endif
-#else /* MLE_REHEARSAL */
+
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // Null macros for non-rehearsal - see above for description.
 
@@ -584,6 +593,6 @@ class MLE_RUNTIME_API MleStage : public MleObject
     MleStage *_mlCreate##C(void) { return new C; }
 #define MLE_STAGE_ABSTRACT_SOURCE(C,S)
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 	
 #endif /* __MLE_STAGE_H_ */

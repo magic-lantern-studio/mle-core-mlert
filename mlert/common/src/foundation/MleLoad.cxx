@@ -65,9 +65,9 @@
 #include "mle/MleMediaRef.h"
 #include "mle/MleScene.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
-// Include all the workprint stuff actor loading needs to deal with.
+// Include the Magic Lantern Digital Workprint header files.
 #include "mle/DwpActor.h"
 #include "mle/DwpActorTemplate.h"
 #include "mle/DwpRoleAttachment.h"
@@ -80,8 +80,14 @@
 #include "mle/DwpScene.h"
 #include "mle/DwpStrKeyDict.h"
 
+// Include the Magic Lantern Runtime Engine header files.
 #include "mle/mlExpandFilename.h"
 #include "mle/MleDso.h"
+#include "mle/MleActorClass.h"
+#include "mle/MleRoleClass.h"
+#include "mle/MleGroupClass.h"
+#include "mle/MleMediaRefClass.h"
+#include "mle/MleSceneClass.h"
 
 
 // Callback ptr used by _mlLoadGroup to call a client on DSO errors.
@@ -124,7 +130,7 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
 
     // If we found one, we use that to define the actor class name.
     if ( tmpl )
-	acname = tmpl->getActorClass();
+        acname = tmpl->getActorClass();
 
     // Look up actor class.
     const MleActorClass *ac = MleActorClass::find(acname);
@@ -801,7 +807,9 @@ mlLoadBootScene(MleDwpItem *item)
 	return mlLoadScene(wps);
 }
 
-#else // Digital Playprint loading.
+#endif /* Digital Workprint loading. */
+
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // Include Magic Lantern Runtime Player header files.
 #include "mle/ppinput.h"
@@ -1021,4 +1029,4 @@ mlUnloadPlayprint(MleDppInput *dpp)
     delete dpp;
 }
 
-#endif /* MLE_REHEARSAL */
+#endif /* Digital Playprint loading. */

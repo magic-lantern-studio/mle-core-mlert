@@ -55,10 +55,10 @@
 // Include Runtime Engine header files.
 #include "mle/MleStage.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 #include "mle/DwpDataUnion.h"
 #include "mle/DwpDatatype.h"
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 // Implement the static stage pointer.
 MleStage *MleStage::g_theStage = NULL;
@@ -117,7 +117,7 @@ MleStage::getSize(int * /* width */,int * /* height */)
 
 // Define null init()
 //   This is conditionally compiled under rehearsal
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 // This function is implemented by subclasses to build the stage.  This
 // is not done in the constructor so as to keep the constructor interface
 // pure.  There is optional configuration that may be done on a stage -
@@ -128,7 +128,7 @@ void
 MleStage::init(void)
 {
 }
-#endif /* MLE_REHEARSAL init */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 MleStage *
 _mlCreateMleStage(void)
@@ -136,7 +136,7 @@ _mlCreateMleStage(void)
     return new MleStage;
 }
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 // This virtual function returns the type name of the stage.
 const char *
 MleStage::getTypeName(void) const
@@ -230,11 +230,7 @@ MleStage::setName(char *newName)
     m_name = strdup(newName);
 }
 
-#endif /* MLE_REHEARSAL */
-
-#ifdef MLE_REHEARSAL
-
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
 // X event handling: each stage does its own event handling; this
 // is so that particular stages, such as ones that use inventor,
 // can control the select blocking in the main loop.
@@ -244,9 +240,9 @@ int MleStage::doSelect(int nfds, fd_set *readfds, fd_set *writefds,
     // Default is to just call select.
     return select(nfds, readfds, writefds, exceptfds, userTimeOut);
 }
-#endif
+#endif /* __linux__ */
 
-#endif /* MLE_REHEARSAL event handling */
+#endif /* MLE_DIGITAL_WORKPRINT*/
 
 // Define editing functions
 // This is all conditionally compiled under rehearsal.
@@ -285,7 +281,7 @@ int MleStage::setSize(int,int)
     return 1;
 }
 
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
 Window
 MleStage::getWindow(void)
 {
@@ -297,7 +293,7 @@ MleStage::getDisplay(void)
 {
     return NULL;
 }
-#endif /* sgi */
+#endif /* __linux__ */
 #if defined(WIN32)
 HWND
 MleStage::getWindow(void)
@@ -451,7 +447,7 @@ void MleStage::showDecoration(int onOff)
 {
 }
 
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
 void
 MleStage::reparentWindow(Window parentWindow)
 {
@@ -473,7 +469,7 @@ MleStage::reparentWindow(Window parentWindow)
     XSelectInput(display, w, wa.your_event_mask & ~ButtonPress);
     */
 }
-#endif  /* sgi */
+#endif  /* __linux__ */
 #if defined(WIN32)
 void
 MleStage::reparentWindow(HWND parentWindow)
@@ -636,7 +632,7 @@ MleStage::setRightMouseCallback(void (*cb)(MSG *e, void *client),void *client)
 #define DOUBLE_CLICK_USECS 500000L
 #define DOUBLE_CLICK_MSECS 500L
 
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
 // This function checks for a double click
 // (static func).
 int 
@@ -674,7 +670,7 @@ MleStage::checkForDoubleClick(XButtonEvent* event)
     // Return the value.
     return(ret);
 }
-#endif /* sgi */
+#endif /* __linux__ */
 #if defined(WIN32)
 int 
 MleStage::checkForDoubleClick(MSG* event)

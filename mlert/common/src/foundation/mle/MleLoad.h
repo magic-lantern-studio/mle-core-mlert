@@ -79,16 +79,17 @@ class MleSet;
 class MleGroup;
 class MleScene;
 class MleMediaRef;
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 class MleDwpItem;
 class MleDwpActor;
 class MleDwpGroup;
 class MleDwpScene;
-#else
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 class MleDppInput;
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 #define mlSceneRefToType(ID) #ID
 #define mlSceneRefToLoad(ID) #ID
@@ -132,7 +133,9 @@ extern MLE_RUNTIME_API MleMediaRef *mlLoadMediaRef(const char *id, void *userDat
 
 extern MLE_RUNTIME_API MleSet *mlLoadSet(const char *id);
 
-#else /* Playprint/Runtime */
+#endif /* MLE_DIGITAL_WORKPRINT */
+
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 /**
  * @brief mlSceneRefTo Macro.
@@ -292,9 +295,9 @@ extern MLE_RUNTIME_API MleDppInput *mlLoadPlayprint(const char *filename, unsign
  */
 extern MLE_RUNTIME_API void mlUnloadPlayprint(MleDppInput *dpp);
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 // g_mlRehearsalWorkprint is a rehearsal player global that points to the
 //   workprint hierarchy.
@@ -304,6 +307,6 @@ extern MLE_RUNTIME_API MleDwpItem *g_mlRehearsalWorkprint;
 // calls when actor DSO's cannot be found.
 void MLE_RUNTIME_API mlSetLoadErrorCallback(void (*loadErrorCB)(MleDwpActor *wpActor));
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 #endif /* __MLE_LOAD_H_ */

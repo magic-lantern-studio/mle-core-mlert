@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2016 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -185,7 +185,7 @@ class MLE_RUNTIME_API MleRole
 	 */
     void  operator delete(void *p);
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 	/**
 	 * Get the name of the role's class.
 	 *
@@ -222,7 +222,7 @@ class MLE_RUNTIME_API MleRole
     // This is dictionary maintained at rehearsal time for roles
     // to enable picking on themselves.
     static MleDwpDict g_pickRegistry;
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
     /**
 	 * @brief Get the role's associated actor.
@@ -270,7 +270,7 @@ class MLE_RUNTIME_API MleRole
 	  MleRole() : m_actor(NULL) {};
 };
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 #include <string.h>
 
@@ -353,7 +353,8 @@ class MLE_RUNTIME_API MleRole
 		MleRoleClass::add(#C,_mlCreate##C); \
 	}
 
-#else /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 /* Define null macros for non-rehearsal players. */
 
@@ -367,6 +368,6 @@ class MLE_RUNTIME_API MleRole
 #define MLE_ROLE_SOURCE(C,S) \
     MleRole *_mlCreate##C(MleActor *a) { return new C(a); }
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 #endif /* __MLE_ROLE_H_ */

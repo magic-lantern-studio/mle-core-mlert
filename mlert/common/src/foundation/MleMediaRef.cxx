@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -53,13 +53,14 @@
 #include "mle/MleMediaRefConverter.h"
 #include "mle/MleMediaRef.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 #include "mle/DwpMediaRef.h"
 #include "mle/mlExpandFilename.h"
-#else
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 #include "mle/chunk.h"
 #include "mle/ppinput.h"
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 
 MleMediaRef::MleMediaRef(void)
@@ -93,7 +94,7 @@ MleMediaRef::operator delete(void *p)
 	mlFree(p);
 }
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 const char *MleMediaRef::g_rehearsal = "rehearsal";
 MleDwpStrKeyDict MleMediaRef::g_registry(32);  // Argument is hash table size.
 
@@ -110,7 +111,7 @@ MleMediaRef::isa(const char *type) const
 {
     return !strcmp(type,"MleMediaRef");
 }
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 
 // Routines to manipulate the reference converter.  
@@ -141,7 +142,7 @@ MleMediaRef::deleteConverter(void)
     }
 }
 
-#ifndef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_PLAYPRINT
 static int getMediaRefCB(void *clientData,void *callData)
 {
     MleMediaRefChunk *chunkData = (MleMediaRefChunk *)callData;
@@ -153,7 +154,7 @@ static int getMediaRefCB(void *clientData,void *callData)
     ((MleMediaRefChunk *)clientData)->m_flags = chunkData->m_flags;
     return(0);
 }
-#endif /* ! MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 // Cache media data from the DWP/Playprint.
 MlBoolean
@@ -163,7 +164,7 @@ MleMediaRef::load(unsigned long numEntries,void *usrData)
     MleMediaLoadReference *newReference, *nextReference;
     int status = TRUE;
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
     MleDwpMediaRefTargetMedia *entries = (MleDwpMediaRefTargetMedia *)usrData;
 
     for (unsigned int i = 0; i < numEntries; i++)
@@ -190,7 +191,8 @@ MleMediaRef::load(unsigned long numEntries,void *usrData)
         m_numReferences++;
     }
 
-#else /* !MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
     MleMediaRefChunk mrefData;
     MleDppInput* pp = (MleDppInput *)usrData;
@@ -221,7 +223,7 @@ MleMediaRef::load(unsigned long numEntries,void *usrData)
         }
         m_numReferences++;
     }
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
     return(status);
 }

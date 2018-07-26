@@ -39,6 +39,7 @@ libmlert_la_SOURCES = \
 	$(top_srcdir)/../../common/src/foundation/MleSetClass.cxx \
 	$(top_srcdir)/../../common/src/foundation/MleStage.cxx \
 	$(top_srcdir)/../../common/src/foundation/MleStageClass.cxx \
+	$(top_srcdir)/../../common/src/foundation/loaddwp.cxx \
 	$(top_srcdir)/../../common/src/foundation/loadSet.cxx \
 	$(top_srcdir)/../../common/src/input/MleKeyboardPolled.cxx \
 	$(MLE_HOME)/Core/util/common/src/mlDebug.c \
@@ -54,6 +55,7 @@ libmlert_la_LDFLAGS =
 libmlert_la_CPPFLAGS = \
 	-DMLE_NOT_DLL \
 	-DMLE_INTERNAL \
+	-DMLE_DIGITAL_WORKPRINT \
 	-DML_MATH_DEBUG=0 \
 	-DML_FIXED_POINT=0 \
 	-I$(top_srcdir)/include \

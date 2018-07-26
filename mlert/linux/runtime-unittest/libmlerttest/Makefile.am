@@ -16,6 +16,7 @@ libmlerttest_la_LDFLAGS =
 # Compiler options. Here we are adding the include directory
 # to be searched for headers included in the source code.
 libmlerttest_la_CPPFLAGS = \
+	-DMLE_DIGITAL_PLAYPRINT \
 	-DMLE_NOT_DLL \
 	-DMLE_INTERNAL \
 	-DML_MATH_DEBUG=0 \

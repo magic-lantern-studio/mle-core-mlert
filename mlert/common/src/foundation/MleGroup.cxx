@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@
 #include "mle/MleRole.h"
 #include "mle/MleSet.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 // Include system header files.
 #include <stdio.h>
@@ -56,7 +56,8 @@
 #include "mle/DwpActor.h"
 #include "mle/DwpFinder.h"
 
-#else /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // Include system header files.
 #ifdef WIN32
@@ -70,7 +71,7 @@
 #include "mle/ppinput.h"
 #include "mle/MleTables.h"
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 // Base class implementation for Groups.
 //
@@ -85,18 +86,18 @@
 
 MleGroup::MleGroup(int initSize) : MlePtrContainer<MleActor*>(initSize)
 {
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 	m_name = NULL;
 	m_groupClass = NULL;
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 }
 
 MleGroup::MleGroup(void) : MlePtrContainer<MleActor*>(8)
 {
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 	m_name = NULL;
 	m_groupClass = NULL;
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 }
 
 MleGroup::~MleGroup(void)
@@ -107,10 +108,10 @@ MleGroup::~MleGroup(void)
 		delete (*this)[i];
 	}
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 	this->unregisterInstance();
 	if (m_name) mlFree(m_name);
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 }
   
 // Do nothing yet
@@ -137,7 +138,7 @@ _mlCreateMleGroup(void)
     return new MleGroup;
 }
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 const char *
 MleGroup::getTypeName(void) const
 {
@@ -198,10 +199,6 @@ MleGroup::getClass(void)
 	return m_groupClass;
 }
 
-#endif /* MLE_REHEARSAL */
-
-#ifdef MLE_REHEARSAL
-
 // Load the group from the relevant item in the DWP.
 // Use different binding types depending on whether the DWP is 
 // a playprint or workprint.  In the workprint, we use the WP struct.
@@ -229,7 +226,8 @@ MleGroup::load(const char* id)
 	return mlLoadGroup( id );
 }
 
-#else /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // In the playprint, we use the compiled table of group identifiers.
 
@@ -241,4 +239,4 @@ MleGroup::load(const int indexToPpTOC)
 	return mlLoadGroup( indexToPpTOC );
 }
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */

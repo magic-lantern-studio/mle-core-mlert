@@ -55,7 +55,7 @@
 #include "mle/MleRuntime.h"
 #include "mle/MleObject.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 // Include additional Magic Lantern header files.
 #include "mle/mlErrno.h"
@@ -97,7 +97,7 @@ class MlTransform;
 // Returned by MleActor::hasTransform().
 #define MLE_ACTOR_AFFINE 0x7
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 // New Actor Property definitions (to remove legacy offsetof implementation).
 #define MLE_ACTOR_PROPERTY(TYPE,NAME,GETTER,SETTER)         \
@@ -142,9 +142,9 @@ class MlTransform;
 // Forward declaration.
 class MleRole;
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
-// MleActor Rehearsal-only macro.
+// MleActor DWP-only macro.
 // 
 // This macro should be placed in the class declaration of any subclass
 // of MleActor.  It defines some basic functions needed by every subclass.
@@ -166,7 +166,7 @@ class MleRole;
     static C *cast(MleActor *actor); \
     static void initClass(void)
 
-// MleActor Rehearsal-only macro.
+// MleActor DWP-only macro.
 // 
 // This macro should be placed in the implementation of any subclass of
 // MleActor.  It defines some basic functionality needed by every subclass.
@@ -190,7 +190,7 @@ class MleRole;
     } \
     MleActor *_mlCreate##C(void) { return new C; }
 
-// MleActor Rehearsal-only macro.
+// MleActor DWP-only macro.
 //
 // This macro should be used instead of MLE_ACTOR_HEADER for abstract classes.
 #define MLE_ACTOR_ABSTRACT_HEADER(C) \
@@ -200,7 +200,7 @@ class MleRole;
     static C *cast(MleActor *actor); \
     static void initClass(void)
 
-// MleActor Rehearsal-only macro.
+// MleActor DWP-only macro.
 //
 // This macro should be used instead of MLE_ACTOR_SOURCE for abstract classes
 #define MLE_ACTOR_ABSTRACT_SOURCE(C,S) \
@@ -214,7 +214,7 @@ class MleRole;
     } \
     MleActor *_mlCreate##C(void) { return NULL; }
 
-// MleActor Rehearsal-only macro.
+// MleActor DWP-only macro.
 //
 // This macro should be used inside your actor's initClass()
 // member function. You are required to register your actor's
@@ -233,7 +233,7 @@ class MleRole;
     SUPERCLASS::initClass(); \
     new MleActorClass(#ACTOR,_mlCreate##ACTOR,#SUPERCLASS)
 
-// MleActor Rehearsal-only macro.
+// MleActor DWP-only macro.
 //
 // ACTOR must be the unquoted actor class name. SUPERCLASS must be
 // the actor class's direct superclass name. EDITOR should be
@@ -245,7 +245,7 @@ class MleRole;
     SUPERCLASS::initClass(); \
     new MleActorClass(#ACTOR,_mlCreate##ACTOR,#SUPERCLASS, #EDITOR, #CONTENT_EDITOR)
 
-// MleActor Rehearsal-only macro.
+// MleActor DWP-only macro.
 //
 // ACTOR must be the unquoted actor class's name MEMBER must be
 // the unquoted member variable name. TYPE must be the unquoted member
@@ -268,7 +268,7 @@ class MleRole;
     MleActorClass::find(#ACTOR)->addMember(#MEMBER,#TYPE,entryFor##MEMBER)
 #endif
 
-// MleActor Rehearsal-only macro.
+// MleActor DWP-only macro.
 //
 // ACTOR must be the unquoted actor class name. MEMBER must be
 // the unquoted member variable name. DATASET must be one of
@@ -281,7 +281,8 @@ class MleRole;
 #define mleRegisterActorMemberDataset(ACTOR,MEMBER,DATASET) \
     MleActorClass::find(#ACTOR)->addMemberDataset(#MEMBER,DATASET)
 
-#else /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // Null macros for non-rehearsal - see description for rehearsal player.
 
@@ -293,7 +294,7 @@ class MleRole;
 #define MLE_ACTOR_SOURCE(C,S) \
     MleActor *_mlCreate##C(void) { return new C; }
 #define MLE_ACTOR_ABSTRACT_SOURCE(C,S)
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 /**
  * @brief MleActor is the base class for all Magic Lantern actors.
@@ -479,7 +480,7 @@ class MLE_RUNTIME_API MleActor : public MleObject
 	 */
     virtual void init(void);
     
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 	/**
 	 * @brief Get the actor's type name.
@@ -746,7 +747,7 @@ class MLE_RUNTIME_API MleActor : public MleObject
 	 */
     virtual void getTransform(MlTransform& transform);
     
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 	/**
 	 * Override operator new.
@@ -785,23 +786,23 @@ class MLE_RUNTIME_API MleActor : public MleObject
     virtual void attachRole(MleRole* newRole);
     //   { MLE_ASSERT(! m_role); m_role = newRole; }
     
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
     /** The actor instance registry. */
     static MleDwpStrKeyDict g_instanceRegistry; 
     
     /** The actor class. */
     const MleActorClass *m_actorClass;    
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
   private:
 
 	// The actor's role.
     MleRole* m_role;
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 	// The name of the actor.
     char* m_name;
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 };
 

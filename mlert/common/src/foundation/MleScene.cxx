@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,11 +57,11 @@
 #include "mle/MleRole.h"
 #include "mle/MleSet.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 /* Include all the workprint stuff group loading needs to deal with. */
 #include "mle/DwpGroup.h"
 #include "mle/DwpFinder.h"
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
 //#include "mle/MleDppInput.h"
 //#include "mle/MleTables.h"
@@ -86,10 +86,10 @@ MleScene* MleScene::g_globalScene = 0;
 MleScene::MleScene(void)
   : MlePtrContainer<MleGroup*>(8)
 {
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 	m_name = NULL;
 	m_sceneClass = NULL;
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 }
 
 
@@ -100,10 +100,10 @@ MleScene::~MleScene(void)
         delete (*this)[i];
     }
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 	this->unregisterInstance();
 	if (m_name) mlFree(m_name);
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
     // Make sure we\'re no longer listed as the globally active scene.
     if (this == getCurrentScene()) {
@@ -140,7 +140,7 @@ _mlCreateMleScene(void)
     return new MleScene;
 }
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 const char *
 MleScene::getTypeName(void) const
 {
@@ -203,9 +203,9 @@ MleScene::getClass(void)
 	return m_sceneClass;
 }
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 // Load the scene from the relevant item in the DWP.
 // Use different binding types depending on whether the DWP is 
@@ -234,7 +234,8 @@ MleScene::load(const char* id)
 	return mlLoadScene( id );
 }
 
-#else /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // In the playprint, we use the compiled table of scene identifiers.
 
@@ -247,7 +248,7 @@ MleScene::load(const int indexToPpTOC)
     return mlLoadScene( indexToPpTOC );
 }
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
 
 
 // Delete the global scene.
@@ -293,7 +294,7 @@ MleScene::changeCurrentScene( MleScene *newScene )
     return newScene;
 }
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 // Changes the current scene to the one loaded from the identifier that
 // is passed in.  
 MleScene *
@@ -320,7 +321,8 @@ MleScene::changeCurrentScene( const char *id )
 	return MleScene::load(id);
 }
 
-#else /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 MleScene *
 MleScene::changeCurrentScene( const int indexToPpTOC )
@@ -334,4 +336,4 @@ MleScene::changeCurrentScene( const int indexToPpTOC )
     return MleScene::load(indexToPpTOC);
 }
 
-#endif /* MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */

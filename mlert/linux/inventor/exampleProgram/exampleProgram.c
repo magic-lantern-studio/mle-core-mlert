@@ -1,9 +1,9 @@
 /*
  ============================================================================
  Name        : exampleProgram.c
- Author      : Mark Millard
+ Author      : Mark S. Millard
  Version     :
- Copyright   : (C) Wizzer Works 2015
+ Copyright   : Copyright (c) Wizzer Works
  Description : Uses shared library to print greeting
                To run the resulting executable the LD_LIBRARY_PATH must be
                set to ${project_loc}/libmlert/.libs

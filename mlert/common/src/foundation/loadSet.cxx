@@ -53,7 +53,7 @@
 #include "mle/MleSet.h"
 #include "mle/MleDirector.h"
 
-#ifdef MLE_REHEARSAL
+#ifdef MLE_DIGITAL_WORKPRINT
 
 #include "mle/MleDso.h"
 #include "mle/MleSetClass.h"
@@ -164,7 +164,8 @@ mlLoadSet(const char *id)
 	return set;
 }
 
-#else /* Runtime Player */
+#endif /* MLE_DIGITAL_WORKPRINT */
+#ifdef MLE_DIGITAL_PLAYPRINT
 
 // Include Magic Lantern Runtime Engine header files.
 #include "mle/MleActorGC.h"
@@ -250,4 +251,4 @@ mlLoadSet(const int id)
     return mlRTSet[id].ptr;
 }
 
-#endif /* ! MLE_REHEARSAL */
+#endif /* MLE_DIGITAL_PLAYPRINT */
