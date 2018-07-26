@@ -140,7 +140,7 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
         /* Try loading the DSO */
         if ( mlLoadDSO(wpa->getActorClass()) )
         {
-            printf("MleLoad: ERROR loading DSO for %s.\n",acname);
+            printf("_mlCreatActor: ERROR loading DSO for %s.\n",acname);
             fflush(stdout);
             return NULL;
         }
@@ -237,7 +237,7 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
         {
             // Try loading the DSO.
             if ( mlLoadDSO(binding->getName()) )
-                printf("***** ERROR loading DSO for %s.\n",
+                printf("_mlCreateActor: ERROR loading DSO for %s.\n",
 	        binding->getName());
 
             // Try to look up the function again.
@@ -273,7 +273,7 @@ static MleGroup *_mlCreateGroup(MleDwpGroup *wpg)
         // Try loading the DSO.
         if ( mlLoadDSO(wpg->getGroupClass()) )
         {
-            printf("***** ERROR loading DSO for %s.\n",gpname);
+            printf("_mlCreateGroup: ERROR loading DSO for %s.\n",gpname);
             return NULL;
         }
 
@@ -308,7 +308,7 @@ MleGroup *_mlLoadGroup(MleDwpGroup* wpGroup)
 
     if ( wpGroup == NULL )
     {
-        printf("mlLoadGroup: Cant find group in workprint.\n");
+        printf("_mlLoadGroup: Cant find group in workprint.\n");
         return NULL;
     }
     
@@ -552,7 +552,7 @@ static MleScene *_mlCreateScene(MleDwpScene *wps)
         // Try loading the DSO.
         if ( mlLoadDSO(wps->getSceneClass()) )
         {
-            printf("***** ERROR loading DSO for %s.\n",scnname);
+            printf("_mlCreateScene: ERROR loading DSO for %s.\n",scnname);
             return NULL;
         }
 
@@ -590,7 +590,7 @@ MleScene *_mlLoadScene(MleDwpScene* wpScene)
 
     if ( wpScene == NULL )
     {
-        printf("mlLoadScene: Cant find scene in workprint.\n");
+        printf("_mlLoadScene: Cant find scene in workprint.\n");
         return NULL;
     }
     
@@ -638,7 +638,7 @@ MleScene *_mlLoadScene(MleDwpScene* wpScene)
 		    wpg = _mlGetWorkprintGroup(item->getName());
 		    if (wpg == NULL)
 		    {
-			    printf("mlLoadGroup: GroupRef named %s not found\n", item->getName());
+			    printf("_mlLoadScene: GroupRef named %s not found\n", item->getName());
 			    continue;
 		    }
 	    } 
@@ -663,7 +663,7 @@ MleScene *_mlLoadScene(MleDwpScene* wpScene)
 	    // Check to see if group got created.
 	    if ( group == NULL )
 	    {
-		    printf("_mlLoadScene: ***** ERROR creating group %s.\n",
+		    printf("_mlLoadScene: ERROR creating group %s.\n",
 			   wpg->getName());
 		    continue;
 	    }
