@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2018 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -55,6 +55,7 @@
 #include "mle/DwpScene.h"
 #include "mle/DwpMediaRef.h"
 #include "mle/DwpFinder.h"
+#include "mle/DwpLoad.h"
 
 // Include Magic Lantern Runtime Engine header files.
 #include "mle/MleRuntime.h"
