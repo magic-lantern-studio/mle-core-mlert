@@ -111,7 +111,7 @@
       <AdditionalDependencies>DWPd.lib;mlmathd.lib;utild.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(Platform)\$(Configuration)/mlertd.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(MLE_HOME)/lib/rehearsal;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(MLE_HOME)\lib\rehearsal;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(Platform)\$(Configuration)/mlertd.pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
@@ -170,7 +170,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
       <AdditionalDependencies>DWP.lib;mlmath.lib;util.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(Platform)\$(Configuration)/mlert.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(MLE_HOME)/lib/rehearsal;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(MLE_HOME)\lib\rehearsal;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>$(Platform)\$(Configuration)/mlert.pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
       <MapFileName>.\Release/mlert.map</MapFileName>
@@ -228,7 +228,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
       <AdditionalDependencies>DWPd.lib;mlmathd.lib;utild.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(Platform)\$(Configuration)/mlertd.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(MLE_HOME)/lib64/rehearsal;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(MLE_HOME)\lib64\rehearsal;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(Platform)\$(Configuration)/mlertd.pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
@@ -287,7 +287,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
       <AdditionalDependencies>DWP.lib;mlmath.lib;util.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(Platform)\$(Configuration)/mlert.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>$(MLE_HOME)/lib64/rehearsal;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(MLE_HOME)\lib64\rehearsal;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>$(Platform)\$(Configuration)/mlert.pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
       <MapFileName>.\Release/mlert.map</MapFileName>

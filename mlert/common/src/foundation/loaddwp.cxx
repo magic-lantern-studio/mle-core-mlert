@@ -85,16 +85,16 @@ MleDwpGroup *_mlGetWorkprintGroup(const char *id)
 {
 #ifdef MLE_REHEARSAL
 	if ( _mlPlayer )
-		_mlWorkprint = _mlPlayer->sendGetWorkprintGroup(id);
+		mlSetWorkprint(_mlPlayer->sendGetWorkprintGroup(id));
 #endif /* MLE_REHEARSAL */
 
-	MLE_ASSERT(_mlWorkprint);
+	MLE_ASSERT(mlGetWorkprint());
 #if defined(WIN32)
     MleDwpFinder groupFinder("MleDwpGroup",id,0);
 #else
 	MleDwpFinder groupFinder(MleDwpGroup::typeId,id,0);
 #endif
-	return (MleDwpGroup *)groupFinder.find(_mlWorkprint);
+	return (MleDwpGroup *)groupFinder.find(mlGetWorkprint());
 }
 
 void _mlReleaseWorkprintGroup(MleDwpItem *group)
@@ -106,16 +106,16 @@ MleDwpScene *_mlGetWorkprintScene(const char *id)
 {
 #ifdef MLE_REHEARSAL
 	if ( _mlPlayer )
-		_mlWorkprint = _mlPlayer->sendGetWorkprintScene(id);
+		mlSetWorkprint(_mlPlayer->sendGetWorkprintScene(id));
 #endif /* MLE_REHEARSAL */
 
-	MLE_ASSERT(_mlWorkprint);
+	MLE_ASSERT(mlGetWorkprint());
 #if defined(WIN32)
 	MleDwpFinder sceneFinder("MleDwpScene",id,0);
 #else
 	MleDwpFinder sceneFinder(MleDwpScene::typeId,id,0);
 #endif
-	return (MleDwpScene *)sceneFinder.find(_mlWorkprint);
+	return (MleDwpScene *)sceneFinder.find(mlGetWorkprint());
 }
 
 void _mlReleaseWorkprintScene(MleDwpItem *scene)
@@ -128,21 +128,21 @@ MleDwpMediaRef *_mlGetWorkprintMediaRef(const char *id)
 #ifdef MLE_REHEARSAL
 	if ( _mlPlayer )
 	{
-		_mlWorkprint = _mlPlayer->sendGetWorkprintMediaRef(id);
+		mlSetWorkprint(_mlPlayer->sendGetWorkprintMediaRef(id));
 
 		// If we fail, just return NULL.
-		if ( _mlWorkprint == NULL )
+		if ( mlGetWorkprint() == NULL )
 			return NULL;
 	}
 #endif /* MLE_REHEARSAL */
 
-	MLE_ASSERT(_mlWorkprint);
+	MLE_ASSERT(mlGetWorkprint());
 #if defined(WIN32)
 	MleDwpFinder mediaRefFinder("MleDwpMediaRef",id,0);
 #else
 	MleDwpFinder mediaRefFinder(MleDwpMediaRef::typeId,id,0);
 #endif
-	return (MleDwpMediaRef *)mediaRefFinder.find(_mlWorkprint);
+	return (MleDwpMediaRef *)mediaRefFinder.find(mlGetWorkprint());
 }
 
 void _mlReleaseWorkprintMediaRef(MleDwpMediaRef *mediaRef)
@@ -155,21 +155,21 @@ MleDwpSet *_mlGetWorkprintSet(const char *id)
 #ifdef MLE_REHEARSAL
 	if ( _mlPlayer )
 	{
-		_mlWorkprint = _mlPlayer->sendGetWorkprintSet(id);
+		mlSetWorkprint(_mlPlayer->sendGetWorkprintSet(id));
 
 		// If we fail, just return NULL.
-		if ( _mlWorkprint == NULL )
+		if ( mlGetWorkprint() == NULL )
 			return NULL;
 	}
 #endif /* MLE_REHEARSAL */
 
-	MLE_ASSERT(_mlWorkprint);
+	MLE_ASSERT(mlGetWorkprint());
 #if defined(WIN32)
 	MleDwpFinder setFinder("MleDwpSet",id,0);
 #else
 	MleDwpFinder setFinder(MleDwpSet::typeId,id,0);
 #endif
-	return (MleDwpSet *)setFinder.find(_mlWorkprint);
+	return (MleDwpSet *)setFinder.find(mlGetWorkprint());
 }
 
 void _mlReleaseWorkprintSet(MleDwpItem *set)
