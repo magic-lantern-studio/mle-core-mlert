@@ -2,7 +2,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2018 Wizzer Works
+// Copyright (c) 2017-2019 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,6 +52,12 @@ TestActor::TestActor()
 	length[0] = 1.0f;
 	length[1] = 1.0f;
 	length[2] = 1.0f;
+
+	position[0] = 1.0f;
+	position[1] = 1.0f;
+	position[2] = 1.0f;
+
+	orientation.makeIdentity();
 }
 
 
@@ -81,6 +87,14 @@ TestActor:: getProperty(MleObject *object, const char *name, unsigned char **val
         const MleArray<float> *length;
         length = ((TestActor *)object)->getLengthProperty();
         *((MleArray<float> *)value) = *length;
+    } else if (strcmp("position",name) == 0)
+    {
+        MlVector3 position = ((TestActor *)object)->getPositionProperty();
+        *((MlVector3 *)value) = position;
+    } else if (strcmp("orientation",name) == 0)
+    {
+        MlTransform orientation = ((TestActor *)object)->getOrientationProperty();
+        *((MlTransform *)value) = orientation;
     } else
     {
         // TBD: log warning.
@@ -106,7 +120,13 @@ TestActor::setProperty(MleObject *object, const char *name, unsigned char *value
     } else if (strcmp("length",name) == 0)
     {
         ((TestActor *)object)->setLengthProperty(*((MleArray<float> *)value));
-    } else {
+    } else if (strcmp("position",name) == 0)
+    {
+        ((TestActor *)object)->setPositionProperty(*((MlVector3 *)value));
+    } else if (strcmp("orientation",name) == 0)
+    {
+        ((TestActor *)object)->setOrientationProperty(*((MlTransform *)value));
+    }else {
         // TBD: log warning.
         cout << "***** ERROR: Unknown TestActor property: " << name << endl;
     }

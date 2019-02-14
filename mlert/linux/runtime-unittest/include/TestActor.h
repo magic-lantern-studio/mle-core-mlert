@@ -2,7 +2,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2018 Wizzer Works
+// Copyright (c) 2017-2019 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,6 +43,8 @@
 #include "mle/mlMalloc.h"
 #include "mle/MleObject.h"
 #include "mle/MleActor.h"
+#include "math/vector.h"
+#include "math/transfrm.h"
 
 class TestActor : public MleActor
 {
@@ -57,6 +59,8 @@ class TestActor : public MleActor
     MLE_ACTOR_DYNAMIC_PROPERTY(char *, text, getTextProperty, setTextProperty)
     MLE_ACTOR_ARRAY_PROPERTY(int, age, getAgeProperty, setAgeProperty)
 	MLE_ACTOR_ARRAY_PROPERTY(float, length, getLengthProperty, setLengthProperty)
+	MLE_ACTOR_PROPERTY(MlVector3, position, getPositionProperty, setPositionProperty)
+	MLE_ACTOR_PROPERTY(MlTransform, orientation, getOrientationProperty, setOrientationProperty)
 
   public:
 

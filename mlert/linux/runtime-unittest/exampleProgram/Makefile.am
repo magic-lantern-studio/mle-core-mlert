@@ -24,6 +24,7 @@ exampleProgram_SOURCES = exampleProgram.cxx
 exampleProgram_LDADD = $(top_srcdir)/libmlerttest/libmlerttest.la \
 	$(top_srcdir)/../runtime/libmlert/libmlert.la \
 	$(MLE_ROOT)/lib/libplayprint.a \
+	$(MLE_ROOT)/lib/libmlmath.a \
 	$(MLE_ROOT)/lib/libmlutil.a \
 	$(GTEST_DIR)/libgtest.a -ldl
 

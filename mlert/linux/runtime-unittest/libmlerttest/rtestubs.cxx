@@ -2,7 +2,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2018 Wizzer Works
+// Copyright (c) 2017-2019 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -47,12 +47,14 @@
 
 // Runtime Engine support for Actors.
 MleRTPropertyEntry mlRTActorProperties[] = {
-    { MLE_PROPERTY_ENTRY(TestActor,id) },   // id property
-    { MLE_PROPERTY_ENTRY(TestActor,text) }, // text property
-    { MLE_PROPERTY_ENTRY(TestActor,age) },  // age property
+    { MLE_PROPERTY_ENTRY(TestActor,id) },           // id property
+    { MLE_PROPERTY_ENTRY(TestActor,text) },         // text property
+    { MLE_PROPERTY_ENTRY(TestActor,age) },          // age property
+    { MLE_PROPERTY_ENTRY(TestActor,position) },     // position property
+    { MLE_PROPERTY_ENTRY(TestActor,orientation) },  // orientation property
 };
 
-int mlRTActorPropertyLength = 3;
+int mlRTActorPropertyLength = 5;
 
 MleRTActorClassEntry mlRTActorClass[1];
 int mlRTActorClassLength = 0;

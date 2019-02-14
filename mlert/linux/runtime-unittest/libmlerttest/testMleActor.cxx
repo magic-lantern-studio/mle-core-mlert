@@ -2,7 +2,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2016 - 2018 Wizzer Works
+// Copyright (c) 2016 - 2019 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -111,6 +111,8 @@ TEST(MleActorTest, TestActorProperties) {
     EXPECT_TRUE(tActor->textIsOfType("char *"));
     EXPECT_TRUE(tActor->ageIsOfArrayType("int"));
     EXPECT_TRUE(tActor->lengthIsOfArrayType("float"));
+    EXPECT_TRUE(tActor->positionIsOfType("MlVector3"));
+    EXPECT_TRUE(tActor->orientationIsOfType("MlTransform"));
     EXPECT_FALSE(tActor->idIsOfType("bool"));
 
     // Testing id property.
@@ -168,6 +170,18 @@ TEST(MleActorTest, TestActorProperties) {
     length = (*lengths)[2];
     EXPECT_FLOAT_EQ(10.333f,length);
 
+    // Testing position property.
+    MlVector3 position;
+    position.setValue(0.5f, 0.5f, 1.0f);
+    tActor->setPositionProperty(position);
+    EXPECT_FLOAT_EQ(0.5f, tActor->position[0]);
+    EXPECT_FLOAT_EQ(0.5f, tActor->position[1]);
+    EXPECT_FLOAT_EQ(1.0f, tActor->position[2]);
+    MlVector3 pos = tActor->getPositionProperty();
+    EXPECT_FLOAT_EQ(0.5f, pos[0]);
+    EXPECT_FLOAT_EQ(0.5f, pos[1]);
+    EXPECT_FLOAT_EQ(1.0f, pos[2]);
+
     // Testing global actor property callbacks.
     MleRTPropertyEntry *idEntry = &mlRTActorProperties[0];
     int idValue;
@@ -211,4 +225,20 @@ TEST(MleActorTest, TestActorProperties) {
     EXPECT_EQ(3,bday);
     bday = (*ages)[3];
     EXPECT_EQ(4,bday);
+
+    MleRTPropertyEntry *positionEntry = &mlRTActorProperties[3];
+    MlVector3 positionValue;
+    positionEntry->getProperty(tActor, positionEntry->name, (unsigned char **)&positionValue);
+    EXPECT_FLOAT_EQ(0.5f, positionValue[0]);
+    EXPECT_FLOAT_EQ(0.5f, positionValue[1]);
+    EXPECT_FLOAT_EQ(1.0f, positionValue[2]);
+
+    positionValue[0] = 1.0f;
+    positionValue[1] = 1.0f;
+    positionValue[2] = 0.5f;
+    positionEntry->setProperty(tActor, positionEntry->name, (unsigned char *)&positionValue);
+    pos = tActor->getPositionProperty();
+    EXPECT_FLOAT_EQ(1.0f, pos[0]);
+    EXPECT_FLOAT_EQ(1.0f, pos[1]);
+    EXPECT_FLOAT_EQ(0.5f, pos[2]);
 }
