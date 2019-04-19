@@ -169,8 +169,13 @@ MleActor::initClass(void)
 #include "mle/DwpIntArray.h"
 #include "mle/DwpScalarArray.h"
 #include "mle/DwpVector3Array.h"
+#include "mle/DwpVector2.h"
+#include "mle/DwpVector3.h"
+#include "mle/DwpVector4.h"
+#include "mle/DwpTransform.h"
 #include "math/scalar.h"
 #include "math/vector.h"
+#include "math/transfrm.h"
 
 #if defined(WIN32)
 // Make sure that the registry can be shared if the library is
@@ -263,7 +268,9 @@ MleActor::poke(const char *property,MleDwpDataUnion *value)
 	// Transfer the value.
 	MLE_ASSERT(value->m_datatype);
 
-	if (value->m_datatype != member->getType())
+	//if (value->m_datatype != member->getType())
+	int cmp = strcmp(value->m_datatype->getName(),member->getType()->getName());
+	if (cmp != 0)
 	{
         printf("MleActor: type mismatch in setting property %s on %s (%s and %s).\n",
                property, getTypeName(),
@@ -295,13 +302,40 @@ MleActor::poke(const char *property,MleDwpDataUnion *value)
 		MleArray<MlVector3> array;
 		dwpVec3Array->get(value, &array);
 		pvalue = (unsigned char *)&array;
-	} else
+	} else if (member->getType()->isa(MleDwpVector2::typeId)) {
+        const MleDwpVector2 *dwpVec2 = (MleDwpVector2 *)member->getType();
+        MlVector2 *vector = new MlVector2();
+        dwpVec2->get(value, vector);
+        pvalue = (unsigned char *)vector;
+	} else if (member->getType()->isa(MleDwpVector3::typeId)) {
+        const MleDwpVector3 *dwpVec3 = (MleDwpVector3 *)member->getType();
+        MlVector3 *vector = new MlVector3();
+        dwpVec3->get(value, vector);
+        pvalue = (unsigned char *)vector;
+    } else if (member->getType()->isa(MleDwpVector4::typeId)) {
+        const MleDwpVector4 *dwpVec4 = (MleDwpVector4 *)member->getType();
+        MlVector4 *vector = new MlVector4();
+        dwpVec4->get(value, vector);
+        pvalue = (unsigned char *)vector;
+    } else if (member->getType()->isa(MleDwpTransform::typeId)) {
+        const MleDwpTransform *dwpTran = (MleDwpTransform *)member->getType();
+        MlTransform *transfrm = new MlTransform();
+        dwpTran->get(value, transfrm);
+        pvalue = (unsigned char *)transfrm;
+    } else {
 		// This should work for anonymous data types (i.e. int, float, etc.)
 		pvalue = (unsigned char *)value;
+	}
 
 	// Set value from DWP into Actor property. Note: other data types may need to be
 	// translated in addition to arrays.
 	entry->setProperty(this, entry->name, pvalue);
+
+	// Clean up
+	if (member->getType()->isa(MleDwpVector2::typeId)) { delete ((MlVector2 *)pvalue); }
+	else if (member->getType()->isa(MleDwpVector3::typeId)) { delete ((MlVector3 *)pvalue); }
+	else if (member->getType()->isa(MleDwpVector4::typeId)) { delete ((MlVector4 *)pvalue); }
+	else if (member->getType()->isa(MleDwpTransform::typeId)) { delete ((MlTransform *)pvalue); }
 
 	return 0;
 }

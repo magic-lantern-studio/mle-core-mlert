@@ -43,9 +43,11 @@
 #include "mle/mlMalloc.h"
 #include "math/scalar.h"
 #include "math/vector.h"
-#include "math/rotation.h"
+#include "math/transfrm.h"
 #include "mle/MleObject.h"
 #include "mle/MleActor.h"
+#include "mle/propdef.h"
+#include "mle/3dtranlp.h"
 
 class TestActor : public MleActor
 {
@@ -69,6 +71,9 @@ class TestActor : public MleActor
 	MLE_ACTOR_PROPERTY(MlScalar, aspectRatio, getAspectRatioProperty, setAspectRatioProperty)
 	MLE_ACTOR_PROPERTY(int, cameraType, getCameraTypeProperty, setCameraTypeProperty)
 	MLE_ACTOR_PROPERTY(MlScalar, viewHeight, getViewHeightProperty, setViewHeightProperty)
+
+	// Declare additional property types.
+	MLE_ACTOR_PROPERTY(Mle3dTranslationProperty, translation, getTranslationProperty, setTranslationProperty)
 
   public:
 

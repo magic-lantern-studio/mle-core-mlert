@@ -90,11 +90,13 @@ void TestActor::initClass()
 	mleRegisterActorMember(TestActor,aspectRatio,MlScalar);
 	mleRegisterActorMember(TestActor,cameraType,int);
 	mleRegisterActorMember(TestActor,viewHeight,MlScalar);
+	mleRegisterActorMember(TestActor,translation,Mle3dTranslationProperty);
 
 	// Mark all the properties that belongs to the "transform" property
 	// data set.
 	mleRegisterActorMemberDataset(TestActor,position,MLE_PROP_DATASET_TRANSFORM);
 	mleRegisterActorMemberDataset(TestActor,orientation,MLE_PROP_DATASET_TRANSFORM);
+	mleRegisterActorMemberDataset(TestActor,translation,MLE_PROP_DATASET_TRANSFORM);
 }
 
 
@@ -143,6 +145,10 @@ TestActor:: getProperty(MleObject *object, const char *name, unsigned char **val
     {
     	MlScalar viewHeight = ((TestActor *)object)->getViewHeightProperty();
     	*((MlScalar *)value) = viewHeight;
+    } else if (strcmp("translation",name) == 0)
+    {
+        Mle3dTranslationProperty translation = ((TestActor *)object)->getTranslationProperty();
+        *((Mle3dTranslationProperty *)value) = translation;
     } else
     {
         // TBD: log warning.

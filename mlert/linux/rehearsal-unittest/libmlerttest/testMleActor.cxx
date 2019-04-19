@@ -2,7 +2,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2016 - 2018 Wizzer Works
+// Copyright (c) 2016 - 2019 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,8 @@
 #include "mle/MleActor.h"
 #include "mle/MleRole.h"
 #include "mle/MleTables.h"
+#include "mle/DwpDataUnion.h"
+#include "mle/DwpVector3.h"
 
 // Include Magic Lantern Runtime unit test header files.
 #include "TestActor.h"
@@ -199,4 +201,34 @@ TEST(MleActorTest, TestActorProperties) {
 
     // Testing viewHeight property.
     EXPECT_EQ(75.0,tActor->viewHeight);
+}
+
+
+TEST(MleActorTest, TestActorPropertiesUpdate) {
+    // This test is named "TestActorPropertiesUpdate", and belongs to the "MleActorTest"
+    // test case. It tests updating Actor properties using the poke method.
+    const MleDwpVector3 dwpVec3;
+
+    EXPECT_TRUE(dwpVec3.isa(MleDwpVector3::typeId));
+
+    MlVector3 vector;
+    vector[0] = 0.0f;
+    vector[1] = 0.0f;
+    vector[2] = 0.0f;
+    MleDwpDataUnion data;
+    dwpVec3.set(&data, &vector);
+    MlVector3 vtmp;
+    dwpVec3.get(&data, &vtmp);
+    EXPECT_EQ(0.0, vtmp[0]);
+    EXPECT_EQ(0.0, vtmp[1]);
+    EXPECT_EQ(0.0, vtmp[2]);
+
+    TestActor *tActor = new TestActor();
+    ASSERT_TRUE(tActor != NULL);
+
+    tActor->poke("position", &data);
+    MlVector3 position = tActor->getPositionProperty();
+    EXPECT_EQ(vector[0], position[0]);
+    EXPECT_EQ(vector[1], position[1]);
+    EXPECT_EQ(vector[2], position[2]);
 }
