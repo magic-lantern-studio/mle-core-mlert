@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2018 Wizzer Works
+// Copyright (c) 2015-2019 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -133,8 +133,18 @@ class MLE_RUNTIME_API MleActorClassDict : public MleDwpStrKeyDict
 {
   public:
 
+    /**
+     * A constructor that initializes the size of the dictionary hash.
+     *
+     * @param hashsize The size of the hash table.
+     */
     MleActorClassDict(int hashsize) : MleDwpStrKeyDict(hashsize) {}
 
+    /**
+     * Utility function to make a dictionary entry.
+     *
+     * @return A pointer to the new entry is returned.
+     */
     virtual MleDwpDictEntry *makeEntry(void);
 
 	/**
@@ -189,6 +199,11 @@ class MLE_RUNTIME_API MleActorClass : public MleDwpStrKeyDict
 		 const char* editor, const char* contentEditor);
     
     /**
+     * The destructor.
+     */
+    ~MleActorClass();
+
+    /**
 	 * Creates a new instance of the class.
 	 *
 	 * @return A pointer to the new instance is returned.
@@ -198,8 +213,7 @@ class MLE_RUNTIME_API MleActorClass : public MleDwpStrKeyDict
 	/**
      * Adds a new property given the property name,
      * the property type (given as a string so it can be used
-     * to look up a type object), and the offset in bytes of this
-     * property in an actor instance.
+     * to look up a type object), and the property entry.
 	 *
 	 * @param name The name of the property.
 	 * @param type The property type.
@@ -207,6 +221,16 @@ class MLE_RUNTIME_API MleActorClass : public MleDwpStrKeyDict
 	 * such as the Actor's setter and getter functions.
 	 */
     void addMember(const char *name,const char *type,MlePropertyEntry *entry);
+
+    /**
+     * Removes an existing property, give the propert name.
+     *
+     * @param name A pointer to the name of the property to remove.
+     *
+     * @return A pointer to the value of the named property is returned.
+     * This value can be used to finish cleaing up the property.
+     */
+    MlePropertyEntry *removeMember(const char *name);
 
 	/**
 	 * Finds the member object of a given name.
@@ -245,9 +269,28 @@ class MLE_RUNTIME_API MleActorClass : public MleDwpStrKeyDict
 	 */
     static MleActorClass *find(const char *name);
     
-    char* getEditorName() { return m_editorName; }
+    /**
+     * Get the name of the Actor class.
+     *
+     * @return A pointer to the class name is returned.
+     */
+    const char *getName() { return m_name; }
 
-    char* getContentEditorName()  { return m_contentEditorName; }
+    /**
+     * Get the name of the editor associated with this Actor class.
+     * This editor is used to edit the Actor's class.
+     *
+     * @return A pointer to the editor's name is returned.
+     */
+    const char *getEditorName() { return m_editorName; }
+
+    /**
+     * Get the name of the content editor associated with this Actor class.
+     * This editor is used to edit the Actor's content.
+     *
+     * @return A pointer to the content editor's name is returned.
+     */
+    const char *getContentEditorName()  { return m_contentEditorName; }
 
    	/**
 	 * Override operator new.
@@ -287,6 +330,8 @@ class MLE_RUNTIME_API MleActorClass : public MleDwpStrKeyDict
 
     friend class MleActorMemberIter;
     
+    /** The name of the Actor class. */
+    char *m_name;
     /** The name of the Actor class editor. */
     char* m_editorName;
 	/** The name of the Actor editor. */

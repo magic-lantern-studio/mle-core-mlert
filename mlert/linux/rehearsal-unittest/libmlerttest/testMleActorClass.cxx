@@ -58,6 +58,7 @@ TEST(MleActorClassTest, Constructor) {
 
     TestActorClass *actorClass = new TestActorClass("TestActor", _mlCreateTestActor, "MleActor");
     EXPECT_TRUE(actorClass != NULL);
+    delete actorClass;
 }
 
 TEST(MleActorClassTest, AddMember) {
@@ -147,6 +148,8 @@ TEST(MleActorClassTest, AddMember) {
     EXPECT_EQ(19,tActor->age[1]);
     EXPECT_EQ(51,tActor->age[2]);
     EXPECT_EQ(57,tActor->age[3]);
+
+    delete actorClass;
 }
 
 TEST(MleActorClassTest, RegisterActorClass) {

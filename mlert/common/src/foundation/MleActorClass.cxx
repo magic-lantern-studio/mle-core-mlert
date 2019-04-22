@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2018 Wizzer Works
+// Copyright (c) 2015-2019 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -78,7 +78,10 @@ MleActorClass::MleActorClass(const char *name,
 	MleActor *(*c)(void),const char *superclass)
 : MleDwpStrKeyDict(20), m_propDatasetDict(3)
 {
-	/* Set the editor name. */
+    /* Set the class name. */
+    m_name = strdup(name);
+
+	/* Set the editor names. */
 	m_editorName = 0;
 	m_contentEditorName = 0;
 
@@ -101,8 +104,10 @@ MleActorClass::MleActorClass(const char *name,
 		}
 	}
 
-	/* Put self into the registry. */
-	g_registry.set(name,this);
+	/* Put self into the global Actor class registry ... */
+	MleActorClass *tmp = (MleActorClass *)g_registry.find(name);
+	if (tmp == NULL)  // ... but only if it hasn't been registered yet.
+	    g_registry.set(name,this);
 }
 
 MleActorClass::MleActorClass(const char *name,
@@ -110,8 +115,8 @@ MleActorClass::MleActorClass(const char *name,
 	const char* e, const char* ce)
 : MleDwpStrKeyDict(20), m_propDatasetDict(3)
 {
-	/* Set the editor name. */
-	/* XXX - need to add a destructor to free these. */
+	/* Set the class and editor names. */
+    m_name = strdup(name);
 	m_editorName = (e) ? strdup(e) : strdup("");
 	m_contentEditorName = (ce) ? strdup(ce) : strdup("");
 
@@ -134,8 +139,40 @@ MleActorClass::MleActorClass(const char *name,
 		}
 	}
 
-	/* Put self into the registry. */
-	g_registry.set(name,this);
+	/* Put self into the global Actor class registry ... */
+	MleActorClass *tmp = (MleActorClass *)g_registry.find(name);
+	if (tmp == NULL)  // ... but only if it hasn't been registered yet.
+	    g_registry.set(name,this);
+}
+
+MleActorClass::~MleActorClass()
+{
+    /* Remove self from the registry? */
+    // g_registry.remove(m_name);
+    // Note - this destructor is called when the class is unregistered with the above
+    // remove! Therefore, don't unregister from the destructor.
+
+    if (m_name != NULL) free(m_name);                     // allocated using strdup()
+    if (m_editorName != NULL) free(m_editorName);         // allocated using strdup()
+    if (m_contentEditorName != NULL) free(m_editorName);  // allocated using strdup()
+
+    // Remove property members.
+    MleActorMemberIter iter(this);
+    const MleActorMember *member;
+    while ( member = iter.getMember() )
+    {
+        // Note that the dictionary remove method below does NOT delete the
+        // value of the dictionary entry. Therefore, we return it for the
+        // caller to clean up the entry.
+        MlePropertyEntry *entry = member->getEntry();
+        // XXX - delete entry here?
+
+        // Remove the property type from the dictionary.
+        remove(iter.getName());
+
+        // Get the next member.
+        iter.next();
+    }
 }
 
 void *
@@ -161,7 +198,7 @@ MleActorClass::createInstance(void) const
 }
 
 /*
-	This function adds a new property type to the actor class.
+ * This function adds a new property type to the actor class.
 */
 void
 MleActorClass::addMember(const char *name,const char *type,MlePropertyEntry *entry)
@@ -174,7 +211,33 @@ MleActorClass::addMember(const char *name,const char *type,MlePropertyEntry *ent
 }
 
 /*
-	This function looks up a property.
+ * This function removes an existing property type from the actor class.
+ * NULL will be returned if no entry matching the specified name is found.
+ */
+MlePropertyEntry *
+MleActorClass::removeMember(const char *name)
+{
+    MlePropertyEntry *entry = NULL;
+
+    if (name == NULL) return NULL;
+
+    const MleActorMember *member = findMember(name);
+    if (member != NULL)
+    {
+        // Note that the dictionary remove method below does NOT delete the
+        // value of the dictionary entry. Therefore, we return it for the
+        // caller to clean up the entry.
+        entry = member->getEntry();
+
+        // Remove the property type from the dictionary.
+        remove(name);
+    }
+
+    return entry;
+}
+
+/*
+ * This function looks up a property.
 */
 const MleActorMember *
 MleActorClass::findMember(const char *name) const
