@@ -173,6 +173,7 @@ MleActor::initClass(void)
 #include "mle/DwpVector3.h"
 #include "mle/DwpVector4.h"
 #include "mle/DwpTransform.h"
+#include "mle/DwpRotation.h"
 #include "math/scalar.h"
 #include "math/vector.h"
 #include "math/transfrm.h"
@@ -282,47 +283,61 @@ MleActor::poke(const char *property,MleDwpDataUnion *value)
 	//value->m_datatype->get(value,(char *)this + member->getOffset());
 	MlePropertyEntry *entry = member->getEntry();
 	unsigned char *pvalue;
-	if (member->getType()->isa(MleDwpFloatArray::typeId)) {
+	//if (member->getType()->isa(MleDwpFloatArray::typeId)) {
+	if (! strcmp(member->getType()->getName(), "FloatArray")) {
 		const MleDwpFloatArray *dwpFloatArray = (MleDwpFloatArray *)member->getType();
 		MleArray<float> array;
 		dwpFloatArray->get(value, &array);
 		pvalue = (unsigned char *)&array;
-	} else if (member->getType()->isa(MleDwpIntArray::typeId)) {
+	//} else if (member->getType()->isa(MleDwpIntArray::typeId)) {
+	} else if (! strcmp(member->getType()->getName(), "IntArray")) {
 		const MleDwpIntArray *dwpIntArray = (MleDwpIntArray *)member->getType();
 		MleArray<int> array;
 		dwpIntArray->get(value, &array);
 		pvalue = (unsigned char *)&array;
-	} else if (member->getType()->isa(MleDwpScalarArray::typeId)) {
+	//} else if (member->getType()->isa(MleDwpScalarArray::typeId)) {
+	} else if (! strcmp(member->getType()->getName(), "ScalarArray")) {
 		const MleDwpScalarArray *dwpScalarArray = (MleDwpScalarArray *)member->getType();
 		MleArray<MlScalar> array;
 		dwpScalarArray->get(value, &array);
 		pvalue = (unsigned char *)&array;
-	} else if (member->getType()->isa(MleDwpVector3Array::typeId)) {
+	//} else if (member->getType()->isa(MleDwpVector3Array::typeId)) {
+	} else if (! strcmp(member->getType()->getName(), "Vector3Array")) {
 		const MleDwpVector3Array *dwpVec3Array = (MleDwpVector3Array *)member->getType();
 		MleArray<MlVector3> array;
 		dwpVec3Array->get(value, &array);
 		pvalue = (unsigned char *)&array;
-	} else if (member->getType()->isa(MleDwpVector2::typeId)) {
+	//} else if (member->getType()->isa(MleDwpVector2::typeId)) {
+	} else if (! strcmp(member->getType()->getName(), "MlVector2")) {
         const MleDwpVector2 *dwpVec2 = (MleDwpVector2 *)member->getType();
         MlVector2 *vector = new MlVector2();
         dwpVec2->get(value, vector);
         pvalue = (unsigned char *)vector;
-	} else if (member->getType()->isa(MleDwpVector3::typeId)) {
+	//} else if (member->getType()->isa(MleDwpVector3::typeId)) {
+	} else if (! strcmp(member->getType()->getName(), "MlVector3")) {
         const MleDwpVector3 *dwpVec3 = (MleDwpVector3 *)member->getType();
         MlVector3 *vector = new MlVector3();
         dwpVec3->get(value, vector);
         pvalue = (unsigned char *)vector;
-    } else if (member->getType()->isa(MleDwpVector4::typeId)) {
+    //} else if (member->getType()->isa(MleDwpVector4::typeId)) {
+	} else if (! strcmp(member->getType()->getName(), "MlVector4")) {
         const MleDwpVector4 *dwpVec4 = (MleDwpVector4 *)member->getType();
         MlVector4 *vector = new MlVector4();
         dwpVec4->get(value, vector);
         pvalue = (unsigned char *)vector;
-    } else if (member->getType()->isa(MleDwpTransform::typeId)) {
+    //} else if (member->getType()->isa(MleDwpTransform::typeId)) {
+	} else if (! strcmp(member->getType()->getName(), "MlTransform")) {
         const MleDwpTransform *dwpTran = (MleDwpTransform *)member->getType();
         MlTransform *transfrm = new MlTransform();
         dwpTran->get(value, transfrm);
         pvalue = (unsigned char *)transfrm;
-    } else {
+    //} else if (member->getType()->isa(MleDwpRotation::typeId)) {
+	} else if (! strcmp(member->getType()->getName(), "MlRotation")) {
+        const MleDwpRotation *dwpRot = (MleDwpRotation *)member->getType();
+        MlRotation *rotation = new MlRotation();
+        dwpRot->get(value, rotation);
+        pvalue = (unsigned char *)rotation;
+	} else {
 		// This should work for anonymous data types (i.e. int, float, etc.)
 		pvalue = (unsigned char *)value;
 	}
@@ -336,6 +351,7 @@ MleActor::poke(const char *property,MleDwpDataUnion *value)
 	else if (member->getType()->isa(MleDwpVector3::typeId)) { delete ((MlVector3 *)pvalue); }
 	else if (member->getType()->isa(MleDwpVector4::typeId)) { delete ((MlVector4 *)pvalue); }
 	else if (member->getType()->isa(MleDwpTransform::typeId)) { delete ((MlTransform *)pvalue); }
+	else if (member->getType()->isa(MleDwpRotation::typeId)) { delete ((MlRotation*)pvalue); }
 
 	return 0;
 }
