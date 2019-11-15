@@ -286,27 +286,27 @@ MleActor::poke(const char *property,MleDwpDataUnion *value)
 	//if (member->getType()->isa(MleDwpFloatArray::typeId)) {
 	if (! strcmp(member->getType()->getName(), "FloatArray")) {
 		const MleDwpFloatArray *dwpFloatArray = (MleDwpFloatArray *)member->getType();
-		MleArray<float> array;
-		dwpFloatArray->get(value, &array);
-		pvalue = (unsigned char *)&array;
+		MleArray<float> *array = new MleArray<float>;
+		dwpFloatArray->get(value, array);
+		pvalue = (unsigned char *)array;
 	//} else if (member->getType()->isa(MleDwpIntArray::typeId)) {
 	} else if (! strcmp(member->getType()->getName(), "IntArray")) {
 		const MleDwpIntArray *dwpIntArray = (MleDwpIntArray *)member->getType();
-		MleArray<int> array;
-		dwpIntArray->get(value, &array);
-		pvalue = (unsigned char *)&array;
+		MleArray<int> *array = new MleArray<int>;
+		dwpIntArray->get(value, array);
+		pvalue = (unsigned char *)array;
 	//} else if (member->getType()->isa(MleDwpScalarArray::typeId)) {
 	} else if (! strcmp(member->getType()->getName(), "ScalarArray")) {
 		const MleDwpScalarArray *dwpScalarArray = (MleDwpScalarArray *)member->getType();
-		MleArray<MlScalar> array;
-		dwpScalarArray->get(value, &array);
-		pvalue = (unsigned char *)&array;
+		MleArray<MlScalar> *array = new MleArray<MlScalar>;
+		dwpScalarArray->get(value, array);
+		pvalue = (unsigned char *)array;
 	//} else if (member->getType()->isa(MleDwpVector3Array::typeId)) {
 	} else if (! strcmp(member->getType()->getName(), "Vector3Array")) {
 		const MleDwpVector3Array *dwpVec3Array = (MleDwpVector3Array *)member->getType();
-		MleArray<MlVector3> array;
-		dwpVec3Array->get(value, &array);
-		pvalue = (unsigned char *)&array;
+		MleArray<MlVector3> *array = new MleArray<MlVector3>;
+		dwpVec3Array->get(value, array);
+		pvalue = (unsigned char *)array;
 	//} else if (member->getType()->isa(MleDwpVector2::typeId)) {
 	} else if (! strcmp(member->getType()->getName(), "MlVector2")) {
         const MleDwpVector2 *dwpVec2 = (MleDwpVector2 *)member->getType();
@@ -347,11 +347,23 @@ MleActor::poke(const char *property,MleDwpDataUnion *value)
 	entry->setProperty(this, entry->name, pvalue);
 
 	// Clean up
+	/*
 	if (member->getType()->isa(MleDwpVector2::typeId)) { delete ((MlVector2 *)pvalue); }
 	else if (member->getType()->isa(MleDwpVector3::typeId)) { delete ((MlVector3 *)pvalue); }
 	else if (member->getType()->isa(MleDwpVector4::typeId)) { delete ((MlVector4 *)pvalue); }
 	else if (member->getType()->isa(MleDwpTransform::typeId)) { delete ((MlTransform *)pvalue); }
 	else if (member->getType()->isa(MleDwpRotation::typeId)) { delete ((MlRotation*)pvalue); }
+	*/
+
+	if (! strcmp(member->getType()->getName(), "MlVector2")) { delete ((MlVector2 *)pvalue); }
+	else if (! strcmp(member->getType()->getName(), "MlVector3")) { delete ((MlVector3 *)pvalue); }
+	else if (! strcmp(member->getType()->getName(), "MlVector4")) { delete ((MlVector4 *)pvalue); }
+	else if  (! strcmp(member->getType()->getName(), "MlTransform")) { delete ((MlTransform *)pvalue); }
+	else if (! strcmp(member->getType()->getName(), "MlRotation")) { delete ((MlRotation *)pvalue); }
+	else if (! strcmp(member->getType()->getName(), "FloatArray")) { delete ((MleArray<float> *)pvalue); }
+	else if (! strcmp(member->getType()->getName(), "IntArray")) { delete ((MleArray<int> *)pvalue); }
+	else if (! strcmp(member->getType()->getName(), "ScalarArray")) { delete ((MleArray<MlScalar> *)pvalue); }
+	else if (! strcmp(member->getType()->getName(), "Vector3Array")) { delete ((MleArray<MlVector3> *)pvalue); }
 
 	return 0;
 }
