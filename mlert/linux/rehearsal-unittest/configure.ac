@@ -16,8 +16,8 @@ dnl This allows us to specify individual liking flags for each target
 AM_PROG_CC_C_O 
 
 dnl Add variable for Google Test location
-AC_SUBST([GTEST_DIR])
-AC_ARG_VAR(GTEST_DIR, Google Test installation directory)
+dnl AC_SUBST([GTEST_DIR])
+dnl AC_ARG_VAR(GTEST_DIR, Google Test installation directory)
 
 dnl Initialize Libtool
 LT_INIT
