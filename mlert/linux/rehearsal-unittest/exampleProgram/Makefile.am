@@ -26,7 +26,7 @@ exampleProgram_LDADD = $(top_srcdir)/libmlerttest/libmlerttest.la \
 	$(MLE_ROOT)/lib/libDWP.a \
 	$(MLE_ROOT)/lib/libmlutil.a \
 	$(MLE_ROOT)/lib/libmlmath.a \
-	$(GTEST_DIR)/libgtest.a -lX11 -ldl
+	/usr/local/lib/libgtest.a -lX11 -ldl
 
 # Linker options for a.out
 exampleProgram_LDFLAGS = \
@@ -39,4 +39,5 @@ exampleProgram_CPPFLAGS = \
 	-DMLE_REHEARSAL \
 	-I$(top_srcdir)/include \
 	-I$(MLE_ROOT)/include \
-	-I$(GTEST_DIR)/include
+	-I/usr/local/include \
+	-std=c++11

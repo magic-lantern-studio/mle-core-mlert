@@ -23,4 +23,5 @@ libmlerttest_la_CPPFLAGS = \
 	-DML_FIXED_POINT=0 \
 	-I$(top_srcdir)/include \
 	-I$(MLE_ROOT)/include \
-	-I$(GTEST_DIR)/include
+	-I/usr/local/include \
+	-std=c++11

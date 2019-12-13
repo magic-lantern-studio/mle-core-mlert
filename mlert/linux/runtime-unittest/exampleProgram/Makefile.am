@@ -26,7 +26,7 @@ exampleProgram_LDADD = $(top_srcdir)/libmlerttest/libmlerttest.la \
 	$(MLE_ROOT)/lib/libplayprint.a \
 	$(MLE_ROOT)/lib/libmlmath.a \
 	$(MLE_ROOT)/lib/libmlutil.a \
-	$(GTEST_DIR)/libgtest.a -ldl
+	/usr/local/lib/libgtest.a -ldl
 
 # Linker options for a.out
 exampleProgram_LDFLAGS = \
@@ -39,4 +39,5 @@ exampleProgram_CPPFLAGS = \
 	-DMLMATH_EXPORTS \
 	-I$(top_srcdir)/include \
 	-I$(MLE_ROOT)/include \
-	-I$(GTEST_DIR)/include
+	-I/usr/local/include \
+	-std=c++11
