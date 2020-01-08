@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2016 Wizzer Works
+// Copyright (c) 2015-2020 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -136,6 +136,7 @@ class MLE_RUNTIME_API MleRole
 
   private:
 
+    // The role's actor.
     MleActor* const m_actor;
 
 
@@ -257,6 +258,29 @@ class MLE_RUNTIME_API MleRole
 	 * @param child A pointer to the MleRole to add as a child.
 	 */
     virtual void addChild(MleRole *child);
+
+    /**
+     * @brief Set the role's value for the named attribute.
+     *
+     * Role's may have attributes associated with them. An attribute is
+     * a name/value pair and is specific to a particular Role
+     * definition. For example, an attribute may be used to manage
+     * the value for an Actor's property.
+     *
+     * @param name The name of the attribute.
+     * @param value The value of the attribute.
+     */
+    virtual void setAttribute(const char *name, void *value);
+
+    /**
+     * @brief Get the role's value for the named attribute.
+     *
+     * @param name The name of the attribute to retrieve.
+     *
+     * @return A pointer to the value is returned. NULL will be returned
+     * if the attribute does not exist.
+     */
+    virtual void *getAttribute(const char *name);
 
 	/**
 	 * @brief Initialize the class.
