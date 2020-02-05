@@ -70,7 +70,7 @@ MleStage::MleStage(void)
     MLE_ASSERT(g_theStage == NULL);  // Only one stage allowed.
     g_theStage = this;
 
-#ifdef MLE_REHEARSAL
+#if defined(MLE_REHEARSAL)
 	// Initialize variables.
     pickCB = NULL;
     openCB = NULL;
@@ -246,7 +246,7 @@ int MleStage::doSelect(int nfds, fd_set *readfds, fd_set *writefds,
 
 // Define editing functions
 // This is all conditionally compiled under rehearsal.
-#ifdef MLE_REHEARSAL
+#if defined(MLE_REHEARSAL)
 // This function sets the editing mode.  Nonzero turns editing on,
 // zero turns it off.  Editing mode can provide a different interpretation
 // user gestures (such as picking) than occurs in title play.
@@ -275,7 +275,7 @@ MleStage::edit(void)
 #endif /* MLE_REHEARSAL editing functions */
 
 // Define configuration functions
-#ifdef MLE_REHEARSAL
+#if defined(MLE_REHEARSAL)
 int MleStage::setSize(int,int)
 {
     return 1;
@@ -483,7 +483,7 @@ MleStage::reparentWindow(HWND parentWindow)
 // rendering function
 // This forces a redraw of the screen (after editing operations, for
 // example.  This interface is for rehearsal only.
-#ifdef MLE_REHEARSAL
+#if defined(MLE_REHEARSAL)
 void
 MleStage::render(void)
 {
@@ -491,7 +491,7 @@ MleStage::render(void)
 #endif /* MLE_REHEARSAL rendering */
 
 // manipulation
-#ifdef MLE_REHEARSAL
+#if defined(MLE_REHEARSAL)
 void
 MleStage::activateManipulator(MleActor *,int)
 {
@@ -514,7 +514,7 @@ MleStage::nudge(int dir, int numPixels)
 
 #endif /* MLE_REHEARSAL manipuation */
 
-#ifdef MLE_REHEARSAL
+#if defined(MLE_REHEARSAL)
 // Recalculates the clipping planes if auto clipping planes enabled.
 // Should be called anytime an actor property changes that could
 // effect actor transform.
@@ -523,11 +523,11 @@ void MleStage::recalcAutoClipPlanes()
     MLE_ASSERT(0);
 }
 
-#endif	/* MLE_REHEARSAL clip planes */
+#endif /* MLE_REHEARSAL clip planes */
 
 // Define callback registration functions.
 // This is all conditionally compiled under rehearsal.
-#ifdef MLE_REHEARSAL
+#if defined(MLE_REHEARSAL)
 // This functions sets the pick callback.
 // The installed callback function will be called when an actor/role
 // is selected from the stage.
@@ -602,7 +602,7 @@ MleStage::setFinishManipCallback(void (*cb)(MleActor *actor, void *client),void 
     m_finishManipClientData = client;
 }
 
-#if defined(sgi) || defined(__linux__)
+#if defined(__linux__)
 // This function sets the right mouse CB
 // This is to inform the tools that a right mouse event has happend.
 void
@@ -611,7 +611,7 @@ MleStage::setRightMouseCallback(void (*cb)(XEvent *e, void *client),void *client
     rightMouseCB = cb;
     m_rightMouseClientData = client;
 }
-#endif /* sgi */
+#endif /* __linux__ */
 #if defined(WIN32)
 void
 MleStage::setRightMouseCallback(void (*cb)(MSG *e, void *client),void *client)
@@ -624,7 +624,7 @@ MleStage::setRightMouseCallback(void (*cb)(MSG *e, void *client),void *client)
 #endif /* MLE_REHEARSAL callback management */
 
 // Utility for stage subclasses.
-#ifdef MLE_REHEARSAL
+#if defined(MLE_REHEARSAL)
 
 #define MAX_X_DISTANCE 7
 #define MAX_Y_DISTANCE 7

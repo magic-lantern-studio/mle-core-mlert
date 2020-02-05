@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2018 Wizzer Works
+// Copyright (c) 2015-2020 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -55,10 +55,10 @@
 #if defined(__linux__)
 #ifdef Q_OS_UNIX
 // Qt platform on Unix
-#else
+#else /* Q_OS_UNIX */
 // X11/Xt platform on Unix.
 #include <X11/Intrinsic.h>
-#endif
+#endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
 
 #ifdef MLE_DIGITAL_WORKPRINT
@@ -188,7 +188,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
 #endif /* MLE_DIGITAL_WORKPRINT */
 
-#ifdef MLE_REHEARSAL
+#if defined(MLE_REHEARSAL)
     // Editing mode.
 
     // setEditing() enables or disables editing mode.  Editing
@@ -212,22 +212,28 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
 #if defined(__linux__)
 #ifdef Q_OS_UNIX
+    // Qt platform on Unix.
+
     // getWindow() returns a Qt window for the stage, if possible.
     // This window may be reparented for tools.
     //virtual QtStageWindow* getWindow(void);
-#else
+#else /* Q_OS_UNIX */
+    // Not a Qt platform.
+
     // getWindow() returns an X window for the stage, if possible.
     // This window may be reparented for tools.
     virtual Window getWindow(void);
 
     virtual Display* getDisplay(void);
-#endif
+#endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
 #if defined(WIN32)
 #ifdef Q_OS_WIN
-#else
+    // Qt platform on Windows.
+#else /* Q_OS_WIN */
+    // Not a Qt platform.
     virtual HWND getWindow(void);
-#endif
+#endif /* ! Q_OS_WIN */
 #endif /* WIN32 */
 
     virtual void setOffscreen(int flag);
@@ -286,12 +292,14 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
 #if defined(__linux__)
 #ifdef Q_OS_UNIX
+    // Qt platform on Unix.
     //void setRightMouseCallback(void (*rightMouseCB)(QEvent* e,
     //                           void* clientData), void* clientData = NULL);
-#else
+#else /* Q_OS_UNIX */
+    // Not a Qt platform.
     void setRightMouseCallback(void (*rightMouseCB)(XEvent* e,
                                void* clientData), void* clientData = NULL);
-#endif
+#endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
 #if defined(WIN32)
     void setRightMouseCallback(void (*rightMouseCB)(MSG* e,
@@ -358,20 +366,27 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
 #if defined(__linux__)
 #ifdef Q_OS_UNIX
+    // Qt platform on Unix.
+
     // Reparent window - tools call this to reparent the player window
     // to a window passed in from the tools
     //virtual void reparentWindow(QtStageWindow* parentWindow);
-#else
+#else /* Q_OS_UNIX */
+    // Not a Qt platform.
+
     // Reparent window - tools call this to reparent the player window
     // to a window passed in from the tools
     virtual void reparentWindow(Window parentWindow);
-#endif
+#endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
 #if defined(WIN32)
 #ifdef Q_OS_WIN
-#else
+    // Qt platform on Windows.
+#else /* Q_OS_WIN */
+    // Not a Qt platform.
+
     virtual void reparentWindow(HWND parentWindow);
-#endif
+#endif /* ! Q_OS_WIN */
 #endif /* WIN32 */
     
     // Recalculates the clipping planes if auto clipping planes enabled.
@@ -381,7 +396,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
 #endif /* MLE_REHEARSAL */
 
-#ifdef MLE_REHEARSAL
+#if defined(MLE_REHEARSAL)
     // Define state for rehearsal interfaces.
 
   protected:
@@ -396,16 +411,20 @@ class MLE_RUNTIME_API MleStage : public MleObject
     void (*finishManipCB)(MleActor *actor,void *clientData);
 #if defined(__linux__)
 #ifdef Q_OS_UNIX
+    // Qt platform on Unix.
     void (*rightMouseCB)(QEvent* e,void *clientData);
-#else
+#else /* Q_OS_UNIX */
+    // Not a Qt platform.
     void (*rightMouseCB)(XEvent* e,void *clientData);
-#endif
+#endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
 #if defined(WIN32)
 #ifdef Q_OS_WIN
-#else
+    // Qt platform on Windows.
+#else /* Q_OS_WIN */
+    // Not a Qt platform.
 	void (*rightMouseCB)(MSG* e,void *clientData);
-#endif
+#endif /* ! Q_OS_WIN */
 #endif /* WIN32 */
     void *m_pickClientData;
     void *m_unpickClientData;
@@ -422,16 +441,20 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
 #if defined(__linux__)
 #ifdef Q_OS_UNIX
+    // Qt platform for UNIX.
     //static int checkForDoubleClick(QButtonEvent* event);
-#else
+#else /* Q_OS_UNIX */
+    // Not a Qt platform.
     static int checkForDoubleClick(XButtonEvent* event);
-#endif
+#endif /* ! Q_OS_UNIX */
 #endif /* _linux__ */
 #if defined(WIN32)
 #ifdef Q_OS_WIN
-#else
+    // Qt platform for Windows.
+#else /* Q_OS_WIN */
+    // Not a Qt platform.
     static int checkForDoubleClick(MSG* event);
-#endif
+#endif /* ! Q_OS_WIN */
 #endif /* WIN32 */
 
 #endif /* MLE_REHEARSAL */
@@ -575,9 +598,10 @@ class MLE_RUNTIME_API MleStage : public MleObject
     entryFor##MEMBER->getProperty = STAGE::getProperty; \
     entryFor##MEMBER->setProperty = STAGE::setProperty; \
     MleStageClass::find(#STAGE)->addMember(#MEMBER,#TYPE,entryFor##MEMBER)
-#endif
+#endif /* 0 */
 
 #endif /* MLE_DIGITAL_WORKPRINT */
+
 #ifdef MLE_DIGITAL_PLAYPRINT
 
 // Null macros for non-rehearsal - see above for description.
