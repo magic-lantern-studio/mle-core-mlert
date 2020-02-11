@@ -21,7 +21,6 @@ dnl Initialize Libtool
 LT_INIT
 
 AC_CONFIG_FILES(Makefile
-                exampleProgram/Makefile
                 libmlert/Makefile
                 include/Makefile)
 AC_OUTPUT
