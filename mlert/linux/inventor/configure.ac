@@ -2,6 +2,9 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
 AC_INIT(libmlert, 1.0)
+
+: ${CXXFLAGS=-g -O0}
+
 AC_PROG_CC
 AC_PROG_CXX
 

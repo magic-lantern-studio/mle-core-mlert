@@ -12,7 +12,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2018 Wizzer Works
+// Copyright (c) 2015-2020 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -174,6 +174,7 @@ MleActor::initClass(void)
 #include "mle/DwpVector4.h"
 #include "mle/DwpTransform.h"
 #include "mle/DwpRotation.h"
+#include "mle/DwpString.h"
 #include "math/scalar.h"
 #include "math/vector.h"
 #include "math/transfrm.h"
@@ -337,6 +338,13 @@ MleActor::poke(const char *property,MleDwpDataUnion *value)
         MlRotation *rotation = new MlRotation();
         dwpRot->get(value, rotation);
         pvalue = (unsigned char *)rotation;
+	} else if (! strcmp(member->getType()->getName(), "string")) {
+		const MleDwpString *dwpStr = (MleDwpString *)member->getType();
+		//char *str = (char *) mlMalloc(dwpStr->getSize() + 1);
+		char *str;
+		// Memory is allocated for the string by the following get() query.
+		dwpStr->get(value, &str);
+		pvalue = (unsigned char *)str;
 	} else {
 		// This should work for anonymous data types (i.e. int, float, etc.)
 		pvalue = (unsigned char *)value;
@@ -364,6 +372,7 @@ MleActor::poke(const char *property,MleDwpDataUnion *value)
 	else if (! strcmp(member->getType()->getName(), "IntArray")) { delete ((MleArray<int> *)pvalue); }
 	else if (! strcmp(member->getType()->getName(), "ScalarArray")) { delete ((MleArray<MlScalar> *)pvalue); }
 	else if (! strcmp(member->getType()->getName(), "Vector3Array")) { delete ((MleArray<MlVector3> *)pvalue); }
+	else if (! strcmp(member->getType()->getName(), "string")) { mlFree((char *)pvalue); }
 
 	return 0;
 }
