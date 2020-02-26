@@ -1,0 +1,59 @@
+/**
+ * \mainpage Magic Lantern Runtime Engine Library API
+ *
+ * \section overview Overview
+ * <p>
+ * The Magic Lantern Runtime Engine Library is a component of Magic Lantern,
+ * an interactive, title development platform for authoring highly interactive
+ * titles, such as interactive TV applications, games, educational programs, and
+ * point-of-information/sales kiosks. The runtime engine library provides
+ * common routines and functions that Magic Lantern titles (applications)
+ * require.
+ * </p>
+ * <p>
+ * The Magic Lantern Runtime Engine Library is distributed as static libraries
+ * and dynamic link libraries. The build environment distributed with the
+ * source can be used to build any or all of these libraries.
+ * </p>
+ * <p>
+ * The version of the libraries can be found under <b>MLE_ROOT/lib/mle/<i>platform</i></b>
+ * where <b><i>MLE_ROOT</i></b> is the directory where Magic Lantern components are
+ * installed and <b><i>platform</i></b> is the target. Currently there are three
+ * target platforms:
+ * <ol>
+ * <li>rehearsal</i>
+ * <li>inventor</i>
+ * <li>runtime</i>
+ * </ol>
+ * </p><p>
+ * The <b>rehearsal</b> version of the libraries are distributed as a DLL/DSO
+ * and are used with the Magic Lantern Rehearsal Player. They can be found
+ * under <b>MLE_ROOT/bin/rehearsal</b>. Titles developed for the Rehearsal
+ * Player run in conjunction with a Digital Workprint, defining the
+ * characteristic and constraints of the application.
+ * </p><p>
+ * The <b>inventor</b> version of the libraries are distributed as a DLL/DSO and
+ * are used with the Magic Lantern Open Inventor target. They can be found
+ * under <b>MLEROOT/bin/inventor</b>.  Titles developed for the Open
+ * Inventor target run in conjunction with a Digital Workprint, defining the
+ * characteristic and constraints of the application.
+ * </p><p>
+ * The <b>runtime</b> version of the libraries are distributed as a DLL/DSO and
+ * are used with the Magic Lantern mastered targets. They can be found
+ * under <b>MLEROOT/bin/runtime</b>.  Titles developed for the mastered
+ * targets run in conjunction with a Digital Playprint, defining the
+ * runtime characteristic and constraints of the application.
+ * </p>
+ *
+ * \section windows_build Building for Microsoft Windows
+ * </p>
+ * Detailed build instructions for the Windows target platform may be
+ * found on the Github project wiki at https://github.com/magic-lantern-studio/mle-documentation/wiki/SDK-Build-Environment-using-Microsoft-Visual-Studio#build-the-magic-lantern-runtime-engine-libraries.
+ * </p>
+ *
+ * \section linux_build Building for Linux
+ * </p>
+ * Detailed build instructions for the Linux target platform may be
+ * found on the Github project wiki at https://github.com/magic-lantern-studio/mle-documentation/wiki/SDK-Build-Environment-for-Linux-Platform#build-the-magic-lantern-runtime-engine-libraries.
+ * </p>
+ */
