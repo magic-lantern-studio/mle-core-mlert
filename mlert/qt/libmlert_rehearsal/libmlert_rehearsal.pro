@@ -2,7 +2,7 @@ QT -= gui
 
 TARGET = mlert
 TEMPLATE = lib
-DEFINES += LIBMLERT_INVENTOR_LIBRARY
+DEFINES += LIBMLERT_REHEARSAL_LIBRARY
 
 CONFIG += c++11
 
@@ -22,6 +22,7 @@ INCLUDEPATH += $$PWD/../../common/include $$PWD/../../common/src/foundation /opt
 DEFINES += \
     MLE_NOT_DLL \
     MLE_INTERNAL \
+    MLE_REHEARSAL \
     MLE_DIGITAL_WORKPRINT \
     ML_MATH_DEBUG=0 \
     ML_FIXED_POINT=0 \
@@ -100,7 +101,7 @@ HEADERS += \
 
 # Default rules for deployment.
 unix {
-    target.path = /opt/MagicLantern/lib/mle/qt/inventor
+    target.path = /opt/MagicLantern/lib/mle/qt/rehearsal
     headers.path = /opt/MagicLantern/include/mle
     headers.files = $$HEADERS
     INSTALLS += target headers
