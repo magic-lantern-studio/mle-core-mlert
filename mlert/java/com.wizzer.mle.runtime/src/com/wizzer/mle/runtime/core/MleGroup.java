@@ -80,6 +80,8 @@ public class MleGroup extends Object implements IMleGroup
 
     /**
      * A constructor that initializes the number of Actors in the group.
+     * 
+     * @param size The number of Actors in the group.
      */
     public MleGroup(int size)
     {

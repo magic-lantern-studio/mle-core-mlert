@@ -188,6 +188,8 @@ public class MleScene implements IMleScene
 	 * 
 	 * @param newScene The new Scene to switch to.
      * 
+     * @return A reference to the current scene is returned.
+     * 
      * @throws MleRuntimeException This exception is thrown if the
      * old scene can not be successfully disposed of.
 	 */

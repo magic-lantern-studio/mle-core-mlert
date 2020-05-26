@@ -246,6 +246,9 @@ public class MleDppUtil
      * @param whence The mode in which to seek; from the current position or from the
      * beginning of the file.
      * 
+     * @return <b>tree</b> is returned if the seek is successful. Otherwise, <b>false</b>
+     * will be returned.
+     * 
      * @throws IOException This exception is thrown if an error occurs while seeking
      * or if the specified <b>whence</b> mode is not supported.
      */
@@ -428,12 +431,12 @@ public class MleDppUtil
      * @param pinfo The parent chunk of the <i>info</i> chunk. May be <b>null</b>.
      * @param flags Flags specifying how to process the Digital Playprint.
      * The following flags are valid:
-     * <li>
-     * <ul>MLE_DPP_FINDCHUNK - Look for chunk specified by <i>info</i>, relative to <i>pinfo</i></ul>
-     * <ul>MLE_DPP_FINDLIST - Look for LIST chunk, relative to <i>pinfo</i></ul>
-     * <ul>MLE_DPP_FINDPPBE - Look for PPBE chunk</ul>
-     * <ul>MLE_DPP_FINDPPLE - Look for PPLE chunk</ul>
-     * </li>
+     * <ul>
+     * <li>MLE_DPP_FINDCHUNK - Look for chunk specified by <i>info</i>, relative to <i>pinfo</i></li>
+     * <li>MLE_DPP_FINDLIST - Look for LIST chunk, relative to <i>pinfo</i></li>
+     * <li>MLE_DPP_FINDPPBE - Look for PPBE chunk</li>
+     * <li>MLE_DPP_FINDPPLE - Look for PPLE chunk</li>
+     * </ul>
      * 
      * @return If the Digital Playprint is successfully processed, then the <code>MleDppChunkInfo</code>
      * will be returned containing the header information for the chunk. The file pointer for the
@@ -705,10 +708,10 @@ public class MleDppUtil
      * Set the byte order format for the Digital Playprint.
      * 
      * @param format The byte order format. Valid values include:
-     * <li>
-     * <ul>MLE_BIG_ENDIAN_FORMAT</ul>
-     * <ul>MLE_LITTLE_ENDIAN_FORMAT</ul>
-     * </li>
+     * <ul>
+     * <li>MLE_BIG_ENDIAN_FORMAT</li>
+     * <li>MLE_LITTLE_ENDIAN_FORMAT</li>
+     * </ul>
      * 
      * @throws MleDppException This exception is thrown if the specified format is unknown.
      */

@@ -172,12 +172,20 @@ public class MlePQ extends MlePriorityQueue
         decrementNumElements();
     }
 
+    /**
+     * Delete the first item in the queue.
+     */
     public void destroy()
     {
         destroyItem(0);
     }
 
 
+    /**
+     * Delete all items in the queue with the given priority.
+     * 
+     * @param priority The priority of the items to delete.
+     */
     public void destroy(int priority)
     {
         int k;
@@ -194,6 +202,9 @@ public class MlePQ extends MlePriorityQueue
      * 
      * @param k The item to change.
      * @param priority The new priority.
+     * 
+     * @return <b>true</b> will be returned if the priority of the item is changed
+     * successfully. Otherwise, <b>false</b> will be returned.
      */
     public boolean changeItem(int k, int priority)
     {

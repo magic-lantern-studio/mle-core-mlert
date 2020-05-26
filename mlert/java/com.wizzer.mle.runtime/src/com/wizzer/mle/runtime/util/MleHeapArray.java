@@ -144,7 +144,7 @@ public abstract class MleHeapArray extends MleElementArray
 	 * @param k The index of the subtree.
 	 * 
 	 * @return If keys had to be swapped, return the element where k.m_key now is.
-	 * Otherwise, <m>null</m> will be returned.
+	 * Otherwise, <b>null</b> will be returned.
 	 */
     protected int heapifyLocally(int k)
     {

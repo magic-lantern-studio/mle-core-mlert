@@ -80,7 +80,6 @@ public class MleProp implements IMleProp
      * <li>PROP_TYPE_UNKNOWN</li>
      * <li>PROP_TYPE_MEDIAREF</li>
      * </ul>
-     * </p>
      * 
      * @return The property's type is returned.
      *

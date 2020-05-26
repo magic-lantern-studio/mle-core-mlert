@@ -110,6 +110,8 @@ public class MleStage extends Object implements IMleStage
      * supports one window per stage: this is the
      * default window.
      * </p>
+     * 
+     * @return <b>null</b> is returned.
      */
     public MleSize getSize()
     {

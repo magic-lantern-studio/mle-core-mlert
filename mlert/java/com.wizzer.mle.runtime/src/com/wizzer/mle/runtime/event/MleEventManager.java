@@ -407,7 +407,7 @@ public class MleEventManager
      * @return A new event identifier will be returned. Note that the returned event
      * has not yet been added to the event manager (see addEvent(int)).
      * 
-     * @see MleEvent.makeId(short, short)
+     * @see MleEvent
      */
     public static int createEvent(short group)
     {

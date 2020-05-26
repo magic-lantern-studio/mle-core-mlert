@@ -132,6 +132,14 @@ public class MleMediaRef extends Object implements IMleMediaRef
      * This method is used to register the media data that is
      * referenced.
      * </p>
+     * 
+     * @param flags TBD
+     * @param size The size of the media data to be registered.
+     * @param media A byte array containing the media data.
+     * 
+     * @return A boolean value will be returned depending on whether the media
+     * data has been successfully registered. <b>true</b> will be returned upon
+     * success. Otherwise, <b>false</b> will be returned.
      */
     public boolean registerMedia(long flags,int size,byte[] media)
     {

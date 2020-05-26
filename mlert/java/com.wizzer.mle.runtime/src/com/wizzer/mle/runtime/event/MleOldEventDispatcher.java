@@ -357,7 +357,7 @@ public class MleOldEventDispatcher extends Object
     /**
      * Process the event specified by the event id.
      * <p>
-     * If the event type associated with the id is MLE_EVENT_IMMDIATE,
+     * If the event type associated with the id is MLE_EVENT_IMMEDIATE,
      * then the event will dispatched immediately. If the event type
      * is MLE_EVENT_DELAYED, then the event will be placed on a FIFO
      * queue to be processed at a later date (when dispatchEvents() is
@@ -367,12 +367,14 @@ public class MleOldEventDispatcher extends Object
      * @param id The composite event identifier.
      * @param calldata An Object containing the data to
      * be processed along with the event.
+     * @param type The type of event, either <b>MLE_EVENT_IMMEDIATE</b> or
+     * <b>MLE_EVENT_DELAYED</b>.
      *
      * @return If the event is successfully processed, then
      * <b>true</b> will be returned. Otherwise, <b>false</b> will be
      * returned.
      */
-    public boolean processEvent(int id, Object calldata,short type)
+    public boolean processEvent(int id, Object calldata, short type)
     {
         boolean status = false;
         MleEvent event = new MleEvent(this, id, type, calldata);

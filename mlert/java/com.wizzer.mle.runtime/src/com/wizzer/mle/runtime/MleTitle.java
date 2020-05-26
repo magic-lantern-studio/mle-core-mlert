@@ -114,6 +114,10 @@ public class MleTitle
      * The mastered table of group identifiers is used to load from the DPP.
      * </p>
      * 
+     * @param indexToDppTOC The index into the Digital Playprint Table-Of-Content.
+     * 
+     * @return A reference to the loaded group is returned.
+     * 
      * @throws MleRuntimeException This exception is thrown if the Group
      * can not be loaded from the Digital Playprint.
      */

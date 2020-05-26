@@ -255,13 +255,13 @@ public class MlePhase extends Object
     }
     
     /**
-     * Retrieves the task with the specified <code>name</code.
+     * Retrieves the task with the specified <i>name</i>.
      *
-     * @param name A <code>java.lang.String</code> identifying the name
+     * @param name A <i>java.lang.String</i> identifying the name
      * of the task to be retrieved.
      *
-     * @return If a task is found matching the specifed <code>name</code>
-     * then an object of type <code>MleTask</code> will be returned.
+     * @return If a task is found matching the specified <i>name</i>
+     * then an object of type <i>MleTask</i> will be returned.
      * Otherwise, <b>null</b> will be returned.
      *
      * @see MleTask

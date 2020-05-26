@@ -164,12 +164,11 @@ public class MleDppReader
      * Begin reading the Digital Playprint.
      * 
      * @param type The type of Digital Playprint to read. Valid types include:
-     * <p>
-     * <li>
-     * <ul>MleDppUtil.MLE_PPBE_TAG</ul>
-     * <ul>MleDppUtil.MLE_PPLE_TAG</ul>
-     * </li>
-     * </p>
+     * 
+     * <ul>
+     * <li>MleDppUtil.MLE_PPBE_TAG</li>
+     * <li>MleDppUtil.MLE_PPLE_TAG</li>
+     * </ul>
      * 
      * @return <b>true</b> is returned if the Digital Playprint is valid and ready
      * to be read. Otherwise, <b>false</b> will be returned.

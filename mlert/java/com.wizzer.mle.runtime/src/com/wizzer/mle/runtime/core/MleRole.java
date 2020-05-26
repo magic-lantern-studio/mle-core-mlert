@@ -56,7 +56,8 @@ import com.wizzer.mle.runtime.core.MleActor;
  * (which is called by MleDppLoader.loadScene()) goes through
  * the following sequence to initialize the role/actor
  * pair:
- * </p><p>
+ * </p>
+ * 
  * <ol>
  *   <li> When an actor is found inside a group that
  *        is being loaded, the actor is created 
@@ -88,7 +89,8 @@ import com.wizzer.mle.runtime.core.MleActor;
  *        point call the role's init() function.
  *   </li>
  * </ol>
- * </p><p>
+ * 
+ * <p>
  * MleRole's instance variable <i>m_set</i> points to the
  * role instance's set (i.e., the set to which
  * it is directly or indirectly attached).
@@ -111,6 +113,8 @@ public class MleRole extends Object implements IMleRole
 
     /**
      * A factory method for creating a role.
+     * 
+     * @param actor The actor that the role is associated with.
      *
      * @return A new MleRole is returned.
      */
@@ -189,11 +193,14 @@ public class MleRole extends Object implements IMleRole
 
     /**
      * Add a child to this role.
-     *
+     * <p>
      * This method is used to attach other roles
      * to this role.  It should be overridden by sub-classes 
      * of MleRole for which there's a semantic policy for attachment.
-     * The base class implemetation does nothing.
+     * The base class implementation does nothing.
+     * </p>
+     * 
+     * @param child The child role to be attached to this role.
      */
     protected void addChild(MleRole child) {}
 
