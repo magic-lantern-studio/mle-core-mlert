@@ -25,6 +25,7 @@ public class EventManagerTest extends TestCase
 	protected void setUp() throws Exception
 	{
 		super.setUp();
+		MleEventManager.getInstance().clear();
 	}
 
 	/**
