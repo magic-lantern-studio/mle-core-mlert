@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="javadoc">
     <target name="javadoc">
-        <javadoc access="protected" author="true" classpath="." destdir="doc" doctitle="Magic Lantern Runtime Library" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" overview="M:\projects\MagicLantern\Core\mlert\java\com.wizzer.mle.runtime\src\overview-summary.html" packagenames="com.wizzer.mle.runtime.core,com.wizzer.mle.runtime.event,com.wizzer.mle.runtime.dpp,com.wizzer.mle.runtime.scheduler,com.wizzer.mle.runtime.util,com.wizzer.mle.runtime" source="1.5" sourcepath="src" splitindex="true" use="true" version="true"/>
+        <javadoc access="package" author="true" classpath="." destdir="doc" doctitle="Magic Lantern Runtime Library" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" overview="M:\Projects\Github-MagicLantern\mle-core-mlert\mlert\java\com.wizzer.mle.runtime\src\overview-summary.html" packagenames="com.wizzer.mle.runtime.dpp,com.wizzer.mle.runtime.scheduler,com.wizzer.mle.runtime,com.wizzer.mle.runtime.util,com.wizzer.mle.runtime.event,com.wizzer.mle.runtime.core" source="1.8" sourcepath="src" splitindex="true" use="true" version="true"/>
     </target>
 </project>
