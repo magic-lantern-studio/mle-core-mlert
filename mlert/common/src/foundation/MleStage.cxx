@@ -334,12 +334,12 @@ MleStage::getFunctionAttributes(char* /*functionName*/)
 
 // Control over IV viewers.
 int 
-MleStage::setViewer(char* )
+MleStage::setViewer(const char* )
 {
     return(-1);
 }
 
-char* 
+const char*
 MleStage::getViewer()
 {
     return(NULL);

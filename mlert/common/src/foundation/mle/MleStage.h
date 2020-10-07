@@ -318,9 +318,9 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
     // More methods for tool APIs - all should be abstract
     // Control over IV viewers
-    virtual int setViewer(char* viewerName);
+    virtual int setViewer(const char* viewerName);
 
-    virtual char* getViewer();
+    virtual const char* getViewer();
 
     // Control over edit modes.
     virtual int setEditMode(char* editMode);
