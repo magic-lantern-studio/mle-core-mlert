@@ -1,4 +1,4 @@
-QT -= gui
+QT += widgets
 
 TARGET = mlert
 TEMPLATE = lib
@@ -26,6 +26,7 @@ DEFINES += \
     MLE_DIGITAL_WORKPRINT \
     ML_MATH_DEBUG=0 \
     ML_FIXED_POINT=0 \
+    MLE_QT
 
 SOURCES += \
     $$PWD/../../common/src/foundation/3danim.cxx \

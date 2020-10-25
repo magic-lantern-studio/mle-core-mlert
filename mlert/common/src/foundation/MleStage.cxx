@@ -5,14 +5,13 @@
  * @ingroup MleFoundation
  *
  * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2018 Wizzer Works
+// Copyright (c) 2015-2020 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -282,6 +281,15 @@ int MleStage::setSize(int,int)
 }
 
 #if defined(__linux__)
+#ifdef Q_OS_UNIX
+// Qt on Linux platfrom.
+QWidget *
+MleStage::getWindow(void)
+{
+    return NULL;
+}
+#else
+// X11/Xt on Linux platrform.
 Window
 MleStage::getWindow(void)
 {
@@ -293,6 +301,7 @@ MleStage::getDisplay(void)
 {
     return NULL;
 }
+#endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
 #if defined(WIN32)
 HWND
@@ -308,7 +317,7 @@ MleStage::setOffscreen(int)
 }
 
 // Getting the file descriptor.
-// XXX - this should be an abstract method, but
+// Todo: this should be an abstract method, but
 // this class doesn't like being abstract (BrStage balks).
 int
 MleStage::getFD()
@@ -425,7 +434,7 @@ MleStage::getBgndColor(float* /*color*/)
 
 // Horizon grid.
 void 
-MleStage::setHorizonGrid(int onOff)
+MleStage::setHorizonGrid(int /*onOff*/)
 {
 }
 
@@ -443,11 +452,20 @@ void MleStage::viewAll()
 {
 }
 
-void MleStage::showDecoration(int onOff)
+void MleStage::showDecoration(int /*onOff*/)
 {
 }
 
 #if defined(__linux__)
+#ifdef Q_OS_UNIX
+// Qt on Linux platform.
+void
+MleStage::reparentWindow(QWidget *parentWindow)
+{
+    // Todo: Implement.
+}
+#else
+// X11/Xt on Linux platform.
 void
 MleStage::reparentWindow(Window parentWindow)
 {
@@ -469,6 +487,7 @@ MleStage::reparentWindow(Window parentWindow)
     XSelectInput(display, w, wa.your_event_mask & ~ButtonPress);
     */
 }
+#endif /* ! Q_OS_UNIX */
 #endif  /* __linux__ */
 #if defined(WIN32)
 void
@@ -508,7 +527,7 @@ MleStage::moveToTarget()
 }
 
 void
-MleStage::nudge(int dir, int numPixels)
+MleStage::nudge(int /*dir*/, int /*numPixels*/)
 {
 }
 
@@ -603,6 +622,9 @@ MleStage::setFinishManipCallback(void (*cb)(MleActor *actor, void *client),void 
 }
 
 #if defined(__linux__)
+#ifdef Q_OS_UNIX
+// Qt on Linux platform.
+#else
 // This function sets the right mouse CB
 // This is to inform the tools that a right mouse event has happend.
 void
@@ -611,6 +633,7 @@ MleStage::setRightMouseCallback(void (*cb)(XEvent *e, void *client),void *client
     rightMouseCB = cb;
     m_rightMouseClientData = client;
 }
+#endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
 #if defined(WIN32)
 void
@@ -633,6 +656,10 @@ MleStage::setRightMouseCallback(void (*cb)(MSG *e, void *client),void *client)
 #define DOUBLE_CLICK_MSECS 500L
 
 #if defined(__linux__)
+#ifdef Q_OS_UNIX
+// Qt on Linux platform.
+#else
+// X11/Xt on Linux platfrom.
 // This function checks for a double click
 // (static func).
 int 
@@ -670,6 +697,7 @@ MleStage::checkForDoubleClick(XButtonEvent* event)
     // Return the value.
     return(ret);
 }
+#endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
 #if defined(WIN32)
 int 

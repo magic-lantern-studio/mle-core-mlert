@@ -46,6 +46,11 @@
 #define __MLE_STAGE_H_
 
 // Include system header files.
+#ifdef MLE_QT
+// Enable global Qt macros.
+#include <QtGlobal>
+#include <Inventor/Qt/SoQt.h>
+#endif /* MLE_QT */
 #if defined(WIN32)
 #include <winsock2.h>
 #ifdef Q_OS_WIN
@@ -216,7 +221,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
     // getWindow() returns a Qt window for the stage, if possible.
     // This window may be reparented for tools.
-    //virtual QtStageWindow* getWindow(void);
+    virtual QWidget* getWindow(void);
 #else /* Q_OS_UNIX */
     // Not a Qt platform.
 
@@ -293,8 +298,8 @@ class MLE_RUNTIME_API MleStage : public MleObject
 #if defined(__linux__)
 #ifdef Q_OS_UNIX
     // Qt platform on Unix.
-    //void setRightMouseCallback(void (*rightMouseCB)(QEvent* e,
-    //                           void* clientData), void* clientData = NULL);
+    void setRightMouseCallback(void (*rightMouseCB)(QEvent* e,
+                               void* clientData), void* clientData = NULL);
 #else /* Q_OS_UNIX */
     // Not a Qt platform.
     void setRightMouseCallback(void (*rightMouseCB)(XEvent* e,
@@ -369,13 +374,13 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // Qt platform on Unix.
 
     // Reparent window - tools call this to reparent the player window
-    // to a window passed in from the tools
-    //virtual void reparentWindow(QtStageWindow* parentWindow);
+    // to a window passed in from the tools.
+    virtual void reparentWindow(QWidget* parentWindow);
 #else /* Q_OS_UNIX */
     // Not a Qt platform.
 
     // Reparent window - tools call this to reparent the player window
-    // to a window passed in from the tools
+    // to a window passed in from the tools.
     virtual void reparentWindow(Window parentWindow);
 #endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
