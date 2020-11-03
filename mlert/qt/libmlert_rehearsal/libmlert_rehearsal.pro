@@ -100,6 +100,9 @@ HEADERS += \
     $$PWD/../../common/src/foundation/mle/MleStage.h \
     $$PWD/../../common/src/foundation/mle/MleTables.h
 
+HEADERS += \
+    $$PWD/../../rehearsal/include/mle/mlPlatformData.h
+
 # Default rules for deployment.
 unix {
     target.path = /opt/MagicLantern/lib/mle/qt/rehearsal

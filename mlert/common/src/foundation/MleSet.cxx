@@ -58,11 +58,11 @@
 MleSet *MleSet::g_currentSet;
 
 
-void MleSet::getProperty(MleObject *object, const char *name, unsigned char **value)
+void MleSet::getProperty(MleObject */*object*/, const char */*name*/, unsigned char **value)
 { value = 0; }
 
 
-void MleSet::setProperty(MleObject *object, const char *name, unsigned char *value)
+void MleSet::setProperty(MleObject */*object*/, const char */*name*/, unsigned char */*value*/)
 {}
 
 
@@ -268,7 +268,7 @@ const char** MleSet::getFunctions()
     return(NULL);
 }
 
-const char** MleSet::getFunctionAttributes(char* functionName)
+const char** MleSet::getFunctionAttributes(char* /*functionName*/)
 {
     return(NULL);
 }

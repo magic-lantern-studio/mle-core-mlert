@@ -430,9 +430,9 @@ MleGroup *_mlLoadGroup(MleDwpGroup* wpGroup)
 
         // Make sure both exist.
         if ( parent == NULL || child == NULL )
-            printf("_mlLoadGroup: can't find roles for parent %s (0x%x) or child %s (0x%x).\n",da->getParent(),parent,da->getChild(),child);
+            printf("_mlLoadGroup: can't find roles for parent %s (0x%p) or child %s (0x%p).\n",da->getParent(),parent,da->getChild(),child);
 	    else if ( sets[parentIndex] != sets[childIndex] )
-	        printf("_mlLoadGroup: set mismatch between parent %s and child %s.\n",da->getParent(),parent,da->getChild());
+            printf("_mlLoadGroup: set mismatch between parent %s and child %s.\n",da->getParent(),da->getChild());
 	    else
 	        sets[parentIndex]->attach(parent,child);
             

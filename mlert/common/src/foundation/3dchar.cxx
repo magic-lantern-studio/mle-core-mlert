@@ -287,7 +287,7 @@ Mle3dCharacterRegistry* Mle3dCharacterRegistry::read(char* filename)
 #ifdef MLE_DEBUG 
 printf("Registry name is %s\n",registry->m_name); 
 #endif
-                        fscanf(in,"%d",&registry->m_numCharacters);
+                        fscanf(in,"%ld",&registry->m_numCharacters);
 #ifdef MLE_DEBUG 
 printf("Number of characters is %d\n",registry->m_numCharacters);
 #endif
@@ -303,7 +303,7 @@ printf("Number of characters is %d\n",registry->m_numCharacters);
 printf("Character name is %s\n",character->m_name);
 #endif
 
-                            fscanf(in,"%d",&character->m_numSnippets);
+                            fscanf(in,"%ld",&character->m_numSnippets);
 #ifdef MLE_DEBUG 
 printf("Number of snippets is %d\n",character->m_numSnippets);
 #endif
@@ -326,7 +326,7 @@ printf("Snippet name is %s\n",snippet->m_name);
 printf("Snippet frame range is from %d to %d\n",snippet->m_startFrame,snippet->m_endFrame);
 #endif
 
-                                fscanf(in,"%d",&snippet->m_numTransitions);
+                                fscanf(in,"%ld",&snippet->m_numTransitions);
 #ifdef MLE_DEBUG 
 printf("Number of transitions is %d\n",snippet->m_numTransitions);
 #endif

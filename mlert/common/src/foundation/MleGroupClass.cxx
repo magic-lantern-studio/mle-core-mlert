@@ -86,6 +86,9 @@ MleGroupClass::MleGroupClass(const char *name,
 
 	/* Look up the superclass info. */
 	MleGroupClass *super = (MleGroupClass *)g_registry.find(superclass);
+    if (super != NULL) {
+        // ToDo: Report message? What are we looking up the superclass for?
+    }
 
 	/* Put self into the registry. */
 	g_registry.set(name,this);
@@ -106,6 +109,9 @@ MleGroupClass::MleGroupClass(const char *name,
 
 	/* Look up the superclass info. */
 	MleGroupClass *super = (MleGroupClass *)g_registry.find(superclass);
+    if (super != NULL) {
+        // ToDo: Report message? What are we looking up the superclass for?
+    }
 
 	/* Put self into the registry */
 	g_registry.set(name,this);

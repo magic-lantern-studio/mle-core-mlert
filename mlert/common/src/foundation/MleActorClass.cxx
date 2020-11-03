@@ -97,7 +97,7 @@ MleActorClass::MleActorClass(const char *name,
 		/* Use the dictionary iterator. */
 		MleActorMemberIter iter(super);
 		const MleActorMember *member;
-		while ( member = iter.getMember() )
+        while ( (member = iter.getMember()) )
 		{
 			set(iter.getName(),new MleActorMember(*member));
 			iter.next();
@@ -132,7 +132,7 @@ MleActorClass::MleActorClass(const char *name,
 		/* Use the dictionary iterator. */
 		MleActorMemberIter iter(super);
 		const MleActorMember *member;
-		while ( member = iter.getMember() )
+        while ( (member = iter.getMember()) )
 		{
 			set(iter.getName(),new MleActorMember(*member));
 			iter.next();
@@ -159,13 +159,13 @@ MleActorClass::~MleActorClass()
     // Remove property members.
     MleActorMemberIter iter(this);
     const MleActorMember *member;
-    while ( member = iter.getMember() )
+    while ( (member = iter.getMember()) )
     {
         // Note that the dictionary remove method below does NOT delete the
         // value of the dictionary entry. Therefore, we return it for the
         // caller to clean up the entry.
-        MlePropertyEntry *entry = member->getEntry();
-        // XXX - delete entry here?
+        // MlePropertyEntry *entry = member->getEntry();
+        // ToDo - delete entry here?
 
         // Remove the property type from the dictionary.
         remove(iter.getName());

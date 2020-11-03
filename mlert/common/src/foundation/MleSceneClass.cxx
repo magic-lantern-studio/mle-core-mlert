@@ -86,6 +86,9 @@ MleSceneClass::MleSceneClass(const char *name,
 
 	/* Look up the superclass info. */
 	MleSceneClass *super = (MleSceneClass *)g_registry.find(superclass);
+    if (super != NULL) {
+        // ToDo: Report message? Why are we looking up superclass here?
+    }
 
 	/* Put self into the registry */
 	g_registry.set(name,this);
@@ -106,6 +109,9 @@ MleSceneClass::MleSceneClass(const char *name,
 
 	/* Look up the superclass info. */
 	MleSceneClass *super = (MleSceneClass *)g_registry.find(superclass);
+    if (super != NULL) {
+        // ToDo: Report message? Why are we looking up superclass here?
+    }
 
 	/* Put self into the registry. */
 	g_registry.set(name,this);

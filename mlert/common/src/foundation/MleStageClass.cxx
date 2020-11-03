@@ -103,7 +103,7 @@ MleStageClass::MleStageClass(const char *name, MleStage *(*c)(void),
 		MleStageMemberIter iter(super);
 		const MleStageMember *member;
 
-		while (member = iter.getMember())
+        while ( (member = iter.getMember()) )
 		{
 			set(iter.getName(), new MleStageMember(*member));
 			iter.next();

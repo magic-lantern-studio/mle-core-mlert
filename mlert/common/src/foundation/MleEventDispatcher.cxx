@@ -71,9 +71,9 @@
 
 
 MleEventDispatcher::MleEventDispatcher()
-  :m_head(NULL),
-   m_tail(NULL),
-   m_flags(0)
+  :m_flags(0),
+   m_head(NULL),
+   m_tail(NULL)
 {
     // Do nothing extra.
 }

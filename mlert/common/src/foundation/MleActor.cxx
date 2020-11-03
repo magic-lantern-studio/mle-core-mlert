@@ -52,15 +52,15 @@
 #include "mle/MleRole.h"
 #include "mle/mlMalloc.h"
 
-void MleActor::getProperty(MleObject *object, const char *name, unsigned char **value)
+void MleActor::getProperty(MleObject */*object*/, const char */*name*/, unsigned char **value)
 {
 	value = 0;
-	// TBD: Log that default getter is being used.
+    // ToDo: Log that default getter is being used.
 }
 
-void MleActor::setProperty(MleObject *object, const char *name, unsigned char *value)
+void MleActor::setProperty(MleObject */*object*/, const char */*name*/, unsigned char */*value*/)
 {
-	// TBD: Log that default setter is being used.
+    // ToDo: Log that default setter is being used.
 }
 
 MleActor::MleActor(void)

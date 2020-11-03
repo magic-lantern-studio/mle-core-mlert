@@ -89,7 +89,7 @@ MleSetClass::MleSetClass(const char *name,
 		/* Use the dictionary iterator. */
 		MleSetMemberIter iter(super);
 		const MleSetMember *member;
-		while ( member = iter.getMember() )
+        while ( (member = iter.getMember()) )
 		{
 			set(iter.getName(),new MleSetMember(*member));
 			iter.next();
@@ -122,7 +122,7 @@ MleSetClass::MleSetClass(const char *name,
 		/* use the dictionary iterator */
 		MleSetMemberIter iter(super);
 		const MleSetMember *member;
-		while ( member = iter.getMember() )
+        while ( (member = iter.getMember()) )
 		{
 			set(iter.getName(),new MleSetMember(*member));
 			iter.next();

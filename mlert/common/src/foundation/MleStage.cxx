@@ -460,7 +460,7 @@ void MleStage::showDecoration(int /*onOff*/)
 #ifdef Q_OS_UNIX
 // Qt on Linux platform.
 void
-MleStage::reparentWindow(QWidget *parentWindow)
+MleStage::reparentWindow(QWidget */*parentWindow*/)
 {
     // Todo: Implement.
 }
@@ -624,6 +624,12 @@ MleStage::setFinishManipCallback(void (*cb)(MleActor *actor, void *client),void 
 #if defined(__linux__)
 #ifdef Q_OS_UNIX
 // Qt on Linux platform.
+void
+MleStage::setRightMouseCallback(void (*cb)(QEvent *e, void *client),void *client)
+{
+    rightMouseCB = cb;
+    m_rightMouseClientData = client;
+}
 #else
 // This function sets the right mouse CB
 // This is to inform the tools that a right mouse event has happend.
