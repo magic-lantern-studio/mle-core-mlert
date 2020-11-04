@@ -101,6 +101,13 @@ HEADERS += \
     $$PWD/../../common/src/foundation/mle/MleTables.h
 
 HEADERS += \
+    $$PWD/../../common/src/input/mle/MleKeyboardPolled.h \
+    $$PWD/../../common/src/input/mle/MleKeyboardEvent.h \
+    $$PWD/../../common/src/input/mle/MleMousePolled.h \
+    $$PWD/../../common/src/input/mle/MleMouseEvent.h \
+    $$PWD/../../common/src/input/mle/MleKeyMap.h
+
+HEADERS += \
     $$PWD/../../rehearsal/include/mle/mlPlatformData.h
 
 # Default rules for deployment.
