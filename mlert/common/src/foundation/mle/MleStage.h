@@ -66,6 +66,12 @@
 #endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
 
+#if defined(__linux__)
+#ifdef Q_OS_UNIX
+class QWindow;
+#endif /* Q_OS_UNIX */
+#endif /* __linux__ */
+
 #ifdef MLE_DIGITAL_WORKPRINT
 // Include Magic Lantern Runtime Engine header files.
 #include "mle/MleStageClass.h"
@@ -375,7 +381,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
     // Reparent window - tools call this to reparent the player window
     // to a window passed in from the tools.
-    virtual void reparentWindow(QWidget* parentWindow);
+    virtual void reparentWindow(QWindow* parentWindow);
 #else /* Q_OS_UNIX */
     // Not a Qt platform.
 

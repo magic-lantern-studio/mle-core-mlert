@@ -460,7 +460,7 @@ void MleStage::showDecoration(int /*onOff*/)
 #ifdef Q_OS_UNIX
 // Qt on Linux platform.
 void
-MleStage::reparentWindow(QWidget */*parentWindow*/)
+MleStage::reparentWindow(QWindow */*parentWindow*/)
 {
     // Todo: Implement.
 }
