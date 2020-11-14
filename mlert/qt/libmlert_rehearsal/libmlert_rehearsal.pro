@@ -64,6 +64,9 @@ SOURCES += \
     $$PWD/../../common/src/foundation/MleStageClass.cxx \
     $$PWD/../../common/src/foundation/MleStage.cxx
 
+SOURCES += \
+    $$PWD/../../common/src/input/MleKeyboardPolled.cxx
+
 HEADERS += \
     $$PWD/../../common/src/foundation/mle/3danim.h \
     $$PWD/../../common/src/foundation/mle/3dchar.h \
