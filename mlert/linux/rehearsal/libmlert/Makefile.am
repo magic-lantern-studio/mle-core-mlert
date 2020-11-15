@@ -50,7 +50,7 @@ libmlert_la_SOURCES = \
 	$(MLE_HOME)/Core/util/common/src/mlExpandFilename.c
 
 # Linker options libTestProgram
-libmlert_la_LDFLAGS = 
+libmlert_la_LDFLAGS = -version-info 1:0:0
 
 # Compiler options. Here we are adding the include directory
 # to be searched for headers included in the source code.
