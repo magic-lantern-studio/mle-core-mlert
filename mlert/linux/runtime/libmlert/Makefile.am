@@ -35,7 +35,6 @@ libmlert_la_SOURCES = \
 	$(top_srcdir)/../../common/src/foundation/MleScheduler.cxx \
 	$(top_srcdir)/../../common/src/foundation/MleSet.cxx \
 	$(top_srcdir)/../../common/src/foundation/MleStage.cxx \
-	$(top_srcdir)/../../common/src/foundation/loadSet.cxx \
 	$(top_srcdir)/../../common/src/input/MleKeyboardPolled.cxx \
 	$(MLE_HOME)/Core/util/common/src/mlDebug.c \
 	$(MLE_HOME)/Core/util/common/src/mlErrno.c \
