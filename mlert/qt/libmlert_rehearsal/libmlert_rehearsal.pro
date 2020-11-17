@@ -20,6 +20,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH += \
     $$PWD/../../common/include \
     $$PWD/../../common/src/foundation \
+    $$PWD/../../common/src/input \
+    $$PWD/../../rehearsal/include \
     /opt/MagicLantern/include \
     /usr/local/include
 
@@ -35,7 +37,6 @@ DEFINES += \
 SOURCES += \
     $$PWD/../../common/src/foundation/3danim.cxx \
     $$PWD/../../common/src/foundation/3dchar.cxx \
-    $$PWD/../../common/src/foundation/loaddwp.cxx \
     $$PWD/../../common/src/foundation/loadSet.cxx \
     $$PWD/../../common/src/foundation/MleActorClass.cxx \
     $$PWD/../../common/src/foundation/MleActor.cxx \
