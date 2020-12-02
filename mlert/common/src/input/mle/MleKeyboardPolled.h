@@ -11,7 +11,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Wizzer Works
+// Copyright (c) 2000-2020 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -50,10 +50,12 @@
 #include "mle/MleEventDispatcher.h"
 #include "mle/MleKeyMap.h"
 
-#if defined(__sgi) || defined(__linux__)
+#if defined(__linux__)
+#ifdef MLE_XT
 // We'll use the Xt library to deal with X events.
 #include <X11/Intrinsic.h>
-#endif /* __sgi */
+#endif /* MLE_XT */
+#endif /* __linux__ */
 
 #if defined(WIN32)
 #include <windows.h>
@@ -66,7 +68,6 @@
  * Maximum number of keys which can be simultaneous down.
  * Default is 20.
  */
-
 #define MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN 20
 
 /**
@@ -83,7 +84,6 @@
  * 
  * @see MleKeyboardEvent, MleMousePolled, MleMouseEvent, MleJoystick and MleKeyMap.h.
  */
-
 class MLE_RUNTIME_API MleKeyboardPolled
 {
   public:
@@ -166,20 +166,28 @@ class MLE_RUNTIME_API MleKeyboardPolled
     // Signals a key that has just gone up.
     void keyWentUp(unsigned int keysym);
 
-#if defined(__sgi) || defined(__linux__)
-
-    // Handles X FocusIn, FocusOut, EnterNotify and LeaveNotify events
+#if defined(__linux__)
+#ifdef MLE_XT
+    // Handles X11 FocusIn, FocusOut, EnterNotify and LeaveNotify events
     static void MleFocusChange(Widget /* widget */,
 		XPointer /* clientData */, XEvent *event);
 
-    // Handlers X KeyPress and KeyReleased events
+    // Handles X11 KeyPress and KeyReleased events
     static void MleKeyboardPolledEventHandler(Widget w,
 		XPointer keyboardManager, XEvent *event);
+#endif /* MLE_XT */
+#ifdef MLE_QT
+    // Handles QKeyEvent events.
+    static void QT_KEYPRESS_EventHandler(MleEvent event,
+        void *callData, void *clientData);
 
-#endif /* __sgi */
+    // Handles QKeyEvent events.
+    static void QT_KEYRELEASE_EventHandler(MleEvent event,
+        void *callData, void *clientData);
+#endif /* MLE_QT */
+#endif /* __linux__ */
 
 #if defined(WIN32)
-
     // Handles Win32 WM_KEYDOWN events.
     static void WM_KEYDOWN_EventHandler(MleEvent event,
 		void *callData, void *clientData);
@@ -191,7 +199,6 @@ class MLE_RUNTIME_API MleKeyboardPolled
     // Handles Win32 WM_CHAR events.
     static void WM_CHAR_EventHandler(MleEvent event,
 		void *callData, void *clientData);
-
 #endif // WIN32
 
   public:
@@ -209,6 +216,5 @@ class MLE_RUNTIME_API MleKeyboardPolled
     unsigned int m_keysDownTable[MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN];
 
 };
-
 
 #endif /*__MLE_KEYBOARDPOLLED_H_*/

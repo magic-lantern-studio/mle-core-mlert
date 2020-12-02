@@ -5,7 +5,6 @@
  * @ingroup MleRteRehearsal
  *
  * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
@@ -48,15 +47,15 @@
 #if defined(WIN32)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#endif
+#endif /* WIN32 */
 #if defined(__linux__)
-#if defined(Q_OS_LINIX)
+#if defined(MLE_QT)
 #include <QWidget>
 #else
 #include <X11/Xlib.h>
 #include <X11/Intrinsic.h>
 #endif
-#endif
+#endif /* __linux__ */
 
 // Include Magic Lantern types.
 #include "mle/mlTypes.h"
@@ -76,37 +75,73 @@ class MleIvPlatformData : public MlePlatformData
   public:
 
 #if defined(__linux__)
-#if defined(Q_OS_LINUX)
+#if defined(MLE_QT)
     /* Qt platform */
-    QWidget *m_widget;                /* Qt widget for player window's render area. */
+    QWidget *m_widget;                /** Qt widget for player window's render area. */
 #else
     /* Xt platform */
-    Widget m_widget;                  /* Xt widget for player window's render area. */
-    XtAppContext m_appContext;        /* Application context for player window. */
+    Widget m_widget;                  /** Xt widget for player window's render area. */
+    XtAppContext m_appContext;        /** Application context for player window. */
 #endif
 #endif
 #if defined(WIN32)
-	HWND m_widget;                    /* Windows widget for player window's render area. */
+    HWND m_widget;                    /** Windows widget for player window's render area. */
 #endif
-    int m_focusEventHandlerRefCount;  /* Input event mgmt: Count of managers relying on focus events. */
-    MlBoolean m_inFocus;              /* Input event mgmt: Is widget in focus? */
-    MlBoolean m_keyboardActive;       /* Input event mgmt: Is keyboard active? */
+    int m_focusEventHandlerRefCount;  /** Input event mgmt: Count of managers relying on focus events. */
+    MlBoolean m_inFocus;              /** Input event mgmt: Is widget in focus? */
+    MlBoolean m_keyboardActive;       /** Input event mgmt: Is keyboard active? */
 
+    /**
+     * @brief Set keyboard manager.
+     *
+     * @param flag Boolean indicating that the keyboard manager has been set
+     * for the platform.
+     */
     void setKeyboardManager(MlBoolean flag)
     { m_keyboardManager = flag; }
 
+    /**
+     * @brief Test if the platform has a keyboard manager.
+     *
+     * @return <b>ML_TRUE</b> will be returned if the platform has a
+     * keyboard manager. Otherwise, <b>ML_FALSE</b> will be returned.
+     */
     MlBoolean hasKeyboardManager()
     { return m_keyboardManager; }
 
+    /**
+     * @brief Set mouse manager.
+     *
+     * @param flag Boolean indicating that the mouse manager has been set
+     * for the platform.
+     */
     void setMouseManager(MlBoolean flag)
     { m_mouseManager = flag; }
 
+    /**
+     * @brief Test if the platform has a mouse manager.
+     *
+     * @return <b>ML_TRUE</b> will be returned if the platform has a
+     * mouse manager. Otherwise, <b>ML_FALSE</b> will be returned.
+     */
     MlBoolean hasMouseManager()
     { return m_mouseManager; }
 
+    /**
+     * @brief Set joystick manager.
+     *
+     * @param flag Boolean indicating that the joystick manager has been set
+     * for the platform.
+     */
     void setJoystickManager(MlBoolean flag)
     { m_joystickManager = flag; }
 
+    /**
+     * @brief Test if the platform has a joystick manager.
+     *
+     * @return <b>ML_TRUE</b> will be returned if the platform has a
+     * joystic manager. Otherwise, <b>ML_FALSE</b> will be returned.
+     */
     MlBoolean hasJoystickManager()
     { return m_joystickManager; }
 

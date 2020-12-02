@@ -5,23 +5,33 @@
  * @ingroup MleInput
  *
  * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
-//  Copyright (C) 2000-2007  Wizzer Works
+// The MIT License (MIT)
 //
-//  Wizzer Works makes available all content in this file ("Content").
-//  Unless otherwise indicated below, the Content is provided to you
-//  under the terms and conditions of the Common Public License Version 1.0
-//  ("CPL"). A copy of the CPL is available at
+// Copyright (c) 2000-2020 Wizzer Works
 //
-//      http://opensource.org/licenses/cpl1.0.php
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
-//  For purposes of the CPL, "Program" will mean the Content.
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
 //
-//  For information concerning this Makefile, contact Mark S. Millard,
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
+//  For information concerning this header file, contact Mark S. Millard,
 //  of Wizzer Works at msm@wizzerworks.com.
 //
 //  More information concerning Wizzer Works may be found at
@@ -29,6 +39,14 @@
 //      http://www.wizzerworks.com
 //
 // COPYRIGHT_END
+
+#if defined(MLE_QT)
+#include <QtGlobal>
+#include <Qt>
+#include <QWidget>
+#include <QEvent>
+#include <QKeyEvent>
+#endif /* MLE_QT */
 
 // Include Magic Lantern header files.
 #include "mle/mlPlatformData.h"
@@ -43,7 +61,6 @@
 // Include Magic Lantern event manager.
 #include "mle/MleEventDispatcher.h"
 #endif /* WIN32 */
-
 
 //#define MLE_KEY_DEBUG 1
 
@@ -70,13 +87,13 @@ printf ( const char * format, ... )
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
-#endif
+#endif /* WIN32 */
 // Holds global keyboard manager (polled).
 MleKeyboardPolled *MleKeyboardPolled::g_keyboardManager = NULL;
 #if defined(WIN32)
 #pragma data_seg()
 #pragma comment("linker, /section:.GLOBALS,rws")
-#endif
+#endif /* WIN32 */
 
 MleKeyboardPolled::MleKeyboardPolled(void)
 {
@@ -85,9 +102,6 @@ MleKeyboardPolled::MleKeyboardPolled(void)
         m_keysDownTable[i] = 0;
   
     // Get the platform data.
-#if defined(__sgi)
-    MleSGIPlatformData *platformData = (MleSGIPlatformData *)g_theTitle->m_platformData;
-#endif /* __sgi */
 #if defined(WIN32)
 #ifdef MLE_REHEARSAL
 	MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
@@ -115,7 +129,7 @@ MleKeyboardPolled::MleKeyboardPolled(void)
     MleKeyboardPolled::g_keyboardManager = this;
     platformData->setKeyboardManager(MLE_INPUT_DEVICE_MANAGER_INSTANTIATED);
 
-#if defined(__sgi) || defined(__linux__)
+#if defined(__linux__)
 #if defined(MLE_XT)
 
     // Get the widget for the window's rendering area.
@@ -145,11 +159,22 @@ MleKeyboardPolled::MleKeyboardPolled(void)
     platformData->m_keyboardActive = FALSE;
 
 #endif /* MLE_XT */
-#endif /* __sgi */
+#ifdef MLE_QT
+    // Add keyboard event handler callbacks.
+    g_theTitle->m_theEventMgr->installEventCB(
+        (MleEvent) Qt::Key_Down,
+        (MleCallback) MleKeyboardPolled::QT_KEYPRESS_EventHandler,
+        this);
+    g_theTitle->m_theEventMgr->installEventCB(
+        (MleEvent) Qt::Key_Up,
+        (MleCallback) MleKeyboardPolled::QT_KEYRELEASE_EventHandler,
+        this);
+#endif /* MLE_QT */
+#endif /* __linux__ */
 
 #if defined(WIN32)
 
-// XXX - Not sure how to handle these event callbacks in rehearsal
+// Todo: Not sure how to handle these event callbacks in rehearsal
 // mode, ala Inventor Stage.
 //#ifndef MLE_REHEARSAL
     // Add keyboard message handler callbacks.
@@ -171,14 +196,9 @@ MleKeyboardPolled::MleKeyboardPolled(void)
 
 }
 
-
 MleKeyboardPolled::~MleKeyboardPolled(void)
 {
     // Get platform-independent data.
-#if defined(__sgi)
-    // Get platform-independent data.
-    MleSGIPlatformData *platformData = (MleSGIPlatformData *)g_theTitle->m_platformData;
-#endif /* __sgi */
 #if defined(WIN32)
 #ifdef MLE_REHEARSAL
 	MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
@@ -198,7 +218,7 @@ MleKeyboardPolled::~MleKeyboardPolled(void)
 #endif /* MLE_REHEARSAL */
 #endif /* __linux__ */
 
-#if defined(__sgi) || defined(__linux__)
+#if defined(__linux__)
 #if defined(MLE_XT)
     // Remove Xt event handlers
 
@@ -221,11 +241,16 @@ MleKeyboardPolled::~MleKeyboardPolled(void)
 		this);
 
 #endif /* MLE_XT */
-#endif /* __sgi */
+#ifdef MLE_QT
+    // Remove Qt evvent handlers.
+    g_theTitle->m_theEventMgr->uninstallEvent((MleEvent) Qt::Key_Down);
+    g_theTitle->m_theEventMgr->uninstallEvent((MleEvent) Qt::Key_Up);
+#endif /* MLE_QT */
+#endif /* __linux__ */
 
 #if defined(WIN32)
 
-// XXX - Not sure how to handle these event callbacks in rehearsal
+// Todo: Not sure how to handle these event callbacks in rehearsal
 // mode, ala Inventor Stage.
 //#ifndef MLE_REHEARSAL
     // Remove Win32 message handlers.
@@ -236,7 +261,7 @@ MleKeyboardPolled::~MleKeyboardPolled(void)
 
 #endif /* WIN32 */
 
-    // Release keyboard manager resource
+    // Release keyboard manager resource.
     platformData->setKeyboardManager(MLE_INPUT_DEVICE_MANAGER_NOT_INSTANTIATED);
     MleKeyboardPolled::g_keyboardManager = NULL;
 }
@@ -250,7 +275,7 @@ MleKeyboardPolled::keyboardIsActive(void)
 #ifdef MLE_REHEARSAL
     MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
     result = platformData->m_keyboardActive;
-    #else
+#else
     MlePlatformData *platformData = (MlePlatformData *)g_theTitle->m_platformData;
 #if defined(MLE_XT)
     MleXtPlatformData *platformData = (MleXtPlatformData *)g_theTitle->m_platformData;
@@ -268,22 +293,22 @@ MleKeyboardPolled::keyboardIsActive(void)
     return result;
 }
 
-
 MlBoolean
 MleKeyboardPolled::keyDown(unsigned int keysym)
 {
     MlBoolean result = FALSE;
 
     for (int i = 0 ; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
+    {
         if (m_keysDownTable[i] == keysym)
 		{
             result = TRUE;
             break;
 		}
+    }
 
     return (result);
 }
-
 
 MlBoolean
 MleKeyboardPolled::getInputString(
@@ -293,11 +318,10 @@ MleKeyboardPolled::getInputString(
 	int /* timeout */)
 {
     MLE_ASSERT(0);
-    // XXX -  I'll implement this as a bonus when I have time!
+    // Todo: implement this.
 
     return FALSE;
 }
-
 
 void
 MleKeyboardPolled::keyWentDown(unsigned int keysym)
@@ -306,7 +330,7 @@ MleKeyboardPolled::keyWentDown(unsigned int keysym)
     int i;
 
 #if defined(MLE_KEY_DEBUG)
-    printf("KEYDOWN: %x\n", keysym);
+    printf("MleKeyboardPolled: KEY DOWN: 0x%x\n", keysym);
 #endif /* MLE_KEY_DEBUG */
 
     for (i = 0 ; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
@@ -314,7 +338,7 @@ MleKeyboardPolled::keyWentDown(unsigned int keysym)
         if (m_keysDownTable[i] == keysym)
 		{
 #if defined(MLE_KEY_DEBUG)
-            printf("  KEY ALREADY THERE: %x\n", keysym);
+            printf("MleKeyboardPolled: KEY ALREADY THERE: 0x%x\n", keysym);
 #endif /* MLE_KEY_DEBUG */
            alreadyThere = TRUE;
 		}
@@ -327,7 +351,7 @@ MleKeyboardPolled::keyWentDown(unsigned int keysym)
 			if (m_keysDownTable[i] == 0)
 			{
 #if defined(MLE_KEY_DEBUG)
-				printf("  KEY STORED: %x\n", keysym);
+                printf("MleKeyboardPolled: KEY STORED: 0x%x\n", keysym);
 #endif /* MLE_KEY_DEBUG */
 				m_keysDownTable[i] = keysym;
 				break;
@@ -339,7 +363,7 @@ MleKeyboardPolled::keyWentDown(unsigned int keysym)
         (i == MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN))
 	{
 #if defined(MLE_KEY_DEBUG)
-		printf("  KEY STACK OVERFLOW: %x\n", keysym);
+        printf("MleKeyboardPolled: KEY STACK OVERFLOW: 0x%x\n", keysym);
 #endif /* MLE_KEY_DEBUG */
 		m_keysDownTable[0] = keysym;
 		for (int i = 1 ; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
@@ -351,7 +375,7 @@ void
 MleKeyboardPolled::keyWentUp(unsigned int keysym)
 {
 #if defined(MLE_KEY_DEBUG)
-    printf("KEYUP: %x\n", keysym);
+    printf("MleKeyboardPolled: KEY UP: 0x%x\n", keysym);
 #endif /* MLE_KEY_DEBUG */
   
     for (int i= 0; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
@@ -359,7 +383,7 @@ MleKeyboardPolled::keyWentUp(unsigned int keysym)
         if (m_keysDownTable[i] == keysym)
 		{
 #if defined(MLE_KEY_DEBUG)
-			printf("  KEY REMOVED: %x\n", keysym);
+            printf("MleKeyboardPolled: KEY REMOVED: 0x%x\n", keysym);
 #endif /* MLE_KEY_DEBUG */
 			m_keysDownTable[i] = 0;
 			break;
@@ -374,26 +398,20 @@ MleKeyboardPolled::operator new(size_t tSize)
 	return p;
 }
 
-
 void
 MleKeyboardPolled::operator delete(void *p)
 {
 	mlFree(p);
 }
 
-
-#if defined(__sgi) || defined(__linux__)
+#if defined(__linux__)
 #if defined(MLE_XT)
-
 void 
 MleKeyboardPolled::MleFocusChange(
 	Widget   /* widget */,
 	XPointer /* clientData */,
 	XEvent *event)
 {
-#if defined(__sgi)
-    MleSGIPlatformData *platformData = (MleSGIPlatformData *)g_theTitle->m_platformData;
-#endif
 #if defined(__linux__)
 #ifdef MLE_REHEARSAL
 	MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
@@ -457,12 +475,56 @@ MleKeyboardPolled::MleKeyboardPolledEventHandler(
 			break;
 	}
 }
-
 #endif /* MLE_XT */
-#endif /* __sgi */
+#ifdef MLE_QT
+void
+MleKeyboardPolled::QT_KEYPRESS_EventHandler(MleEvent event,
+        void *eventData, void *clientData)
+{
+    QEvent *data = (QEvent *) eventData;
+    MleKeyboardPolled *mgr = (MleKeyboardPolled *) clientData;
+
+    if (data->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = (QKeyEvent *)data;
+        unsigned int keysym = keyEvent->nativeVirtualKey();
+
+#if defined(MLE_KEY_DEBUG)
+        const char *text = keyEvent->text().toStdString().c_str();
+        printf("MleKeyboardPolled: KeyPress Event: %s: key = 0x%x, vkey=0x%x\n",
+               text, keyEvent->key(), keyEvent->nativeVirtualKey());
+#endif /* MLE_KEY_DEBUG */
+
+        // Filter which keys to capture .
+        //if (! (((keysym >= MLE_KEY_0) && (keysym <= MLE_KEY_z))
+        if ((((keysym >= MLE_KEY_0) && (keysym <= MLE_KEY_z))
+            || (keysym == MLE_KEY_BackSpace)
+            || (keysym == MLE_KEY_Return)
+            || (keysym == MLE_KEY_Escape)
+            || (keysym == MLE_KEY_Tab)))
+        {
+            mgr->keyWentDown(keysym);
+        }
+    }
+}
+
+void
+MleKeyboardPolled::QT_KEYRELEASE_EventHandler(MleEvent event,
+        void *eventData, void *clientData)
+{
+    QEvent *data = (QEvent *) eventData;
+    MleKeyboardPolled *mgr = (MleKeyboardPolled *) clientData;
+
+    if (data->type() == QEvent::KeyRelease) {
+        QKeyEvent *keyEvent = (QKeyEvent *)data;
+        unsigned int keysym = keyEvent->nativeVirtualKey();
+
+        mgr->keyWentUp(keysym);
+    }
+}
+#endif /* MLE_QT */
+#endif /* __linux__ */
 
 #if defined(WIN32)
-
 void
 MleKeyboardPolled::WM_KEYDOWN_EventHandler(
 	MleEvent /* event */,
@@ -516,5 +578,4 @@ MleKeyboardPolled::WM_CHAR_EventHandler(
 
     mgr->keyWentDown(data->wParam);
 }
-
 #endif /* WIN32 */
