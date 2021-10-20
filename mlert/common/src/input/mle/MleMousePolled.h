@@ -3,15 +3,13 @@
 /**
  * @file MleMousePolled.h
  * @ingroup MleInput
- *
- * @author Mark S. Millard
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Wizzer Works
+// Copyright (c) 2015-2021 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,26 +41,22 @@
 #ifndef __MLE_MOUSEPOLLED_H_
 #define __MLE_MOUSEPOLLED_H_
 
-/************************Begin common includes***********************/
+// Include Magic Lantern header files.
 #include "mle/mlTypes.h"
 #include "mle/MleKeyMap.h"
-/************************End common includes*************************/
 
-
-/************************Begin Linux includes***********************/
-#if defined(MLE_REHEARSAL) || defined(__linux__)
+// Include Linux header files
+#if defined(__linux__)
+#ifdef MLE_XT
 #include <X11/Intrinsic.h>
-#endif // MLE_REHEARSAL or __linux__
-/*************************End Linux includes*************************/
+#endif // MLE_XT
+#endif // __linux__
 
-
-/*************************Begin Win32 includes*********************/
+// Include Windows header files.
 #if defined(WIN32)
 #include <windows.h>
 #include "mle/MleEventDispatcher.h"
 #endif // WIN32
-/*************************End Win32 includes***********************/
-
 
 
 /*********************************************************************
@@ -92,131 +86,118 @@ SEE ALSO
      and keymap.h.
 *********************************************************************/
 
-
 #define MLE_MAX_NUMBER_OF_MOUSE_BUTTONS_SUPPORTED 3
-
 
 class MleMousePolled
 {
+  public:
 
-/************ MleMousePolled member functions  ***********************/
-public:
-  //////////
-  // Constructor for creating an instance of this mouse manager.
-  // This object should be deleted when the title no longer needs it.
-  // The current instance of the polled mouse manager, if any,
-  // can be accessed through this class's mouseManager static variable.
-  MleMousePolled(void);
+    // Constructor for creating an instance of this mouse manager.
+    // This object should be deleted when the title no longer needs it.
+    // The current instance of the polled mouse manager, if any,
+    // can be accessed through this class's mouseManager static variable.
+    MleMousePolled(void);
 
-  //////////
-  // Destructor releases mouse driver resources and ensures 
-  // that the default platform mouse cursor pointer is restored.
-  ~MleMousePolled(void);
+    // Destructor releases mouse driver resources and ensures
+    // that the default platform mouse cursor pointer is restored.
+    ~MleMousePolled(void);
 
-  //////////
-  // Returns the number of buttons on the mouse.
-  // If it returns 0, then there's no mouse physically
-  // attached to the system.
-  int getNumberOfButtons(void);
+    // Returns the number of buttons on the mouse.
+    // If it returns 0, then there's no mouse physically
+    // attached to the system.
+    int getNumberOfButtons(void);
 
-  //////////
-  // Returns TRUE when given mouse button is down and FALSE when
-  // the button is up.  If keysym is 0, then TRUE will be
-  // returned if any button is down. The mouse buttons are
-  // recognized by the following FireWalker keysyms:
-  //
-  //    MLE_KEY_Pointer_Button1  -- left button
-  //    MLE_KEY_Pointer_Button2  -- middle button
-  //    MLE_KEY_Pointer_Button3  -- right button
-  //
-  // Note: FireWalker keysyms are defined in keymap.h.
-  //
-  MlBoolean buttonDown(unsigned int keysym);
+    // Returns TRUE when given mouse button is down and FALSE when
+    // the button is up.  If keysym is 0, then TRUE will be
+    // returned if any button is down. The mouse buttons are
+    // recognized by the following FireWalker keysyms:
+    //
+    //    MLE_KEY_Pointer_Button1  -- left button
+    //    MLE_KEY_Pointer_Button2  -- middle button
+    //    MLE_KEY_Pointer_Button3  -- right button
+    //
+    // Note: Magic Lantern keysyms are defined in MleKeyMap.h.
+    //
+    MlBoolean buttonDown(unsigned int keysym);
 
-  //////////
-  // Returns TRUE when given modifier key was down when
-  // the mouse data was last updated. 
-  // keysym must be a modifier key supported by the
-  // target platform. The common modifiers supported
-  // by SGI and Windows are:
-  //
-  //    MLE_KEY_Control -- control key modifier
-  //    MLE_KEY_Shift   -- shift key modifier
-  //
-  // If a key that's not supported as a modifier is passed in,
-  // then the return value will be meaningless.
-  MlBoolean modifierDown(unsigned int keysym);
+    // Returns TRUE when given modifier key was down when
+    // the mouse data was last updated.
+    // keysym must be a modifier key supported by the
+    // target platform. The common modifiers supported
+    // by Linux and Windows are:
+    //
+    //    MLE_KEY_Control -- control key modifier
+    //    MLE_KEY_Shift   -- shift key modifier
+    //
+    // If a key that's not supported as a modifier is passed in,
+    // then the return value will be meaningless.
+    MlBoolean modifierDown(unsigned int keysym);
 
-  //////////
-  // Returns the current mouse position in
-  // absolute x,y coordinates. These coordinates
-  // are relative to the window of the title in
-  // which the mouse pointer is in.
-  void getPosition(int *x, int *y);
+    // Returns the current mouse position in
+    // absolute x,y coordinates. These coordinates
+    // are relative to the window of the title in
+    // which the mouse pointer is in.
+    void getPosition(int *x, int *y);
 
-  //////////
-  // Returns TRUE if visual cursor has been set.
-  // Sets the mouse cursor to the supplied one.
-  // Cursors are stored in a file in a format
-  // appropriate for each platform.
-  // The initial cursor is the default cursor used
-  // by the platform. Since a title can use multiple 
-  // cursors, it's the title's responsibility to load
-  // and register the necessary cursors.
-  MlBoolean setCursor(char* filename);
+    // Returns TRUE if visual cursor has been set.
+    // Sets the mouse cursor to the supplied one.
+    // Cursors are stored in a file in a format
+    // appropriate for each platform.
+    // The initial cursor is the default cursor used
+    // by the platform. Since a title can use multiple
+    // cursors, it's the title's responsibility to load
+    // and register the necessary cursors.
+    MlBoolean setCursor(char* filename);
 
-  //////////
-  // Sets the visibility of the mouse cursor.
-  // If show = TRUE, then the cursor will be shown;
-  // else it will be hidden. It's the title's
-  // responsibility to remember whether the
-  // mouse is hidden or not. Initially, the
-  // mouse is visible.
-  void setVisibility(MlBoolean show);
+    // Sets the visibility of the mouse cursor.
+    // If show = TRUE, then the cursor will be shown;
+    // else it will be hidden. It's the title's
+    // responsibility to remember whether the
+    // mouse is hidden or not. Initially, the
+    // mouse is visible.
+    void setVisibility(MlBoolean show);
 
+  private:
 
-private:
-  // Auxiliary function for MleMousePolledEventHandler
-  void updateModifiers(unsigned int modifiers);
+    // Auxiliary function for MleMousePolledEventHandler
+    void updateModifiers(unsigned int modifiers);
 
-#if defined(MLE_REHEARSAL) || defined(__sgi) || defined(__linux__)
-  // Handles X mouse events
-  static void MleMousePolledEventHandler(Widget w,
-					XPointer mouseManager,
-					XEvent *event);
-#endif // MLE_REHEARSAL or __sgi
+#if defined(__linux__)
+#ifdef MLE_XT
+    // Handles X mouse events
+    static void MleMousePolledEventHandler(Widget w,
+        XPointer mouseManager, XEvent *event);
+#endif // MLE_XT
+#endif // __linux__
 
 #if defined(WIN32)
-  // Handles Win32 mouse messages
-  static void  MleMousePolledEventHandler(MleEvent event,
-					 void *eventData,
-					 void *mouseManager);
+    // Handles Win32 mouse messages
+    static void  MleMousePolledEventHandler(MleEvent event,
+        void *eventData, void *mouseManager);
 #endif // WIN32
 
-protected:
+  public:
 
-/************ MleMousePolled member variables  ***********************/
-public:
-  //////////
-  // This global can be used to access the current polled 
-  // mouse manager instance. 
-  static MleMousePolled *mouseManager;
+      // This global can be used to access the current polled
+      // mouse manager instance.
+      static MleMousePolled *mouseManager;
 
-private:  
-  // Latest mouse x position
-  int x_pos;
+  private:
 
-  // Latest mouse y position
-  int y_pos;
+    // Latest mouse x position
+    int x_pos;
 
-  // State of three supported mouse buttons
-  MlBoolean buttonIsDown[MLE_MAX_NUMBER_OF_MOUSE_BUTTONS_SUPPORTED];
+    // Latest mouse y position
+    int y_pos;
 
-  // Control key modifier state (TRUE = down)
-  MlBoolean controlKeyDown;
+    // State of three supported mouse buttons
+    MlBoolean buttonIsDown[MLE_MAX_NUMBER_OF_MOUSE_BUTTONS_SUPPORTED];
 
-  // Shift key modifier state (TRUE = down)
-  MlBoolean shiftKeyDown;
+    // Control key modifier state (TRUE = down)
+    MlBoolean controlKeyDown;
+
+    // Shift key modifier state (TRUE = down)
+    MlBoolean shiftKeyDown;
 };
 
 

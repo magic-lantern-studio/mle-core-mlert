@@ -53,7 +53,9 @@
 #include <string.h>
 #ifdef __linux__
 #else
+#ifndef __APPLE__
 #include <stream.h>
+#endif /* ! __APPLE__ */
 #endif
 #endif /* WIN32 */
 

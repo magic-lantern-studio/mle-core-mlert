@@ -3,14 +3,11 @@
 /**
  * @file MleOpcode.h
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @created May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
-//  Copyright (C) 2000-2007  Wizzer Works
+//  Copyright (C) 2000-2021  Wizzer Works
 //
 //  Wizzer Works makes available all content in this file ("Content").
 //  Unless otherwise indicated below, the Content is provided to you

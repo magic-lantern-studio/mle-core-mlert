@@ -4,9 +4,6 @@
  * @file 3danim.h
  * @ingroup MleFoundation
  *
- * @author Mark S. Millard
- * @date May 1, 2003
- *
  * This file defines 3D animation registry structures.
  */
 
@@ -14,7 +11,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2018 Wizzer Works
+// Copyright (c) 2015-2021 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal

@@ -3,15 +3,13 @@
 /**
  * @file MleMouseEvent.h
  * @ingroup MleInput
- *
- * @author Mark S. Millard
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Wizzer Works
+// Copyright (c) 2015-2021 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -48,8 +46,10 @@
 
 /* X11 includes */
 #if defined(__linux__)
+#ifdef MLE_XT
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#endif // MLE_XT
 #endif /* __linux__ */
 
 /* Win32 includes */
@@ -109,7 +109,7 @@ enum MleKeyState
 //                 supported by MleMouseEvent.
 //  xxx this enum will be inside the class definition
 //      and will be parametrized by platform event type.
-enum MleMouseEvent
+enum MleMouseEventType
 {
   MLE_EVENT_MOUSE_ALL,    // used to request ALL mouse events
 
@@ -141,9 +141,9 @@ enum MleMouseEvent
 //                  clientData - The arbitrary client data passed
 //                               through the registerCB member function.
 typedef int (*MleMouseEventCB)
-     (MleMouseEvent mouseEvent,  // one of MleMouseEvent
-      void *eventData,          // platform-specific event data
-      void *clientData)         // arbitrary client data.
+     (MleMouseEventType mouseEvent,  // one of MleMouseEvent
+      void *eventData,               // platform-specific event data
+      void *clientData);             // arbitrary client data.
 
 
 /* MleMouseEvent Class
@@ -264,7 +264,9 @@ private:
 public:
 private:  
 #if defined (__linux__)
+#ifdef MLE_XT
   Display* display;                     // caches pointer to X display
+#endif // MLE_XT
 #endif /* __linux__ */
 };
 

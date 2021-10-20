@@ -13,7 +13,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2021 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,7 @@
 
 // Forward class declarations
 
-#if defined(__sgi) || defined(WIN32) || defined(__linux__)
+#if defined(WIN32) || defined(__linux__) || defined(__APPLE__)
 class MleEventDispatcher;
 #endif
 class MleScheduler;
@@ -71,7 +71,7 @@ typedef struct MLE_RUNTIME_API MleDirector
 	 */
     MleScheduler *m_theScheduler;
 
-#if defined(__sgi) || defined(WIN32) || defined(__linux__)
+#if defined(WIN32) || defined(__linux__) || defined(__APPLE__)
 	/**
 	 * The event dispatch manager.
 	 */

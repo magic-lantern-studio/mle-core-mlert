@@ -3,16 +3,13 @@
 /**
  * @file MlePtrContainer.h
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @created May 5, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2018 Wizzer Works
+// Copyright (c) 2015-2021 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +54,7 @@
 #include "mle/MlePtrArray.h"
 
 #ifdef MLE_DIGITAL_WORKPRINT
-#ifdef __linux__
+#if defined(__linux__) || defined(__APPLE__)
 #include <string.h>
 #endif
 #include <mle/DwpStrKeyDict.h>

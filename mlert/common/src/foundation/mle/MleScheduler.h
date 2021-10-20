@@ -3,16 +3,13 @@
 /**
  * @file MleScheduler.h
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @created May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2021 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal

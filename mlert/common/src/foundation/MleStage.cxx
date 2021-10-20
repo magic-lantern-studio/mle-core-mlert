@@ -76,7 +76,9 @@ MleStage::MleStage(void)
     launchCB = NULL;
     manipCB = NULL;
 #if !defined(__linux__)
+#if !defined(__APPLE__)
     rightMouseCB = NULL;
+#endif
 #endif /* Add this back in once we define it for Linux. */
 
     m_pickClientData = NULL;

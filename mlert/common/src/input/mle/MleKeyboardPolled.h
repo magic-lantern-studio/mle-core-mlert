@@ -3,15 +3,13 @@
 /**
  * @file MleKeyboardPolled.h
  * @ingroup MleInput
- *
- * @author Mark S. Millard
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2000-2020 Wizzer Works
+// Copyright (c) 2000-2021 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -166,7 +164,7 @@ class MLE_RUNTIME_API MleKeyboardPolled
     // Signals a key that has just gone up.
     void keyWentUp(unsigned int keysym);
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef MLE_XT
     // Handles X11 FocusIn, FocusOut, EnterNotify and LeaveNotify events
     static void MleFocusChange(Widget /* widget */,

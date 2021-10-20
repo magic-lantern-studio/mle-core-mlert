@@ -109,7 +109,7 @@ MleKeyboardPolled::MleKeyboardPolled(void)
     MleWin32PlatformData *platformData = (MleWin32PlatformData *)g_theTitle->m_platformData;
 #endif /* !MLE_REHEARSAL */
 #endif /* WIN32 */
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef MLE_REHEARSAL
 	MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
 #else
@@ -120,7 +120,7 @@ MleKeyboardPolled::MleKeyboardPolled(void)
 	MlePlatformData *platformData = (MlePlatformData *)g_theTitle->m_platformData;
 #endif /* MLE_XT */
 #endif /* MLE_REHEARSAL */
-#endif /* __linux__ */
+#endif /* __linux__ || __APPLE__ */
     MLE_ASSERT(platformData);
 
     // Install and register only one keyboard manager (of any type) per title at any one time.
@@ -129,7 +129,7 @@ MleKeyboardPolled::MleKeyboardPolled(void)
     MleKeyboardPolled::g_keyboardManager = this;
     platformData->setKeyboardManager(MLE_INPUT_DEVICE_MANAGER_INSTANTIATED);
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #if defined(MLE_XT)
 
     // Get the widget for the window's rendering area.
@@ -206,7 +206,7 @@ MleKeyboardPolled::~MleKeyboardPolled(void)
     MleWin32PlatformData *platformData = (MleWin32PlatformData *)g_theTitle->m_platformData;
 #endif /* !MLE_REHEARSAL */
 #endif /* WIN32 */
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef MLE_REHEARSAL
 	MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
 #else
@@ -218,7 +218,7 @@ MleKeyboardPolled::~MleKeyboardPolled(void)
 #endif /* MLE_REHEARSAL */
 #endif /* __linux__ */
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #if defined(MLE_XT)
     // Remove Xt event handlers
 
@@ -271,7 +271,7 @@ MleKeyboardPolled::keyboardIsActive(void)
 {
     MlBoolean result = FALSE;
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef MLE_REHEARSAL
     MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
     result = platformData->m_keyboardActive;
@@ -404,7 +404,7 @@ MleKeyboardPolled::operator delete(void *p)
 	mlFree(p);
 }
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #if defined(MLE_XT)
 void 
 MleKeyboardPolled::MleFocusChange(

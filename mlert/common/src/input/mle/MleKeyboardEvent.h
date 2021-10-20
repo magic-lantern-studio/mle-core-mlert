@@ -3,15 +3,13 @@
 /**
  * @file MleKeyboardEvent.h
  * @ingroup MleInput
- *
- * @author Mark S. Millard
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Wizzer Works
+// Copyright (c) 2015-2021 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -50,10 +48,12 @@
 #include "mle/MleEventDispatcher.h"
 #include "mle/MleKeyMap.h"
 
-#if defined(MLE_REHEARSAL) || defined(__sgi) || defined(__linux__)
+#if defined(__linux__)
+#ifdef MLE_XT
 // We'll use the Xt library to deal with X events.
 #include <X11/Intrinsic.h>
-#endif /* MLE_REHEARSAL or __sgi */
+#endif // MLE_XT
+#endif /* MLE_REHEARSAL */
 
 #if defined(WIN32)
 #include <windows.h>
@@ -255,14 +255,14 @@ class MLE_RUNTIME_API MleKeyboardEvent
   // Dispatches events to registered event handlers.
   void dispatch(void *platformEvent, MleKeyboardCallbackName eventType);
 
-#if defined(__sgi) || defined(__linux__)
-
+#if defined(__linux__)
+#ifdef MLE_XT
   // Handles Xt keyboard events.
   static void MleKeyboardEvent::EventHandler(Widget widget,
 					    XPointer keyboardManager,
 					    XEvent *event);
-
-#endif /* __sgi */
+#endif // MLE_XT
+#endif /* __linux__ */
 
 #if defined(WIN32)
   // Handles Win32 WM_KEYDOWN events.
