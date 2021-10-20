@@ -3,15 +3,13 @@
 /**
  * @file mlPlatformData.h
  * @ingroup MleRteRehearsal
- *
- * @author Mark S. Millard
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2020 Wizzer Works
+// Copyright (c) 2017-2021 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +46,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif /* WIN32 */
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #if defined(MLE_QT)
 #include <QWidget>
 #else
@@ -74,7 +72,7 @@ class MleIvPlatformData : public MlePlatformData
 {
   public:
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #if defined(MLE_QT)
     /* Qt platform */
     QWidget *m_widget;                /** Qt widget for player window's render area. */
