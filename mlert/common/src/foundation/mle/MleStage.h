@@ -54,7 +54,7 @@
 // Qt platform on Windows.
 #endif /* Q_OS_WIN */
 #endif /* WIN32 */
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
 // Qt platform on Unix
 #else /* Q_OS_UNIX */
@@ -63,7 +63,7 @@
 #endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
 class QWindow;
 #endif /* Q_OS_UNIX */
@@ -183,7 +183,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // new name.
     virtual void setName(char *newName);
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
     // Event handling: each stage does its own event handling; this
     // is so that particular stages, such as ones that use inventor,
     // can control the select blocking in the main loop.
@@ -218,7 +218,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // (for example, if the stage does not support changing its size).
     virtual int setSize(int width,int height);
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
     // Qt platform on Unix.
 
@@ -298,7 +298,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     void setFinishManipCallback(void (*manipCB)(MleActor *actor,
     void *clientData), void *clientData = NULL);
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
     // Qt platform on Unix.
     void setRightMouseCallback(void (*rightMouseCB)(QEvent* e,
@@ -372,7 +372,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
     virtual void showDecoration(int onOff);
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
     // Qt platform on Unix.
 
@@ -417,7 +417,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     void (*startManipCB)(MleActor *actor,void *clientData);
     void (*manipCB)(MleActor *actor,void *clientData);
     void (*finishManipCB)(MleActor *actor,void *clientData);
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
     // Qt platform on Unix.
     void (*rightMouseCB)(QEvent* e,void *clientData);
@@ -447,7 +447,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // Editing mode.
     int m_editMode;
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
     // Qt platform for UNIX.
     //static int checkForDoubleClick(QButtonEvent* event);
