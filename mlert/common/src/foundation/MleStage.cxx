@@ -3,15 +3,13 @@
 /**
  * @file MleStage.cxx
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Wizzer Works
+// Copyright (c) 2015-2021 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -231,7 +229,7 @@ MleStage::setName(char *newName)
     m_name = strdup(newName);
 }
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 // X event handling: each stage does its own event handling; this
 // is so that particular stages, such as ones that use inventor,
 // can control the select blocking in the main loop.
@@ -282,7 +280,7 @@ int MleStage::setSize(int,int)
     return 1;
 }
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
 // Qt on Linux platfrom.
 QWidget *
@@ -623,7 +621,7 @@ MleStage::setFinishManipCallback(void (*cb)(MleActor *actor, void *client),void 
     m_finishManipClientData = client;
 }
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
 // Qt on Linux platform.
 void
@@ -663,7 +661,7 @@ MleStage::setRightMouseCallback(void (*cb)(MSG *e, void *client),void *client)
 #define DOUBLE_CLICK_USECS 500000L
 #define DOUBLE_CLICK_MSECS 500L
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
 // Qt on Linux platform.
 #else
