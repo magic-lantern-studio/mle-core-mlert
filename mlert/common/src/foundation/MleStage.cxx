@@ -458,7 +458,7 @@ void MleStage::showDecoration(int /*onOff*/)
 {
 }
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
 // Qt on Linux platform.
 void
