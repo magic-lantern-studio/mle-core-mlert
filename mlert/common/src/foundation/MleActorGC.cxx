@@ -3,16 +3,13 @@
 /**
  * @file MleActorGC.cxx
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2000-2018 Wizzer Works
+// Copyright (c) 2000-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -158,7 +155,8 @@ readIndex(unsigned char *&streamPtrRef,
     
     while ((byte = nextStreamByte(streamPtrRef, streamStart, streamEnd)) >= 0)
     {
-        MLE_ASSERT((value & (signed int) 0x80000000 >> valueBits - 1) == 0);
+		//MLE_ASSERT((value & (signed int) 0x80000000 >> valueBits - 1) == 0);
+        MLE_ASSERT((value & (signed int)(0x80000000 >> valueBits) - 1) == 0);
         value = (value << valueBits) | byte;
     }
     stdOutIndex(value);

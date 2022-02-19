@@ -262,13 +262,13 @@ Mle3dCharacterRegistry* Mle3dCharacterRegistry::read(char* filename)
     if (filename) 
     {
 		unsigned int filesize = 0;
-        int statcheck = open(filename,O_RDONLY);
+        int statcheck = _open(filename,O_RDONLY);
         if (statcheck >= 0) 
         {
 			struct stat status;
 	        fstat(statcheck,&status);
 	        filesize = status.st_size;
-	        close(statcheck);
+	        _close(statcheck);
 	  
 	        if (filesize) 
             {

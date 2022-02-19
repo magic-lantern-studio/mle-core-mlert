@@ -3,16 +3,13 @@
 /**
  * @file MleActorClass.cxx
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2019 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -67,7 +64,7 @@
 MleActorClassDict MleActorClass::g_registry(20);
 #if defined(WIN32)
 #pragma data_seg()
-#pragma comment("linker, /section:.GLOBALS,rws")
+#pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
 
 
@@ -79,7 +76,7 @@ MleActorClass::MleActorClass(const char *name,
 : MleDwpStrKeyDict(20), m_propDatasetDict(3)
 {
     /* Set the class name. */
-    m_name = strdup(name);
+    m_name = _strdup(name);
 
 	/* Set the editor names. */
 	m_editorName = 0;
@@ -116,9 +113,9 @@ MleActorClass::MleActorClass(const char *name,
 : MleDwpStrKeyDict(20), m_propDatasetDict(3)
 {
 	/* Set the class and editor names. */
-    m_name = strdup(name);
-	m_editorName = (e) ? strdup(e) : strdup("");
-	m_contentEditorName = (ce) ? strdup(ce) : strdup("");
+    m_name = _strdup(name);
+	m_editorName = (e) ? _strdup(e) : _strdup("");
+	m_contentEditorName = (ce) ? _strdup(ce) : _strdup("");
 
 	/* Remember the creation func. */
 	create = c;

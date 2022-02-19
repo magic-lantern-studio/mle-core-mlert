@@ -163,7 +163,7 @@ MleDwpStrKeyDict MleGroup::g_instanceRegistry;
 void
 MleGroup::registerInstance(const char* name)
 {
-   this->m_name = strdup(name);
+   this->m_name = _strdup(name);
    g_instanceRegistry.set(this->m_name, this);
 }
 

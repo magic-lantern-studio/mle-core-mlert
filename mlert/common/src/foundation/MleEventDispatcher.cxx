@@ -3,16 +3,13 @@
 /**
  * @file MleEventDispatcher.cxx
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -45,9 +42,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __sgi
-#include <string.h>
-#endif /* __sgi */
 #ifdef WIN32
 #include <memory.h>
 #endif /* WIN32 */

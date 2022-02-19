@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -71,7 +71,7 @@ class MLE_RUNTIME_API MleObject
      * @param name A pointer to the name of the property to get.
      * @param value An output parameter for returning the property value.
      */
-    static void getProperty(MleObject */*object*/, const char */*name*/, unsigned char **value)
+    static void getProperty(MleObject * /*object*/, const char * /*name*/, unsigned char **value)
     { /* There are no global properties to retrieve. */ value = 0; }
 
     /**
@@ -83,7 +83,7 @@ class MLE_RUNTIME_API MleObject
       * @param name A pointer to the name of the property to set.
       * @param value An input parameter for setting the property value.
       */
-    static void setProperty(MleObject */*object*/, const char */*name*/, unsigned char */*value*/)
+    static void setProperty(MleObject * /*object*/, const char * /*name*/, unsigned char * /*value*/)
 	{ /* There are no global properties to set. */ }
 
     /**

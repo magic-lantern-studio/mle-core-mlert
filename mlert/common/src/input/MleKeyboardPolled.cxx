@@ -92,7 +92,7 @@ printf ( const char * format, ... )
 MleKeyboardPolled *MleKeyboardPolled::g_keyboardManager = NULL;
 #if defined(WIN32)
 #pragma data_seg()
-#pragma comment("linker, /section:.GLOBALS,rws")
+#pragma comment(linker, "/section:.GLOBALS,rws")
 #endif /* WIN32 */
 
 MleKeyboardPolled::MleKeyboardPolled(void)
