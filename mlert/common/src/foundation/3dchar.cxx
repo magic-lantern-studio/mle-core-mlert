@@ -4,9 +4,6 @@
  * @file 3dchar.cxx
  * @ingroup MleFoundation
  *
- * @author Mark S. Millard
- * @date May 1, 2003
- *
  * This file implements 3D character registry structures.
  */
 
@@ -14,7 +11,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -262,13 +259,21 @@ Mle3dCharacterRegistry* Mle3dCharacterRegistry::read(char* filename)
     if (filename) 
     {
 		unsigned int filesize = 0;
+#ifdef WIN32
         int statcheck = _open(filename,O_RDONLY);
+#else
+        int statcheck = open(filename,O_RDONLY);
+#endif
         if (statcheck >= 0) 
         {
 			struct stat status;
 	        fstat(statcheck,&status);
 	        filesize = status.st_size;
+#ifdef WIN32
 	        _close(statcheck);
+#else
+	        close(statcheck);
+#endif
 	  
 	        if (filesize) 
             {

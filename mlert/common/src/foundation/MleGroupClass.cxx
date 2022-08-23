@@ -3,16 +3,13 @@
 /**
  * @file MleActor.cxx
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -100,9 +97,13 @@ MleGroupClass::MleGroupClass(const char *name,
 : MleDwpStrKeyDict(20)
 {
 	/* Set the editor name. */
-	/* XXX - need to add a destructor to free these. */
+#ifdef WIN32
 	m_editorName = (e) ? _strdup(e) : _strdup("");
 	m_contentEditorName = (ce) ? _strdup(ce) : _strdup("");
+#else
+	m_editorName = (e) ? strdup(e) : strdup("");
+	m_contentEditorName = (ce) ? strdup(ce) : strdup("");
+#endif
 
 	/* Remember the creation func. */
 	create = c;
@@ -115,6 +116,12 @@ MleGroupClass::MleGroupClass(const char *name,
 
 	/* Put self into the registry */
 	g_registry.set(name,this);
+}
+
+MleGroupClass::~MleGroupClass()
+{
+	if (m_editorName != NULL) free(m_editorName);
+	if (m_contentEditorName != NULL) free(m_contentEditorName);
 }
 
 /*

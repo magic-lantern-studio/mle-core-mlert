@@ -228,7 +228,11 @@ MleSet::setName(char *newName)
 void
 MleSet::registerInstance(const char* n)
 {
+#ifdef WIN32
    m_name = _strdup(n);
+#else
+   m_name = strdup(n);
+#endif
    g_instanceRegistry.set(m_name, this);
 }
 

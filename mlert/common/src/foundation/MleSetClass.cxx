@@ -103,9 +103,13 @@ MleSetClass::MleSetClass(const char *name,
 : MleDwpStrKeyDict()
 {
 	/* Set the editor name. */
-	/* XXX - need to add a destructor to free these. */
+#ifdef WIN32
 	m_editorName = (e) ? _strdup(e) : _strdup("");
 	m_contentEditorName = (ce) ? _strdup(ce) : _strdup("");
+#else
+	m_editorName = (e) ? strdup(e) : strdup("");
+	m_contentEditorName = (ce) ? strdup(ce) : strdup("");
+#endif
 
 	/* Remember the creation func */
 	create = c;
@@ -130,6 +134,11 @@ MleSetClass::MleSetClass(const char *name,
 	g_registry.set(name,this);
 }
 
+MleSetClass::~MleSetClass()
+{
+	if (m_editorName != NULL) free(m_editorName);
+	if (m_contentEditorName != NULL) free(m_contentEditorName);
+}
 /*
 	This function returns a new instance of an forum of this class.
 */
