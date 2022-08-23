@@ -3,16 +3,13 @@
 /**
  * @file MleActor.cxx
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,13 +49,13 @@
 #include "mle/MleRole.h"
 #include "mle/mlMalloc.h"
 
-void MleActor::getProperty(MleObject */*object*/, const char */*name*/, unsigned char **value)
+void MleActor::getProperty(MleObject * /*object*/, const char * /*name*/, unsigned char **value)
 {
 	value = 0;
     // ToDo: Log that default getter is being used.
 }
 
-void MleActor::setProperty(MleObject */*object*/, const char */*name*/, unsigned char */*value*/)
+void MleActor::setProperty(MleObject * /*object*/, const char * /*name*/, unsigned char * /*value*/)
 {
     // ToDo: Log that default setter is being used.
 }
@@ -187,14 +184,14 @@ MleActor::initClass(void)
 MleDwpStrKeyDict MleActor::g_instanceRegistry;
 #if defined(WIN32)
 #pragma data_seg()
-#pragma comment("linker, /section:.GLOBALS,rws")
+#pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
 
 // Registering the instance with rehearsal player.
 void
 MleActor::registerInstance(const char* name)
 {
-   this->m_name = strdup(name);
+   this->m_name = _strdup(name);
    g_instanceRegistry.set(this->m_name, this);
 }
 

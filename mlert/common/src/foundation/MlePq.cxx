@@ -1,21 +1,18 @@
 /** @defgroup MleFoundation Magic Lantern Runtime Engine Foundation Library API */
 
 /**
- * @file MlePq.h
+ * @file MlePq.cxx
  * @ingroup MleFoundation
  *
  * This file implements the Priority Queue object class for
  * the Magic Lantern Runtime Engine.
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -227,7 +224,7 @@ void MlePQ::print(void)
 	{
 		fprintf(ML_DEBUG_OUTPUT_FILE, "Queue Item: %d\n", i);
 		fprintf(ML_DEBUG_OUTPUT_FILE, "\tPriority: %d\n", m_fpqQueue[i].m_key);
-		fprintf(ML_DEBUG_OUTPUT_FILE, "\tData: %d\n", (int)m_fpqQueue[i].m_data);
+		fprintf(ML_DEBUG_OUTPUT_FILE, "\tData: %p\n", m_fpqQueue[i].m_data);
 		fflush(ML_DEBUG_OUTPUT_FILE);
     }
 }
@@ -249,7 +246,7 @@ void MlePQ::printSorted(void)
     for (unsigned int i = 0; i < m_fpqNumItems; i++)
 	{
 		fprintf(ML_DEBUG_OUTPUT_FILE, "Priority: %d\n", printQ[i].m_key);
-		fprintf(ML_DEBUG_OUTPUT_FILE, "Data: %d\n", (int)printQ[i].m_data);
+		fprintf(ML_DEBUG_OUTPUT_FILE, "Data: %p\n", printQ[i].m_data);
 		fflush(ML_DEBUG_OUTPUT_FILE);
     }
 

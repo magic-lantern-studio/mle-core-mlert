@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,9 +43,10 @@
 
 
 // Include system header files.
-#ifdef __sgi
-#include <values.h>
-#endif /* __sgi */
+//#include <stdlib.h>
+#ifdef WIN32
+#include <climits>
+#endif /* WIN32 */
 
 // Include Magic Lantern header files.
 #include "mle/mlTypes.h"
@@ -296,7 +297,10 @@ class MLE_RUNTIME_API MlePQ
 // Define some useful macros.
 
 #ifdef WIN32
-#define MAXINT 32767
+//#define MAXINT 32767
+#if !defined(MAXINT)
+    #define MAXINT INT_MAX
+#endif
 #endif /* WIN32 */
 #if defined(__linux__) || defined(__APPLE__)
 #define MAXINT INT_MAX

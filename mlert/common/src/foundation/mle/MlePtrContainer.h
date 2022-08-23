@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -195,7 +195,7 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
 	    if (m_name) {
 		    delete m_name; 
 		}
-	    m_name = (nm) ? strdup(nm) : NULL;
+	    m_name = (nm) ? _strdup(nm) : NULL;
 	}
 
     // How to locate a group loaded in a scene from the DWP,

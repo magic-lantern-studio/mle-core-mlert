@@ -62,7 +62,7 @@
 MleDwpStrKeyDict MleMediaRefClass::g_registry(16);
 #if defined(WIN32)
 #pragma data_seg()
-#pragma comment("linker, /section:.GLOBALS,rws")
+#pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
 
 // Declare the DSO loader for mediaref classes.

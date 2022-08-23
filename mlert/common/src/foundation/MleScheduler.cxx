@@ -3,16 +3,13 @@
 /**
  * @file MleScheduler.h
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -413,7 +410,7 @@ MleSchedulerItem* MleScheduler::insertFunc(MleSchedulerPhase *phase,
     ctrlBlk -> m_count = firstInterval;
 #if defined(MLE_DEBUG)
     if ( name != NULL ) {
-	    ctrlBlk->m_name = strdup(name);
+	    ctrlBlk->m_name = _strdup(name);
     } else {
 	    ctrlBlk->m_name = NULL;
     }
@@ -509,11 +506,11 @@ void MleScheduler::dump()
 	  NULL != phase;
 	  phase = iter.nextPhase() ) 
     {
-	printf("    PHASE %x\n", phase);
+	printf("    PHASE 0x%p\n", phase);
 	printf("        IDX FUNCPTR  USERDATA TAG      CNT IVL NAME\n");
 	int j = 0;
 	for ( MleSchedulerItem *s=phase->m_first ; s!=NULL ; s=s->m_next ) {
-	    printf("        %3d 0x%08x 0x%08x 0x%08x %3d %3d %s\n",
+	    printf("        %3d 0x%p 0x%p 0x%p %3d %3d %s\n",
 		   j,
 		   s->m_func,
 		   s->m_data,

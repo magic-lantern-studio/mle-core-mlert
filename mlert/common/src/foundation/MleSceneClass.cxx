@@ -67,7 +67,7 @@
 MleSceneClassDict MleSceneClass::g_registry(20);
 #if defined(WIN32)
 #pragma data_seg()
-#pragma comment("linker, /section:.GLOBALS,rws")
+#pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
 
 // Declare the DSO loader for scene classes.
@@ -101,8 +101,8 @@ MleSceneClass::MleSceneClass(const char *name,
 {
 	/* Set the editor name. */
 	/* XXX - need to add a destructor to free these. */
-	m_editorName = (e) ? strdup(e) : strdup("");
-	m_contentEditorName = (ce) ? strdup(ce) : strdup("");
+	m_editorName = (e) ? _strdup(e) : _strdup("");
+	m_contentEditorName = (ce) ? _strdup(ce) : _strdup("");
 
 	/* Remember the creation func. */
 	create = c;

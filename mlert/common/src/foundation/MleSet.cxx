@@ -3,16 +3,13 @@
 /**
  * @file MleSet.cxx
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2018 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -58,11 +55,11 @@
 MleSet *MleSet::g_currentSet;
 
 
-void MleSet::getProperty(MleObject */*object*/, const char */*name*/, unsigned char **value)
+void MleSet::getProperty(MleObject * /*object*/, const char * /*name*/, unsigned char **value)
 { value = 0; }
 
 
-void MleSet::setProperty(MleObject */*object*/, const char */*name*/, unsigned char */*value*/)
+void MleSet::setProperty(MleObject * /*object*/, const char * /*name*/, unsigned char * /*value*/)
 {}
 
 
@@ -231,7 +228,7 @@ MleSet::setName(char *newName)
 void
 MleSet::registerInstance(const char* n)
 {
-   m_name = strdup(n);
+   m_name = _strdup(n);
    g_instanceRegistry.set(m_name, this);
 }
 
