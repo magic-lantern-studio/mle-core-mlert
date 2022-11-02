@@ -72,4 +72,15 @@ libmlert_la_CPPFLAGS = \
 	-I$(MLE_HOME)/DigitalWorkprint/lib/common/include \
 	-I$(MLE_HOME)/DigitalWorkprint/lib/linux/include \
 	-I$(MLE_HOME)/ATK/common/include \
-	-I$(MLE_HOME)/ATK/linux/include
+	-I$(MLE_HOME)/ATK/linux/include \
+	-std=c++11
+
+if HAVE_LOG4CXX
+#libmlert_la_SOURCES += \
+#    audio_random_portaudio.h \
+#    audio_random_portaudio.cpp
+	
+libmlert_la_CPPFLAGS += $(LOG4CXX_CFLAGS)
+
+#libmlert_la_LDFLAGS += $(LOG4CXX_LIBS)
+endif
