@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -122,21 +122,21 @@ class MLE_RUNTIME_API MleEventDispatcher
   public:
 
     /**
-	 * The default constructor.
+     * The default constructor.
      */
     MleEventDispatcher(void);
 
     /**
-	 * The destructor.
+     * The destructor.
      */
     virtual ~MleEventDispatcher(void);
     
     /**
-	 * Install the event callback for the specified event.
-	 *
-	 * @param event The Magic Lantern event.
-	 * @param callback The event callback function.
-	 * @param cleintData The event callback client data.
+     * Install the event callback for the specified event.
+     *
+     * @param event The Magic Lantern event.
+     * @param callback The event callback function.
+     * @param cleintData The event callback client data.
      */
     MleCallbackId installEventCB(
         MleEvent event,
@@ -144,125 +144,125 @@ class MLE_RUNTIME_API MleEventDispatcher
         void *clientData);
 
     /**
-	 * Install a table of event callbacks.
-	 *
-	 * @param eventTable A pointer to an array of event entries.
-	 * @param numEvents The number of event entries in the table.
-	 *
-	 * @return <b>TRUE</b> will be returned if the events are successfully
-	 * installed. Otherwise, <b>FALSE</b> will be returned.
+     * Install a table of event callbacks.
+     *
+     * @param eventTable A pointer to an array of event entries.
+     * @param numEvents The number of event entries in the table.
+     *
+     * @return <b>TRUE</b> will be returned if the events are successfully
+     * installed. Otherwise, <b>FALSE</b> will be returned.
      */
     MlBoolean installEventCB(MleEventEntry *eventTable,int numEvents);
 
     /**
-	 * Uninstall all the event callbacks for the specified event.
-	 *
-	 * @param event The Magic Lantern event to uninstall.
-	 *
-	 * @return <b>TRUE</b> will be returned if the event is successfully
-	 * uninstalled. Otherwise, <b>FALSE</b> will be returned.
+     * Uninstall all the event callbacks for the specified event.
+     *
+     * @param event The Magic Lantern event to uninstall.
+     *
+     * @return <b>TRUE</b> will be returned if the event is successfully
+     * uninstalled. Otherwise, <b>FALSE</b> will be returned.
      */
     MlBoolean uninstallEvent(MleEvent event);
 
     /**
-	 * Enable all callbacks for the specified event.
-	 *
-	 * @param event The Magic Lantern event to enable.
-	 *
-	 * @return <b>TRUE</b> will be returned if the event is successfully
-	 * enabled. Otherwise, <b>FALSE</b> will be returned.
+     * Enable all callbacks for the specified event.
+     *
+     * @param event The Magic Lantern event to enable.
+     *
+     * @return <b>TRUE</b> will be returned if the event is successfully
+     * enabled. Otherwise, <b>FALSE</b> will be returned.
      */
     MlBoolean enableEvent(MleEvent event);
 
     /**
-	 * Disable all callbacks for the specified event.
-	 *
-	 * @param event The Magic Lantern event to disable.
-	 *
-	 * @return <b>TRUE</b> will be returned if the event is successfully
-	 * disabled. Otherwise, <b>FALSE</b> will be returned.
+     * Disable all callbacks for the specified event.
+     *
+     * @param event The Magic Lantern event to disable.
+     *
+     * @return <b>TRUE</b> will be returned if the event is successfully
+     * disabled. Otherwise, <b>FALSE</b> will be returned.
      */
     MlBoolean disableEvent(MleEvent event);
 
     /**
-	 * Uninstall the event callback for the specified event.
-	 *
-	 * @param event The Magic Lantern event to uninstall.
-	 * @param id The callback identifier to uninstall.
-	 *
-	 * @return <b>TRUE</b> will be returned if the event callback is successfully
-	 * uninstalled. Otherwise, <b>FALSE</b> will be returned.
+     * Uninstall the event callback for the specified event.
+     *
+     * @param event The Magic Lantern event to uninstall.
+     * @param id The callback identifier to uninstall.
+     *
+     * @return <b>TRUE</b> will be returned if the event callback is successfully
+     * uninstalled. Otherwise, <b>FALSE</b> will be returned.
      */
     MlBoolean uninstallEventCB(MleEvent event,MleCallbackId id);
 
     /**
-	 * Enable the event callback for the specified event.
-	 *
-	 * @param event The Magic Lantern event to enable.
-	 * @param id The callback identifier to enable.
-	 *
-	 * @return <b>TRUE</b> will be returned if the event callback is successfully
-	 * enabled. Otherwise, <b>FALSE</b> will be returned.
+     * Enable the event callback for the specified event.
+     *
+     * @param event The Magic Lantern event to enable.
+     * @param id The callback identifier to enable.
+     *
+     * @return <b>TRUE</b> will be returned if the event callback is successfully
+     * enabled. Otherwise, <b>FALSE</b> will be returned.
      */
     MlBoolean enableEventCB(MleEvent event,MleCallbackId id);
 
     /**
-	 * Disable the event callback for the specified event.
-	 *
-	 * @param event The Magic Lantern event to disable.
-	 * @param id The callback identifier to disable.
-	 *
-	 * @return <b>TRUE</b> will be returned if the event callback is successfully
-	 * disabled. Otherwise, <b>FALSE</b> will be returned.
+     * Disable the event callback for the specified event.
+     *
+     * @param event The Magic Lantern event to disable.
+     * @param id The callback identifier to disable.
+     *
+     * @return <b>TRUE</b> will be returned if the event callback is successfully
+     * disabled. Otherwise, <b>FALSE</b> will be returned.
      */
     MlBoolean disableEventCB(MleEvent event,MleCallbackId id);
 
     /**
-	 * Change the event callback priority.
-	 *
-	 * @param event The Magic Lantern event.
-	 * @param id The callback identifier to modify.
-	 * @param key The new priority.
-	 *
+     * Change the event callback priority.
+     *
+     * @param event The Magic Lantern event.
+     * @param id The callback identifier to modify.
+     * @param key The new priority.
+     *
      * @return <b>TRUE</b> will be returned if the event callback priority is successfully
-	 * modified. Otherwise, <b>FALSE</b> will be returned.
+     * modified. Otherwise, <b>FALSE</b> will be returned.
      */
     MlBoolean changeEventCBPriority(MleEvent event,MleCallbackId id,int key);
 
     /**
-	 * Dispatch the specified event.
-	 *
-	 * @param event The Magic Lantern event to dispatch.
-	 * @param callData The event data.
-	 *
-	 * @return The return value of the dispatched callback is returned.
+     * Dispatch the specified event.
+     *
+     * @param event The Magic Lantern event to dispatch.
+     * @param callData The event data.
+     *
+     * @return The return value of the dispatched callback is returned.
      */
     int dispatchEvent(MleEvent event,void *callData);
 
-	/**
-	 * Override operator new.
-	 *
-	 * @param tSize The size, in bytes, to allocate.
-	 */
-	void* operator new(size_t tSize);
+    /**
+     * Override operator new.
+     *
+     * @param tSize The size, in bytes, to allocate.
+     */
+    void* operator new(size_t tSize);
 
-	/**
-	 * Override operator delete.
-	 *
-	 * @param p A pointer to the memory to delete.
-	 */
+    /**
+     * Override operator delete.
+     *
+     * @param p A pointer to the memory to delete.
+     */
     void  operator delete(void *p);
 
   private:
 
-	// Link the event node into the runtime structures.
+    // Link the event node into the runtime structures.
     MlBoolean _linkEventNode(MleEventNode *node);
-	// Unlink the event node from the runtime structures.
+    // Unlink the event node from the runtime structures.
     MlBoolean _unlinkEventNode(MleEventNode *node);
-	// Find the event node in the runtime structures.
+    // Find the event node in the runtime structures.
     MleEventNode *_findEventNode(MleEvent event);
 
-	// Find the index location of the event callback in the runtime structures.
+    // Find the index location of the event callback in the runtime structures.
     unsigned int _findEventCBNode(MleEventNode *node,MleCallbackId id);
 };
 

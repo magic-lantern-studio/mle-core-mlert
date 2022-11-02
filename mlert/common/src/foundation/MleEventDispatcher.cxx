@@ -122,7 +122,7 @@ MleCallbackId MleEventDispatcher::installEventCB(
                             MLE_EVMGR_IMMEDIATE |
                             MLE_EVMGR_ENABLED;
             node->m_callbacks = new MlePQ(MLE_EVMGR_PQSIZE);
-			node->m_next = NULL;
+            node->m_next = NULL;
             _linkEventNode(node);
         } else {
             // XXX -- set MLERRno here
@@ -512,15 +512,15 @@ unsigned int MleEventDispatcher::_findEventCBNode(
 void *
 MleEventDispatcher::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 
 void
 MleEventDispatcher::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 
