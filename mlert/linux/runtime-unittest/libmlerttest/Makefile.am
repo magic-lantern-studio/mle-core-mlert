@@ -13,6 +13,7 @@ libmlerttest_la_SOURCES = \
 	TestActor.cxx \
 	testMleActor.cxx \
 	testMleEventDispatcher.cxx \
+	testMleScheduler.cxx \
 	rtestubs.cxx
 
 # Linker options libTestProgram
