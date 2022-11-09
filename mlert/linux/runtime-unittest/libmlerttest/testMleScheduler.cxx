@@ -398,7 +398,7 @@ TEST(MleSchedulerTest, ScheduleObject) {
 		scheduleObj(scheduler, i);
 	}
 
-	// Init seed for random number generation,
+	// Initialize seed for random number generation,
 	// any old integral number will do in place of 1.
 	srand(1);
 
@@ -454,3 +454,81 @@ finalize:
     SchedObj::objArray = NULL;
     delete scheduler;
 }
+
+static char *theString = NULL;
+static MleSchedulerItem *theItemA = NULL;
+static MleSchedulerItem *theItemB = NULL;
+static MleSchedulerItem *theItemC = NULL;
+
+void
+_funcPrint(void *data)
+{
+	MLE_ASSERT(NULL != data);
+
+	char *str = (char*) data;
+	printf("%s\n", str);
+	fflush(stdout);
+}
+
+void
+_funcDelete(MleScheduler *scheduler)
+{
+	static MleSchedulerItem *item = NULL;
+
+	if (NULL != theString) {
+		printf("%s\n", theString);
+		delete theString;
+		theString = NULL;
+		printf("Removing A\n");
+		scheduler->remove(theItemA);
+		printf("Removing C\n");
+		scheduler->remove(theItemC);
+		printf("Inserting B2\n");
+		item = scheduler->insertFunc
+			(theMleSchedulerPhase, (MleSchedulerFunc)_funcDelete, theString, theString );
+
+	}
+	else {
+		// Remove both copies of myself the second time around.
+		printf("Removing B and B2\n");
+		scheduler->remove(theString);
+	}
+}
+
+TEST(MleSchedulerTest, BreakScheduler) {
+    // This test is named "BreakScheduler", and belongs to the "MleSchedulerTest"
+    // test case.
+
+	// Try to break the scheduler by removing a scheduled function from
+	// within a scheduled function -- is the removed function ever called?
+	// If so, the data ptr is probably invalid and we should get a core dump.
+
+	printf("Attempting to force scheduler to execute removed func.\n");
+	fflush(stdout);
+
+	// Set up the global string.
+	theString = strdup("This string to be deleted.");
+
+	// Set up the scheduler.
+	int nPhases = 1;
+	int nItems = 128;
+	MleScheduler *scheduler = new MleScheduler(nPhases, nItems);
+    EXPECT_TRUE(scheduler != NULL);
+    theMleSchedulerPhase = scheduler->insertPhase();
+    EXPECT_TRUE(theMleSchedulerPhase != NULL);
+
+	// Schedule the three items.
+	theItemA = scheduler->insertFunc
+		(theMleSchedulerPhase, (MleSchedulerFunc)_funcPrint, (void *)"Item A", (void *)"Item A" );
+	theItemB = scheduler->insertFunc
+		(theMleSchedulerPhase, (MleSchedulerFunc)_funcDelete, theString, theString );
+	theItemC = scheduler->insertFunc
+		(theMleSchedulerPhase, (MleSchedulerFunc)_funcPrint, (void *)"Item C", (void *)"Item C" );
+
+	// Should fail on third callback.
+	printf("Executing 1 with {A, B, C}.\n");
+	fflush(stdout);
+	ASSERT_EXIT((scheduler->go(theMleSchedulerPhase),exit(0)),::testing::KilledBySignal(SIGSEGV),".*");
+}
+
+

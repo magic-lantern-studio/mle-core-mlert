@@ -57,7 +57,8 @@
 /**
  * Event value definition.
  */
-typedef signed long MleEvent;
+//typedef signed long MleEvent;
+#include "mle/MleEvent.h"
 
 /**
  * Event callback definition.

@@ -64,8 +64,8 @@ int eventHndlr(MleEvent event,void *callData,void *clientData)
     char *clientStr = (char *)clientData;
     char *callStr = (char *)callData;
 
-    fprintf(stdout,"Received event %ld: processing data %s, %s.\n",event,
-        clientStr,callStr);
+    fprintf(stdout,"Received event %d: processing data %s, %s.\n", event.getId(),
+        clientStr, callStr);
 
     return 1;
 }
