@@ -35,11 +35,7 @@ libmlert_la_SOURCES = \
 	$(top_srcdir)/../../common/src/foundation/MleScheduler.cxx \
 	$(top_srcdir)/../../common/src/foundation/MleSet.cxx \
 	$(top_srcdir)/../../common/src/foundation/MleStage.cxx \
-	$(top_srcdir)/../../common/src/input/MleKeyboardPolled.cxx \
-	$(MLE_HOME)/Core/util/common/src/mlDebug.c \
-	$(MLE_HOME)/Core/util/common/src/mlErrno.c \
-	$(MLE_HOME)/Core/util/common/src/mlLogFile.c \
-	$(MLE_HOME)/Core/util/common/src/mlExpandFilename.c
+	$(top_srcdir)/../../common/src/input/MleKeyboardPolled.cxx
 
 # Linker options libTestProgram
 libmlert_la_LDFLAGS = -version-info 1:0:0
@@ -57,10 +53,5 @@ libmlert_la_CPPFLAGS = \
 	-I$(top_srcdir)/../../common/src/input \
 	-I$(top_srcdir)/../../common/include \
 	-I$(top_srcdir)/../../linux/include \
-	-I$(MLE_HOME)/Core/util/common/include \
-	-I$(MLE_HOME)/Core/util/linux/include \
-	-I$(MLE_HOME)/Core/math/common/include \
-	-I$(MLE_HOME)/Core/math/linux/include \
-	-I$(MLE_HOME)/DigitalPlayprint/runtime/common/include \
-	-I$(MLE_HOME)/DigitalPlayprint/runtime/linux/include \
+	-I$(MLE_ROOT)/include \
 	-O0
