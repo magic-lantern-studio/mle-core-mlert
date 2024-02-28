@@ -30,4 +30,4 @@ libmlerttest_la_CPPFLAGS = \
 	-I$(top_srcdir)/include \
 	-I$(MLE_ROOT)/include \
 	-I/usr/local/include \
-	-std=c++11
+	-std=c++17
