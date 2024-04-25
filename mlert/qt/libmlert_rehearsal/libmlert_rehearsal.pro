@@ -126,7 +126,7 @@ macx {
 
 # Default rules for deployment.
 unix {
-    target.path = /opt/MagicLantern/lib/mle/qt/rehearsal
+    target.path = /opt/MagicLantern/lib/mle/rehearsal
     headers.path = /opt/MagicLantern/include/mle
     headers.files = $$HEADERS
     INSTALLS += target headers
