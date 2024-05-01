@@ -25,6 +25,8 @@ DEFINES += \
     MLE_DIGITAL_PLAYPRINT \
     ML_MATH_DEBUG=0 \
     ML_FIXED_POINT=0 \
+    MLE_QT \
+    MLE_KEY_DEBUG
 
 SOURCES += \
     $$PWD/../../common/src/foundation/3danim.cxx \
@@ -105,4 +107,4 @@ unix {
     headers.files = $$HEADERS
     INSTALLS += target headers
 }
-!isEmpty(target.path): INSTALLS += target
+#!isEmpty(target.path): INSTALLS += target
