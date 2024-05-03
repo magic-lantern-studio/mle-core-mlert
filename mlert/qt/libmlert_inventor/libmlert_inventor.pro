@@ -37,8 +37,6 @@ DEFINES += \
 SOURCES += \
     $$PWD/../../common/src/foundation/3danim.cxx \
     $$PWD/../../common/src/foundation/3dchar.cxx \
-    $$PWD/../../common/src/foundation/loaddwp.cxx \
-    $$PWD/../../common/src/foundation/loadSet.cxx \
     $$PWD/../../common/src/foundation/MleActorClass.cxx \
     $$PWD/../../common/src/foundation/MleActor.cxx \
     $$PWD/../../common/src/foundation/MleDirector.cxx \
