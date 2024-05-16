@@ -45,4 +45,5 @@ include_HEADERS = \
 	$(top_srcdir)/../../common/src/input/mle/MleKeyboardPolled.h \
 	$(top_srcdir)/../../common/src/input/mle/MleKeyMap.h \
 	$(top_srcdir)/../../common/src/input/mle/MleMouseEvent.h \
-	$(top_srcdir)/../../common/src/input/mle/MleMousePolled.h
+	$(top_srcdir)/../../common/src/input/mle/MleMousePolled.h \
+	$(top_srcdir)/../../linux/include/mle/mlPlatformData.h
