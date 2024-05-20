@@ -115,7 +115,7 @@ HEADERS += \
     $$PWD/../../common/src/input/mle/MleKeyMap.h
 
 HEADERS += \
-    $$PWD/../../linuxinclude/mle/mlPlatformData.h
+    $$PWD/../../linux/include/mle/mlPlatformData.h
 
 # Default rules for deployment.
 unix {
