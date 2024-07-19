@@ -195,7 +195,11 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
 	    if (m_name) {
 		    delete m_name; 
 		}
+#ifdef WIN32
 	    m_name = (nm) ? _strdup(nm) : NULL;
+#else
+	    m_name = (nm) ? strdup(nm) : NULL;
+#endif
 	}
 
     // How to locate a group loaded in a scene from the DWP,

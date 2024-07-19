@@ -23,9 +23,10 @@ exampleProgram_SOURCES = exampleProgram.cxx
 # Libraries for a.out
 exampleProgram_LDADD = $(top_srcdir)/libmlerttest/libmlerttest.la \
 	$(top_srcdir)/../rehearsal/libmlert/libmlert.la \
+	$(MLE_ROOT)/lib/mle/rehearsal/libmlloaders.a \
 	$(MLE_ROOT)/lib/libDWP.a \
-	$(MLE_ROOT)/lib/libmlutil.a \
 	$(MLE_ROOT)/lib/libmlmath.a \
+	$(MLE_ROOT)/lib/libmlutil.a \
 	/usr/local/lib/libgtest.a -lX11 -ldl
 
 # Linker options for a.out
@@ -40,4 +41,17 @@ exampleProgram_CPPFLAGS = \
 	-I$(top_srcdir)/include \
 	-I$(MLE_ROOT)/include \
 	-I/usr/local/include \
-	-std=c++11
+	-std=c++17
+
+if HAVE_LOG4CXX
+#exampleProgram_SOURCES += \
+#    source.h \
+#    source.cpp
+	
+exampleProgram_CPPFLAGS += $(LOG4CXX_CFLAGS)
+#exampleProgram_CPPFLAGS += -DLINUX -D_REENTRANT -D_GNU_SOURCE -I/usr/local/include -I/usr/include/apr-1.0
+
+exampleProgram_LDFLAGS += -Wl,-rpath=/usr/local/lib
+exampleProgram_LDADD += $(LOG4CXX_LIBS)
+#exampleProgram_LDADD += -L/usr/local/lib -llog4cxx
+endif

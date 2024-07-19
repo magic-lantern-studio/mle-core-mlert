@@ -1,18 +1,15 @@
 /** @defgroup MleFoundation Magic Lantern Runtime Engine Foundation Library API */
 
 /**
- * @file MleActor.cxx
+ * @file MleGroup.cxx
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2018 Wizzer Works
+// Copyright (c) 2015-2022 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -163,7 +160,11 @@ MleDwpStrKeyDict MleGroup::g_instanceRegistry;
 void
 MleGroup::registerInstance(const char* name)
 {
+#ifdef WIN32
    this->m_name = _strdup(name);
+#else
+   this->m_name = strdup(name);
+#endif
    g_instanceRegistry.set(this->m_name, this);
 }
 

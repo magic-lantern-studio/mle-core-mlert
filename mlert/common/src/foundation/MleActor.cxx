@@ -191,7 +191,11 @@ MleDwpStrKeyDict MleActor::g_instanceRegistry;
 void
 MleActor::registerInstance(const char* name)
 {
+#ifdef WIN32
    this->m_name = _strdup(name);
+#else
+   this->m_name = strdup(name);
+#endif
    g_instanceRegistry.set(this->m_name, this);
 }
 

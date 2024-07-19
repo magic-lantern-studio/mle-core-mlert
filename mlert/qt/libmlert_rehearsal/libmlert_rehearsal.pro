@@ -38,7 +38,6 @@ DEFINES += \
 SOURCES += \
     $$PWD/../../common/src/foundation/3danim.cxx \
     $$PWD/../../common/src/foundation/3dchar.cxx \
-    $$PWD/../../common/src/foundation/loadSet.cxx \
     $$PWD/../../common/src/foundation/MleActorClass.cxx \
     $$PWD/../../common/src/foundation/MleActor.cxx \
     $$PWD/../../common/src/foundation/MleDirector.cxx \
@@ -126,9 +125,9 @@ macx {
 
 # Default rules for deployment.
 unix {
-    target.path = /opt/MagicLantern/lib/mle/qt/rehearsal
+    target.path = /opt/MagicLantern/lib/mle/rehearsal
     headers.path = /opt/MagicLantern/include/mle
     headers.files = $$HEADERS
     INSTALLS += target headers
 }
-!isEmpty(target.path): INSTALLS += target
+#!isEmpty(target.path): INSTALLS += target

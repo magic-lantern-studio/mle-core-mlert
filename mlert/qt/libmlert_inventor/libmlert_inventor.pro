@@ -1,4 +1,4 @@
-QT -= gui
+QT += widgets
 
 TARGET = mlert
 TEMPLATE = lib
@@ -17,7 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += $$PWD/../../common/include $$PWD/../../common/src/foundation /opt/MagicLantern/include /usr/local/include
+INCLUDEPATH += \
+    $$PWD/../../common/include \
+    $$PWD/../../common/src/foundation \
+    $$PWD/../../common/src/input \
+    $$PWD/../../linux/include \
+    /opt/MagicLantern/include \
+    /usr/local/include
 
 DEFINES += \
     MLE_NOT_DLL \
@@ -25,12 +31,12 @@ DEFINES += \
     MLE_DIGITAL_WORKPRINT \
     ML_MATH_DEBUG=0 \
     ML_FIXED_POINT=0 \
+    MLE_QT \
+    MLE_KEY_DEBUG
 
 SOURCES += \
     $$PWD/../../common/src/foundation/3danim.cxx \
     $$PWD/../../common/src/foundation/3dchar.cxx \
-    $$PWD/../../common/src/foundation/loaddwp.cxx \
-    $$PWD/../../common/src/foundation/loadSet.cxx \
     $$PWD/../../common/src/foundation/MleActorClass.cxx \
     $$PWD/../../common/src/foundation/MleActor.cxx \
     $$PWD/../../common/src/foundation/MleDirector.cxx \
@@ -57,6 +63,9 @@ SOURCES += \
     $$PWD/../../common/src/foundation/MleSet.cxx \
     $$PWD/../../common/src/foundation/MleStageClass.cxx \
     $$PWD/../../common/src/foundation/MleStage.cxx
+
+SOURCES += \
+    $$PWD/../../common/src/input/MleKeyboardPolled.cxx
 
 HEADERS += \
     $$PWD/../../common/src/foundation/mle/3danim.h \
@@ -98,11 +107,21 @@ HEADERS += \
     $$PWD/../../common/src/foundation/mle/MleStage.h \
     $$PWD/../../common/src/foundation/mle/MleTables.h
 
+HEADERS += \
+    $$PWD/../../common/src/input/mle/MleKeyboardPolled.h \
+    $$PWD/../../common/src/input/mle/MleKeyboardEvent.h \
+    $$PWD/../../common/src/input/mle/MleMousePolled.h \
+    $$PWD/../../common/src/input/mle/MleMouseEvent.h \
+    $$PWD/../../common/src/input/mle/MleKeyMap.h
+
+HEADERS += \
+    $$PWD/../../linux/include/mle/mlPlatformData.h
+
 # Default rules for deployment.
 unix {
-    target.path = /opt/MagicLantern/lib/mle/qt/inventor
+    target.path = /opt/MagicLantern/lib/mle/inventor
     headers.path = /opt/MagicLantern/include/mle
     headers.files = $$HEADERS
     INSTALLS += target headers
 }
-!isEmpty(target.path): INSTALLS += target
+#!isEmpty(target.path): INSTALLS += target

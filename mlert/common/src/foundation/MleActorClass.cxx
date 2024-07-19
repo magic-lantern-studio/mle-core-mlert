@@ -76,7 +76,11 @@ MleActorClass::MleActorClass(const char *name,
 : MleDwpStrKeyDict(20), m_propDatasetDict(3)
 {
     /* Set the class name. */
+#ifdef WIN32
     m_name = _strdup(name);
+#else
+    m_name = strdup(name);
+#endif
 
 	/* Set the editor names. */
 	m_editorName = 0;
@@ -113,9 +117,16 @@ MleActorClass::MleActorClass(const char *name,
 : MleDwpStrKeyDict(20), m_propDatasetDict(3)
 {
 	/* Set the class and editor names. */
+#ifdef WIN32
     m_name = _strdup(name);
 	m_editorName = (e) ? _strdup(e) : _strdup("");
 	m_contentEditorName = (ce) ? _strdup(ce) : _strdup("");
+#else
+    m_name = strdup(name);
+	m_editorName = (e) ? strdup(e) : strdup("");
+	m_contentEditorName = (ce) ? strdup(ce) : strdup("");
+#endif
+
 
 	/* Remember the creation func. */
 	create = c;

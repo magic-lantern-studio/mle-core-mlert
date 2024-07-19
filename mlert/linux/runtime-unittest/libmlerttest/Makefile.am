@@ -8,7 +8,13 @@ lib_LTLIBRARIES = libmlerttest.la
 # Build information for each library
 
 # Sources for libmlerttest
-libmlerttest_la_SOURCES = libmlerttest.cxx TestActor.cxx testMleActor.cxx rtestubs.cxx
+libmlerttest_la_SOURCES = \
+	libmlerttest.cxx \
+	TestActor.cxx \
+	testMleActor.cxx \
+	testMleEventDispatcher.cxx \
+	testMleScheduler.cxx \
+	rtestubs.cxx
 
 # Linker options libTestProgram
 libmlerttest_la_LDFLAGS = 
@@ -24,4 +30,4 @@ libmlerttest_la_CPPFLAGS = \
 	-I$(top_srcdir)/include \
 	-I$(MLE_ROOT)/include \
 	-I/usr/local/include \
-	-std=c++11
+	-std=c++17

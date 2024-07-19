@@ -2,7 +2,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2016 - 2019 Wizzer Works
+// Copyright (c) 2016 - 2024 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@
 
 GTEST_API_ int main(int argc, char **argv)
 {
-  printf("Running main() from exampleProgram.\n");
+  printf("Running libmlert Runtime Google Unit Test\n");
 
   // Initialize Mlert Test. Forces libmlerttest.so to be loaded.
   initMlertTest();

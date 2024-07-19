@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2003-2021 Wizzer Works
+// Copyright (c) 2003-2024 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -881,18 +881,19 @@ MleGroup *mlLoadGroup(const int indexToPpTOC)
 {
 	extern MleSet **_mleSetArray;	// declared in MleActorGC.cxx
 	unsigned int length;
+	size_t nRead;
 
 	FILE *file = g_theTitle->m_dpp->getFp();
 	// XXX -- fix when PP API is available
 
 	mlFSeek(file,g_theTitle->m_dpp->getTOCOffset(indexToPpTOC)+4,SEEK_SET);
-	mlFRead(&length,sizeof(length),1,file);
+	nRead = mlFRead(&length,sizeof(length),1,file);
   
 	unsigned char *actorGroupChunk = new unsigned char[length];
 	unsigned char *chunkPtr = actorGroupChunk;
 	unsigned char *&chunkRef = chunkPtr;
   
-	mlFRead(actorGroupChunk, length, 1, file);
+	nRead = mlFRead(actorGroupChunk, length, 1, file);
 
 	// XXX Should also get the group type from the DPP (before 1st actor)
 	// to create here with a call to mleCreateGroup(<type>).
@@ -944,17 +945,18 @@ MleScene *mlLoadScene(const int indexToPpTOC)
 {
 	extern MleSet **_mleSetArray;	// Declared in MleGroupGC.cxx.
 	unsigned int length;
+	size_t nRead;
 
 	FILE *file = g_theTitle->m_dpp->getFp();
 
 	// XXX -- fix when DPP API is available
 	mlFSeek(file,g_theTitle->m_dpp->getTOCOffset(indexToPpTOC)+4,SEEK_SET);
-	mlFRead(&length,sizeof(length),1,file);
+	nRead = mlFRead(&length,sizeof(length),1,file);
   
 	unsigned char *sceneChunk = new unsigned char[length];
 	unsigned char *chunkPtr = sceneChunk;
 	unsigned char *&chunkRef = chunkPtr;
-	mlFRead(sceneChunk, length, 1, file);
+	nRead = mlFRead(sceneChunk, length, 1, file);
 
 	// XXX Should also get the scene type from the sceneClass[indexToPpTOC]
 	// in order to create the right scene type object, not just MleScene, here.

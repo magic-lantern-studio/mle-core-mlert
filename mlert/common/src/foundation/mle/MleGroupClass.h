@@ -117,6 +117,11 @@ class MLE_RUNTIME_API MleGroupClass : public MleDwpStrKeyDict
 		 const char* editor, const char* contentEditor);
     
     /**
+     * The destructor.
+     */
+    ~MleGroupClass();
+
+    /**
 	 * Creates a new instance of the class.
 	 *
 	 * @return A pointer to the new instance is returned.

@@ -4,9 +4,6 @@
  * @file 3dchar.cxx
  * @ingroup MleFoundation
  *
- * @author Mark S. Millard
- * @date May 1, 2003
- *
  * This file implements 3D character registry structures.
  */
 
@@ -14,7 +11,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2024 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -262,13 +259,21 @@ Mle3dCharacterRegistry* Mle3dCharacterRegistry::read(char* filename)
     if (filename) 
     {
 		unsigned int filesize = 0;
+#ifdef WIN32
         int statcheck = _open(filename,O_RDONLY);
+#else
+        int statcheck = open(filename,O_RDONLY);
+#endif
         if (statcheck >= 0) 
         {
 			struct stat status;
 	        fstat(statcheck,&status);
 	        filesize = status.st_size;
+#ifdef WIN32
 	        _close(statcheck);
+#else
+	        close(statcheck);
+#endif
 	  
 	        if (filesize) 
             {
@@ -276,18 +281,19 @@ Mle3dCharacterRegistry* Mle3dCharacterRegistry::read(char* filename)
 	            if (in != NULL) 
                 {
 					char magic[MLE_NAME_LENGTH];
-                    fscanf(in,"%s",magic);
+					int nItems;
+                    nItems = fscanf(in,"%s",magic);
 
                     if (magic && (!strcmp(magic,MLE_3D_CHAR_MAGIC)))
                     {
 						registry = new Mle3dCharacterRegistry;
 
                         // Read Character Registry
-                        fscanf(in,"%s",registry->m_name);
+                        nItems = fscanf(in,"%s",registry->m_name);
 #ifdef MLE_DEBUG 
 printf("Registry name is %s\n",registry->m_name); 
 #endif
-                        fscanf(in,"%ld",&registry->m_numCharacters);
+                        nItems = fscanf(in,"%ld",&registry->m_numCharacters);
 #ifdef MLE_DEBUG 
 printf("Number of characters is %d\n",registry->m_numCharacters);
 #endif
@@ -298,12 +304,12 @@ printf("Number of characters is %d\n",registry->m_numCharacters);
                         {
 							Mle3dCharacter* character = new Mle3dCharacter;
                             registry->m_character[i] = character;
-                            fscanf(in,"%s",character->m_name);
+                            nItems = fscanf(in,"%s",character->m_name);
 #ifdef MLE_DEBUG 
 printf("Character name is %s\n",character->m_name);
 #endif
 
-                            fscanf(in,"%ld",&character->m_numSnippets);
+                            nItems = fscanf(in,"%ld",&character->m_numSnippets);
 #ifdef MLE_DEBUG 
 printf("Number of snippets is %d\n",character->m_numSnippets);
 #endif
@@ -316,17 +322,17 @@ printf("Number of snippets is %d\n",character->m_numSnippets);
 								Mle3dSnippet* snippet = new Mle3dSnippet;
                                 character->m_snippet[j] = snippet;
 
-                                fscanf(in,"%s",snippet->m_name);
+                                nItems = fscanf(in,"%s",snippet->m_name);
 #ifdef MLE_DEBUG 
 printf("Snippet name is %s\n",snippet->m_name);
 #endif
 
-                                fscanf(in,"%hd %hd",&snippet->m_startFrame,&snippet->m_endFrame);
+                                nItems = fscanf(in,"%hd %hd",&snippet->m_startFrame,&snippet->m_endFrame);
 #ifdef MLE_DEBUG 
 printf("Snippet frame range is from %d to %d\n",snippet->m_startFrame,snippet->m_endFrame);
 #endif
 
-                                fscanf(in,"%ld",&snippet->m_numTransitions);
+                                nItems = fscanf(in,"%ld",&snippet->m_numTransitions);
 #ifdef MLE_DEBUG 
 printf("Number of transitions is %d\n",snippet->m_numTransitions);
 #endif
@@ -339,27 +345,27 @@ printf("Number of transitions is %d\n",snippet->m_numTransitions);
 									Mle3dTransition* transition = new Mle3dTransition;
                                     snippet->m_transition[k] = transition;
 
-                                    fscanf(in,"%s",transition->m_name);
+                                    nItems = fscanf(in,"%s",transition->m_name);
 #ifdef MLE_DEBUG 
 printf("Transition name is %s\n",transition->m_name);
 #endif
 
-                                    fscanf(in,"%s",transition->m_event);
+                                    nItems = fscanf(in,"%s",transition->m_event);
 #ifdef MLE_DEBUG 
 printf("Transition event is %s\n",transition->m_event);
 #endif
 
-                                    fscanf(in,"%d",&transition->m_targetIndex);
+                                    nItems = fscanf(in,"%d",&transition->m_targetIndex);
 #ifdef MLE_DEBUG 
 printf("Transition target snippet index is %d\n",transition->m_targetIndex);
 #endif
 
-                                    fscanf(in,"%s",transition->m_targetName);
+                                    nItems = fscanf(in,"%s",transition->m_targetName);
 #ifdef MLE_DEBUG 
 printf("Transition target snippet name is %s\n",transition->m_targetName);
 #endif
 
-                                    fscanf(in,"%hd %hd",&transition->m_fromFrame,&transition->m_toFrame);
+                                    nItems = fscanf(in,"%hd %hd",&transition->m_fromFrame,&transition->m_toFrame);
 #ifdef MLE_DEBUG 
 printf("Transition changes frame from %d to %d\n",transition->m_fromFrame,transition->m_toFrame);
 #endif

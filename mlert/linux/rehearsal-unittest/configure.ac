@@ -22,6 +22,24 @@ AC_ARG_VAR(GTEST_DIR, Google Test installation directory)
 dnl Initialize Libtool
 LT_INIT
 
+dnl Add variables for log4cxx
+AC_SUBST([LOG4CXX_CFLAGS])
+AC_SUBST([LOG4CXX_LIBS])
+
+AC_ARG_WITH([log4cxx],
+	[AS_HELP_STRING([--with-log4cxx], [enable log4cxx logging])],
+	[],
+	[with_log4cxx=no])
+
+AS_IF([test "x$with_log4cxx" != xno],
+	[
+	PKG_CHECK_MODULES([LOG4CXX], [liblog4cxx])
+	AM_CONDITIONAL(HAVE_LOG4CXX, true)
+	AC_DEFINE(HAVE_LOG4CXX,[],[Use log4cxx])
+	], [
+	AM_CONDITIONAL(HAVE_LOG4CXX, false)
+	])
+
 AC_CONFIG_FILES(Makefile
                 exampleProgram/Makefile
                 libmlerttest/Makefile

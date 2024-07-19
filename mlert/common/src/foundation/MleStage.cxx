@@ -226,7 +226,11 @@ MleStage::setName(char *newName)
     if (m_name)
 		mlFree(m_name);
 
+#ifdef WIN32
     m_name = _strdup(newName);
+#else
+    m_name = strdup(newName);
+#endif
 }
 
 #if defined(__linux__) || defined(__APPLE__)

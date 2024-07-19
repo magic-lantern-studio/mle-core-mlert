@@ -23,6 +23,7 @@ exampleProgram_SOURCES = exampleProgram.cxx
 # Libraries for a.out
 exampleProgram_LDADD = $(top_srcdir)/libmlerttest/libmlerttest.la \
 	$(top_srcdir)/../runtime/libmlert/libmlert.la \
+	$(MLE_ROOT)/lib/mle/runtime/libmlloaders.a \
 	$(MLE_ROOT)/lib/libplayprint.a \
 	$(MLE_ROOT)/lib/libmlmath.a \
 	$(MLE_ROOT)/lib/libmlutil.a \
@@ -40,4 +41,4 @@ exampleProgram_CPPFLAGS = \
 	-I$(top_srcdir)/include \
 	-I$(MLE_ROOT)/include \
 	-I/usr/local/include \
-	-std=c++11
+	-std=c++17
