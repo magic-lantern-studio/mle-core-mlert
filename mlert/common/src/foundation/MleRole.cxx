@@ -3,16 +3,13 @@
 /**
  * @file MleRole.cxx
  * @ingroup MleFoundation
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2020 Wizzer Works
+// Copyright (c) 2015-2024 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -130,7 +127,16 @@ MleRole::isa(const char *type) const
 	return !strcmp(type,"MleRole");
 }
 
+#if defined(WIN32)
+// Make sure that the registry can be shared if the library is
+// included as part of a DLL.
+#pragma data_seg( ".GLOBALS" )
+#endif
 MleDwpDict MleRole::g_pickRegistry;
+#if defined(WIN32)
+#pragma data_seg()
+#pragma comment(linker, "/section:.GLOBALS,rws")
+#endif
 
 void 
 MleRole::setIdentifier(const char* /*id*/)

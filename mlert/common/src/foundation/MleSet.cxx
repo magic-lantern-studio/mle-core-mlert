@@ -52,8 +52,17 @@
 // This static is valid during actor set loads.  Actors and roles
 // instantiated from a group may refer to this variable in their
 // constructor to get a handle to the set that contains them.
-MleSet *MleSet::g_currentSet;
 
+#if defined(WIN32)
+// Make sure that the current Set can be shared if the library is
+// included as part of a DLL.
+#pragma data_seg( ".GLOBALS" )
+#endif
+MleSet *MleSet::g_currentSet;
+#if defined(WIN32)
+#pragma data_seg()
+#pragma comment(linker, "/section:.GLOBALS,rws")
+#endif
 
 void MleSet::getProperty(MleObject * /*object*/, const char * /*name*/, unsigned char **value)
 { value = 0; }
@@ -132,7 +141,16 @@ MleSet::isa(const char *type) const
 #include "mle/DwpDataUnion.h"
 #include "mle/DwpDatatype.h"
 
+#if defined(WIN32)
+// Make sure that the registry can be shared if the library is
+// included as part of a DLL.
+#pragma data_seg( ".GLOBALS" )
+#endif
 MleDwpStrKeyDict MleSet::g_instanceRegistry;
+#if defined(WIN32)
+#pragma data_seg()
+#pragma comment(linker, "/section:.GLOBALS,rws")
+#endif
 
 const char *
 MleSet::getTypeName(void) const

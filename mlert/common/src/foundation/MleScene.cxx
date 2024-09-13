@@ -156,7 +156,16 @@ MleScene::initClass(void)
     new MleSceneClass("MleScene",_mlCreateMleScene,"");
 }
 
+#if defined(WIN32)
+// Make sure that the registry can be shared if the library is
+// included as part of a DLL.
+#pragma data_seg( ".GLOBALS" )
+#endif
 MleDwpStrKeyDict MleScene::g_instanceRegistry;
+#if defined(WIN32)
+#pragma data_seg()
+#pragma comment(linker, "/section:.GLOBALS,rws")
+#endif
 
 // Registering the instance with rehearsal player.
 void

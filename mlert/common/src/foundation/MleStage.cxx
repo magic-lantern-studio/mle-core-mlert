@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2024 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -58,7 +58,16 @@
 #endif /* MLE_DIGITAL_WORKPRINT */
 
 // Implement the static stage pointer.
+#if defined(WIN32)
+// Make sure that the stage can be shared if the library is
+// included as part of a DLL.
+#pragma data_seg( ".GLOBALS" )
+#endif
 MleStage *MleStage::g_theStage = NULL;
+#if defined(WIN32)
+#pragma data_seg()
+#pragma comment(linker, "/section:.GLOBALS,rws")
+#endif
 
 
 MleStage::MleStage(void)
