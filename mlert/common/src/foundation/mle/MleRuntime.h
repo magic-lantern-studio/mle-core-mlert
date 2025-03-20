@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2000-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -50,21 +50,21 @@
   On MSWindows platforms, one of these defines must always be set when
   building application programs:
 
-   - "MLE_DLL", when the application programmer is using the
+   - "MLE_RUNTIME_DLL", when the application programmer is using the
      library in the form of a dynamic link library (DLL)
 
-   - "MLE_NOT_DLL", when the application programmer is using the
+   - "MLE_NOT_RUNTIME_DLL", when the application programmer is using the
      library in the form of a static object library (LIB)
 
-  Note that either MLE_DLL or MLE_NOT_DLL _must_ be defined by
+  Note that either MLE_RUNTIME_DLL or MLE_NOT_RUNTIME_DLL _must_ be defined by
   the application programmer on MSWindows platforms, or else the
   #error statement will hit. Set up one or the other of these two
   defines in your compiler environment according to how the library
-  was built -- as a DLL (use "MLE_DLL") or as a LIB (use
-  "MLE_NOT_DLL").
+  was built -- as a DLL (use "MLE_RUNTIME_DLL") or as a LIB (use
+  "MLE_NOT_RUNTIME_DLL").
 
   (Setting up defines for the compiler is typically done by either
-  adding something like "/DMLE_DLL" to the compiler's argument
+  adding something like "/DMLE_RUNTIME_DLL" to the compiler's argument
   line (for command-line build processes), or by adding the define to
   the list of preprocessor symbols in your IDE GUI (in the MSVC IDE,
   this is done from the "Project"->"Settings" menu, choose the "C/C++"
@@ -72,23 +72,23 @@
   appropriate define)).
 
   It is extremely important that the application programmer uses the
-  correct define, as using "MLE_NOT_DLL" when "MLE_DLL" is
+  correct define, as using "MLE_NOT_RUNTIME_DLL" when "MLE_RUNTIME_DLL" is
   correct is likely to cause mysterious crashes.
  */
 
 // Magic Lantern Digital Workprint export rules.
-# ifdef MLE_INTERNAL
+# ifdef MLE_RUNTIME_EXPORTS
 #  ifdef MLE_MAKE_DLL
 #   define MLE_RUNTIME_API __declspec(dllexport)
 #  endif /* MLE_MAKE_DLL */
-# else /* !MLE_INTERNAL */
-#  ifdef MLE_DLL
+# else /* !MLE_RUNTIME_EXPORTS */
+#  ifdef MLE_RUNTIME_DLL
 #   define MLE_RUNTIME_API __declspec(dllimport)
-#  else /* !MLE_DLL */
-#   ifndef MLE_NOT_DLL
-#    error Define either MLE_DLL or MLE_NOT_DLL as appropriate for your linkage! See mle/MleRuntime.h for further instructions.
-#   endif /* MLE_NOT_DLL */
-#  endif /* !MLE_DLL */
+#  else /* !MLE_RUNTIME_DLL */
+#   ifndef MLE_NOT_RUNTIME_DLL
+#    error Define either MLE_RUNTIME_DLL or MLE_NOT_RUNTIME_DLL as appropriate for your linkage! See mle/MleRuntime.h for further instructions.
+#   endif /* MLE_NOT_RUNTIME_DLL */
+#  endif /* !MLE_RUNTIME_DLL */
 # endif /* !MLE_INTERNAL */
 
 /* Empty define to avoid errors when _not_ compiling an MSWindows DLL. */
