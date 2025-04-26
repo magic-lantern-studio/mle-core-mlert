@@ -223,8 +223,8 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_HOME)/Core/util/common/include;$(MLE_HOME)/Core/util/win32/include;$(MLE_HOME)/Core/math/common/include;$(MLE_ROOT)/DigitalWorkprint/lib/common/include;$(MLE_ROOT)/DigitalWorkprint/lib/win32/include;$(MLE_ROOT)/ATK/common/include;$(MLE_ROOT)/ATK/win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_DEBUG;MLE_INTERNAL;MLE_NOT_DLL;ML_MATH_DEBUG=1;ML_FIXED_POINT=0;WIN32;_DEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_DEBUG;MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_NOT_DWP_DLL;ML_MATH_DEBUG=1;ML_FIXED_POINT=0;WIN32;_DEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>$(Platform)\$(Configuration)\mlert_tools/mlert.pch</PrecompiledHeaderOutputFile>
@@ -257,7 +257,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
       <OutputFile>$(Platform)\$(Configuration)\mlert_tools/mlert_tools.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Message>Install DLL</Message>
+      <Message>Install Library</Message>
       <Command>mkdir $(MLE_HOME)\lib64\tools
 copy x64\Debug\mlert_tools\mlertd.lib $(MLE_HOME)\lib64\tools\mlertd.lib
 mkdir $(MLE_HOME)\include\mle
@@ -282,7 +282,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_HOME)/Core/util/common/include;$(MLE_HOME)/Core/util/win32/include;$(MLE_HOME)/Core/math/common/include;$(MLE_ROOT)/DigitalWorkprint/lib/common/include;$(MLE_ROOT)/DigitalWorkprint/lib/win32/include;$(MLE_ROOT)/ATK/common/include;$(MLE_ROOT)/ATK/win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_INTERNAL;MLE_NOT_DLL;ML_MATH_DEBUG=0;ML_FIXED_POINT=0;WIN32;NDEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_NOT_DWP_DLL;MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;ML_MATH_DEBUG=0;ML_FIXED_POINT=0;WIN32;NDEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -314,7 +314,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
       <OutputFile>$(Platform)\$(Configuration)\mlert_tools/mlert_tools.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Message>Install DLL</Message>
+      <Message>Install Library</Message>
       <Command>mkdir $(MLE_HOME)\lib64\tools
 copy x64\Release\mlert_tools\mlert.lib $(MLE_HOME)\lib64\tools\mlert.lib
 mkdir $(MLE_HOME)\include\mle
@@ -547,16 +547,6 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\mlert.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
     <ClCompile Include="..\..\..\common\src\foundation\MleScene.cxx">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -658,7 +648,6 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
     <ClInclude Include="..\..\..\common\src\foundation\mle\MlePtrDict.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleRole.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleRoleClass.h" />
-    <ClInclude Include="..\..\src\mlert.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleRuntime.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleScene.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleSceneClass.h" />

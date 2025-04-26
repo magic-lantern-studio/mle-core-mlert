@@ -142,6 +142,18 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='FloatRelease|x64'">$(Platform)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='FloatRelease|x64'">$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CDECL FloatDebug|x64'">
+    <TargetName>mlertd</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CDECL FloatRelease|x64'">
+    <TargetName>mlert</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='FloatDebug|x64'">
+    <TargetName>mlertd</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='FloatRelease|x64'">
+    <TargetName>mlert</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='CDECL FloatRelease|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -190,7 +202,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_HOME)/Core/util/common/include;../../../win32/include;$(MLE_HOME)/Core/math/common/include;$(MLE_HOME)/DigitalPlayprint/runtime/common/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_NOT_DLL;MLE_DIGITAL_PLAYPRINT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DIGITAL_PLAYPRINT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -200,6 +212,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <ProgramDataBaseFileName>$(Platform)\$(Configuration)/</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -274,8 +287,8 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_HOME)/Core/util/common/include;$(MLE_HOME)/Core/util/win32/include;$(MLE_HOME)/Core/math/common/include;$(MLE_HOME)/DigitalPlayprint/runtime/common/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_DEBUG;MLE_DIGITAL_PLAYPRINT;MLE_NOT_DLL;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <PreprocessorDefinitions>MLE_DEBUG;MLE_DIGITAL_PLAYPRINT;MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <StructMemberAlignment>4Bytes</StructMemberAlignment>
@@ -287,6 +300,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CallingConvention>StdCall</CallingConvention>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -359,8 +373,8 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_HOME)/Core/util/common/include;$(MLE_HOME)/Core/util/win32/include;$(MLE_HOME)/Core/math/common/include;$(MLE_HOME)/DigitalPlayprint/runtime/common/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_DEBUG;MLE_DIGITAL_PLAYPRINT;MLE_NOT_DLL;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <PreprocessorDefinitions>MLE_DEBUG;MLE_DIGITAL_PLAYPRINT;MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>$(Platform)\$(Configuration)/mlertd.pch</PrecompiledHeaderOutputFile>
@@ -370,6 +384,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -445,7 +460,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_HOME)/Core/util/common/include;../../../win32/include;$(MLE_HOME)/Core/math/common/include;$(MLE_HOME)/DigitalPlayprint/runtime/common/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_NOT_DLL;MLE_DIGITAL_PLAYPRINT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DIGITAL_PLAYPRINT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <StructMemberAlignment>4Bytes</StructMemberAlignment>
@@ -457,6 +472,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CallingConvention>StdCall</CallingConvention>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
