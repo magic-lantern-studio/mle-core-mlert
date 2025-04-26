@@ -83,6 +83,12 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\mlert_rehearsal\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>mlertd</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>mlert</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -214,10 +220,10 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_HOME)/Core/util/common/include;$(MLE_HOME)/Core/util/win32/include;$(MLE_HOME)/Core/math/common/include;$(MLE_ROOT)/DigitalWorkprint/lib/common/include;$(MLE_ROOT)/DigitalWorkprint/lib/win32/include;$(MLE_ROOT)/ATK/common/include;$(MLE_ROOT)/ATK/win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_DEBUG;MLE_INTERNAL;MLE_DLL;MLE_MAKE_DLL;ML_MATH_DEBUG=1;ML_FIXED_POINT=0;WIN32;_DEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_DEBUG;MLE_RUNTIME_EXPORTS;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DWP_DLL;MLE_MAKE_DLL;ML_MATH_DEBUG=1;ML_FIXED_POINT=0;WIN32;_DEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>$(Platform)\$(Configuration)\mlert_rehearsal/mlert.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(Platform)\$(Configuration)\mlert_rehearsal/</AssemblerListingLocation>
       <ObjectFileName>$(Platform)\$(Configuration)\mlert_rehearsal/</ObjectFileName>
@@ -232,7 +238,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DWPd.lib;mlmathd.lib;utild.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DWPd.lib;mlmathd.lib;utild.lib;odbc32.lib;odbccp32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(Platform)\$(Configuration)\mlert_rehearsal/mlertd.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(MLE_HOME)\lib64\rehearsal;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -275,9 +281,9 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_HOME)/Core/util/common/include;$(MLE_HOME)/Core/util/win32/include;$(MLE_HOME)/Core/math/common/include;$(MLE_ROOT)/DigitalWorkprint/lib/common/include;$(MLE_ROOT)/DigitalWorkprint/lib/win32/include;$(MLE_ROOT)/ATK/common/include;$(MLE_ROOT)/ATK/win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_INTERNAL;MLE_DLL;MLE_MAKE_DLL;ML_MATH_DEBUG=0;ML_FIXED_POINT=0;WIN32;NDEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_RUNTIME_EXPORTS;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DWP_DLL;MLE_MAKE_DLL;ML_MATH_DEBUG=0;ML_FIXED_POINT=0;WIN32;NDEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>$(Platform)\$(Configuration)\mlert_rehearsal/mlert.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(Platform)\$(Configuration)\mlert_rehearsal/</AssemblerListingLocation>
@@ -292,7 +298,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DWP.lib;mlmath.lib;util.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DWP.lib;mlmath.lib;util.lib;odbc32.lib;odbccp32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(Platform)\$(Configuration)\mlert_rehearsal/mlert.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(MLE_HOME)\lib64\rehearsal;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
