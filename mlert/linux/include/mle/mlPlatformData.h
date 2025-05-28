@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Wizzer Works
+// Copyright (c) 2017-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -49,6 +49,8 @@
 #if defined(__linux__) || defined(__APPLE__)
 #if defined(MLE_QT)
 #include <QWidget>
+#elif defined(MLE_GTK)
+#include <gtk.h>
 #else
 #include <X11/Xlib.h>
 #include <X11/Intrinsic.h>
@@ -75,11 +77,14 @@ class MleIvPlatformData : public MlePlatformData
 #if defined(__linux__) || defined(__APPLE__)
 #if defined(MLE_QT)
     /* Qt platform */
-    QWidget *m_widget;                /** Qt widget for player window's render area. */
+    QWidget *m_widget;  /** Qt widget for player window's render area. */
+#elif defined(MLE_GTK)
+    /* Gtk platform */
+    GtkWidget *m_widget;  /** Gtk widget for player window's render area. */
 #else
     /* Xt platform */
-    Widget m_widget;                  /** Xt widget for player window's render area. */
-    XtAppContext m_appContext;        /** Application context for player window. */
+    Widget m_widget;  /** Xt widget for player window's render area. */
+    XtAppContext m_appContext; /** Application context for player window. */
 #endif
 #endif
 #if defined(WIN32)
