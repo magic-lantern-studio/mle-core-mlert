@@ -185,4 +185,64 @@ if(GTK2_FOUND)
       $<$<CONFIG:Debug>: MLE_DEBUG>
       $<$<CONFIG:Release>:>)
 
+  # Install the libraries
+  install(
+    TARGETS
+      mlertShared
+      mlertStatic
+    DESTINATION
+      lib/mle/runtime
+   )
+
+  # Install the header files
+  install(
+    FILES
+      ../../../common/src/foundation/mle/3danim.h
+      ../../../common/src/foundation/mle/3dchar.h
+      ../../../common/src/foundation/mle/MleActorClass.h
+      ../../../common/src/foundation/mle/MleActorGC.h
+      ../../../common/src/foundation/mle/MleActor.h
+      ../../../common/src/foundation/mle/MleDirector.h
+      ../../../common/src/foundation/mle/MleDso.h
+      ../../../common/src/foundation/mle/MleEvent.h
+      ../../../common/src/foundation/mle/MleEventDispatcher.h
+      ../../../common/src/foundation/mle/MleGroupClass.h
+      ../../../common/src/foundation/mle/MleGroup.h
+      ../../../common/src/foundation/mle/MleLoad.h
+      ../../../common/src/foundation/mle/MleMediaRefClass.h
+      ../../../common/src/foundation/mle/MleMediaRefConverter.h
+      ../../../common/src/foundation/mle/MleMediaRef.h
+      ../../../common/src/foundation/mle/MleMonitor.h
+      ../../../common/src/foundation/mle/MleNotifier.h
+      ../../../common/src/foundation/mle/MleOpcode.h
+      ../../../common/src/foundation/mle/MleObject.h
+      ../../../common/src/foundation/mle/MlePq.h
+      ../../../common/src/foundation/mle/MleProperty.h
+      ../../../common/src/foundation/mle/MlePropDataset.h
+      ../../../common/src/foundation/mle/MlePtrArray.h
+      ../../../common/src/foundation/mle/MlePtrContainer.h
+      ../../../common/src/foundation/mle/MlePtrDict.h
+      ../../../common/src/foundation/mle/MleRoleClass.h
+      ../../../common/src/foundation/mle/MleRole.h
+      ../../../common/src/foundation/mle/MleRuntime.h
+      ../../../common/src/foundation/mle/MleSceneClass.h
+      ../../../common/src/foundation/mle/MleScene.h
+      ../../../common/src/foundation/mle/MleScheduler.h
+      ../../../common/src/foundation/mle/MleSetClass.h
+      ../../../common/src/foundation/mle/MleSet.h
+      ../../../common/src/foundation/mle/MleStageClass.h
+      ../../../common/src/foundation/mle/MleStageFuncs.h
+      ../../../common/src/foundation/mle/MleStage.h
+      ../../../common/src/foundation/mle/MleTables.h
+      ../../../common/src/foundation/mle/MlePlatformData.h
+      ../../../common/src/input/mle/MleKeyboardEvent.h
+      ../../../common/src/input/mle/MleKeyboardPolled.h
+      ../../../common/src/input/mle/MleKeyMap.h
+      ../../../common/src/input/mle/MleMouseEvent.h
+      ../../../common/src/input/mle/MleMousePolled.h
+      ../../../linux/include/mle/mlPlatformData.h
+    DESTINATION
+      include/mle
+  )
+
 endif()
