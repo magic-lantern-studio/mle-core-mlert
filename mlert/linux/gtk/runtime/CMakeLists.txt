@@ -45,6 +45,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Specify where to find CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+# Specify Debug postfix
+set(CMAKE_DEBUG_POSTFIX "d")
+
 # Fail early if one of the required packages cannot be found
 include(FindGTK2)
 find_package(GTK2 REQUIRED gtk)
