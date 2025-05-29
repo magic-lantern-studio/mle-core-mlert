@@ -50,7 +50,7 @@
 #if defined(MLE_QT)
 #include <QWidget>
 #elif defined(MLE_GTK)
-#include <gtk.h>
+#include <gtk/gtk.h>
 #else
 #include <X11/Xlib.h>
 #include <X11/Intrinsic.h>

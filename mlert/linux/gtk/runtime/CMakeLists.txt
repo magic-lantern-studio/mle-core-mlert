@@ -46,8 +46,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # Fail early if one of the required packages cannot be found
+include(FindGTK2)
+find_package(GTK2 REQUIRED gtk)
 find_package(PkgConfig REQUIRED)
 
+pkg_check_modules (
+  GTK_GL2    # variable will be used by cmake
+  REQUIRED   # is required mandatory
+  gtkgl-2.0  # name of package to be found
+)
+
+# Check for Magic Lantern environment variables
 if (DEFINED ENV{MLE_ROOT})
   message(STATUS "MLE_ROOT=" $ENV{MLE_ROOT})
 else()
@@ -68,107 +77,112 @@ message(STATUS "Magic Lantern Variables:")
 message(STATUS "    MLE_ROOT=" $ENV{MLE_ROOT})
 message(STATUS "    MLE_WORKPRINTS=" $ENV{MLE_WORKPRINTS})
 
-# Specify the include directories for the header files
-include_directories(
-  ../../../common/src/foundation
-  ../../../common/src/input
-  ../../../common/include
-  ../../../linux/include
-  $ENV{MLE_ROOT}/include)
+if(GTK2_FOUND)
 
-# Specify the compiler macro definitions
-add_compile_definitions(
-  MLE_NOT_UTIL_DLL
-  MLE_NOT_MATH_DLL
-  MLE_NOT_DWP_DLL
-  MLE_NOT_RUNTIME_DLL
-  MLE_INTERNAL
-  MLE_DIGITAL_PLAYPRINT
-  ML_MATH_DEBUG=0
-  ML_FIXED_POINT=0
-  MLE_GTK)
+  # Specify the include directories for the header files
+  include_directories(
+    ../../../common/src/foundation
+    ../../../common/src/input
+    ../../../common/include
+    ../../../linux/include
+    $ENV{MLE_ROOT}/include
+    ${GTK2_INCLUDE_DIRS})
 
-# Specify the shared library
-add_library(
-  mlertShared SHARED
-  ../../../common/src/foundation/3danim.cxx
-  ../../../common/src/foundation/3dchar.cxx
-  ../../../common/src/foundation/MleActor.cxx
-  ../../../common/src/foundation/MleActorGC.cxx
-  ../../../common/src/foundation/MleDirector.cxx
-  ../../../common/src/foundation/MleDso.cxx
-  ../../../common/src/foundation/MleEvent.cxx
-  ../../../common/src/foundation/MleEventDispatcher.cxx
-  ../../../common/src/foundation/MleGroup.cxx
-  ../../../common/src/foundation/MleLoad.cxx
-  ../../../common/src/foundation/MleMediaRef.cxx
-  ../../../common/src/foundation/MleMonitor.cxx
-  ../../../common/src/foundation/MleNotifier.cxx
-  ../../../common/src/foundation/MleObject.cxx
-  ../../../common/src/foundation/MlePq.cxx
-  ../../../common/src/foundation/MlePtrArray.cxx
-  ../../../common/src/foundation/MlePtrDict.cxx
-  ../../../common/src/foundation/MleRole.cxx
-  ../../../common/src/foundation/MleScene.cxx
-  ../../../common/src/foundation/MleScheduler.cxx
-  ../../../common/src/foundation/MleSet.cxx
-  ../../../common/src/foundation/MleStage.cxx
-  ../../../common/src/input/MleKeyboardPolled.cxx)
+  # Specify the compiler macro definitions
+  add_compile_definitions(
+    MLE_NOT_UTIL_DLL
+    MLE_NOT_MATH_DLL
+    MLE_NOT_DWP_DLL
+    MLE_NOT_RUNTIME_DLL
+    MLE_INTERNAL
+    MLE_DIGITAL_PLAYPRINT
+    ML_MATH_DEBUG=0
+    ML_FIXED_POINT=0
+    MLE_GTK)
 
-# Specify the static library
-add_library(
-  mlertStatic STATIC
-  ../../../common/src/foundation/3danim.cxx
-  ../../../common/src/foundation/3dchar.cxx
-  ../../../common/src/foundation/MleActor.cxx
-  ../../../common/src/foundation/MleActorGC.cxx
-  ../../../common/src/foundation/MleDirector.cxx
-  ../../../common/src/foundation/MleDso.cxx
-  ../../../common/src/foundation/MleEvent.cxx
-  ../../../common/src/foundation/MleEventDispatcher.cxx
-  ../../../common/src/foundation/MleGroup.cxx
-  ../../../common/src/foundation/MleLoad.cxx
-  ../../../common/src/foundation/MleMediaRef.cxx
-  ../../../common/src/foundation/MleMonitor.cxx
-  ../../../common/src/foundation/MleNotifier.cxx
-  ../../../common/src/foundation/MleObject.cxx
-  ../../../common/src/foundation/MlePq.cxx
-  ../../../common/src/foundation/MlePtrArray.cxx
-  ../../../common/src/foundation/MlePtrDict.cxx
-  ../../../common/src/foundation/MleRole.cxx
-  ../../../common/src/foundation/MleScene.cxx
-  ../../../common/src/foundation/MleScheduler.cxx
-  ../../../common/src/foundation/MleSet.cxx
-  ../../../common/src/foundation/MleStage.cxx
-  ../../../common/src/input/MleKeyboardPolled.cxx)
+  # Specify the shared library
+  add_library(
+    mlertShared SHARED
+    ../../../common/src/foundation/3danim.cxx
+    ../../../common/src/foundation/3dchar.cxx
+    ../../../common/src/foundation/MleActor.cxx
+    ../../../common/src/foundation/MleActorGC.cxx
+    ../../../common/src/foundation/MleDirector.cxx
+    ../../../common/src/foundation/MleDso.cxx
+    ../../../common/src/foundation/MleEvent.cxx
+    ../../../common/src/foundation/MleEventDispatcher.cxx
+    ../../../common/src/foundation/MleGroup.cxx
+    ../../../common/src/foundation/MleLoad.cxx
+    ../../../common/src/foundation/MleMediaRef.cxx
+    ../../../common/src/foundation/MleMonitor.cxx
+    ../../../common/src/foundation/MleNotifier.cxx
+    ../../../common/src/foundation/MleObject.cxx
+    ../../../common/src/foundation/MlePq.cxx
+    ../../../common/src/foundation/MlePtrArray.cxx
+    ../../../common/src/foundation/MlePtrDict.cxx
+    ../../../common/src/foundation/MleRole.cxx
+    ../../../common/src/foundation/MleScene.cxx
+    ../../../common/src/foundation/MleScheduler.cxx
+    ../../../common/src/foundation/MleSet.cxx
+    ../../../common/src/foundation/MleStage.cxx
+    ../../../common/src/input/MleKeyboardPolled.cxx)
 
-# Specify the shared library properties
-set_target_properties(mlertShared PROPERTIES
-  OUTPUT_NAME mlert
-  VERSION ${PROJECT_VERSION}
-  SOVERSION ${PROJECT_VERSION_MAJOR})
+  # Specify the static library
+  add_library(
+    mlertStatic STATIC
+    ../../../common/src/foundation/3danim.cxx
+    ../../../common/src/foundation/3dchar.cxx
+    ../../../common/src/foundation/MleActor.cxx
+    ../../../common/src/foundation/MleActorGC.cxx
+    ../../../common/src/foundation/MleDirector.cxx
+    ../../../common/src/foundation/MleDso.cxx
+    ../../../common/src/foundation/MleEvent.cxx
+    ../../../common/src/foundation/MleEventDispatcher.cxx
+    ../../../common/src/foundation/MleGroup.cxx
+    ../../../common/src/foundation/MleLoad.cxx
+    ../../../common/src/foundation/MleMediaRef.cxx
+    ../../../common/src/foundation/MleMonitor.cxx
+    ../../../common/src/foundation/MleNotifier.cxx
+    ../../../common/src/foundation/MleObject.cxx
+    ../../../common/src/foundation/MlePq.cxx
+    ../../../common/src/foundation/MlePtrArray.cxx
+    ../../../common/src/foundation/MlePtrDict.cxx
+    ../../../common/src/foundation/MleRole.cxx
+    ../../../common/src/foundation/MleScene.cxx
+    ../../../common/src/foundation/MleScheduler.cxx
+    ../../../common/src/foundation/MleSet.cxx
+    ../../../common/src/foundation/MleStage.cxx
+    ../../../common/src/input/MleKeyboardPolled.cxx)
 
-target_compile_options(mlertShared
-  PRIVATE
-    $<$<CONFIG:Debug>:-O0>
-    $<$<CONFIG:Release>:>)
+  # Specify the shared library properties
+  set_target_properties(mlertShared PROPERTIES
+    OUTPUT_NAME mlert
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR})
 
-target_compile_definitions(mlertShared
-  PRIVATE
-    $<$<CONFIG:Debug>: MLE_DEBUG>
-    $<$<CONFIG:Release>:>)
+  target_compile_options(mlertShared
+    PRIVATE
+      $<$<CONFIG:Debug>:-O0>
+      $<$<CONFIG:Release>:>)
 
-# Specify the static library properties
-set_target_properties(mlertStatic PROPERTIES
-  OUTPUT_NAME mlert
-  VERSION ${PROJECT_VERSION})
+  target_compile_definitions(mlertShared
+    PRIVATE
+      $<$<CONFIG:Debug>: MLE_DEBUG>
+      $<$<CONFIG:Release>:>)
 
-target_compile_options(mlertStatic
-  PRIVATE
-    $<$<CONFIG:Debug>:-O0>
-    $<$<CONFIG:Release>:>)
+  # Specify the static library properties
+  set_target_properties(mlertStatic PROPERTIES
+    OUTPUT_NAME mlert
+    VERSION ${PROJECT_VERSION})
 
-target_compile_definitions(mlertStatic
-  PRIVATE
-    $<$<CONFIG:Debug>: MLE_DEBUG>
-    $<$<CONFIG:Release>:>)
+  target_compile_options(mlertStatic
+    PRIVATE
+      $<$<CONFIG:Debug>:-O0>
+      $<$<CONFIG:Release>:>)
+
+  target_compile_definitions(mlertStatic
+    PRIVATE
+      $<$<CONFIG:Debug>: MLE_DEBUG>
+      $<$<CONFIG:Release>:>)
+
+endif()

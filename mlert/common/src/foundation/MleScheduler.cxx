@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -43,6 +43,8 @@
 #ifdef WIN32
 #include <string.h>
 #else
+#include <stdio.h>
+#include <string.h>
 #include <strings.h>
 #endif /* WIN32 */
 #endif /* MLE_DEBUG */
@@ -410,7 +412,11 @@ MleSchedulerItem* MleScheduler::insertFunc(MleSchedulerPhase *phase,
     ctrlBlk -> m_count = firstInterval;
 #if defined(MLE_DEBUG)
     if ( name != NULL ) {
+#if defined(WIN32)
 	    ctrlBlk->m_name = _strdup(name);
+#else
+	    ctrlBlk->m_name = strdup(name);
+#endif /* WIN32 */
     } else {
 	    ctrlBlk->m_name = NULL;
     }
