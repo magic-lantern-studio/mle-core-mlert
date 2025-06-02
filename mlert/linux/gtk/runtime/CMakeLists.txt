@@ -51,6 +51,10 @@ set(CMAKE_DEBUG_POSTFIX "d")
 # Fail early if one of the required packages cannot be found
 include(FindGTK2)
 find_package(GTK2 REQUIRED gtk)
+include(FindMLUTIL)
+find_package(MLUTIL REQUIRED)
+include(FindMLMATH)
+find_package(MLMATH REQUIRED)
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules (
