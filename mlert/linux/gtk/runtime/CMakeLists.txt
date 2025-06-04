@@ -80,9 +80,9 @@ else()
 endif()
 
 # Specify the library
-message(STATUS "Magic Lantern Variables:")
-message(STATUS "    MLE_ROOT=" $ENV{MLE_ROOT})
-message(STATUS "    MLE_WORKPRINTS=" $ENV{MLE_WORKPRINTS})
+#message(STATUS "Magic Lantern Variables:")
+#message(STATUS "    MLE_ROOT=" $ENV{MLE_ROOT})
+#message(STATUS "    MLE_WORKPRINTS=" $ENV{MLE_WORKPRINTS})
 
 if(GTK2_FOUND)
 
