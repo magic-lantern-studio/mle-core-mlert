@@ -437,6 +437,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_ROOT)\include\rehe
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="..\..\..\common\src\foundation\MleObject.cxx" />
+    <ClCompile Include="..\..\..\common\src\foundation\player.cxx" />
     <ClCompile Include="..\..\..\common\src\input\MleKeyboardPolled.cxx">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -631,6 +632,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_ROOT)\include\rehe
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleGroupClass.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleObject.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleProperty.h" />
+    <ClInclude Include="..\..\..\common\src\foundation\mle\player.h" />
     <ClInclude Include="..\..\..\common\src\input\mle\MleKeyboardEvent.h" />
     <ClInclude Include="..\..\..\common\src\input\mle\MleKeyboardPolled.h" />
     <ClInclude Include="..\..\..\common\src\input\mle\MleKeyMap.h" />

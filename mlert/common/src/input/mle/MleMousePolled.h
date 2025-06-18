@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -53,10 +53,10 @@
 #endif // __linux__
 
 // Include Windows header files.
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #include <windows.h>
 #include "mle/MleEventDispatcher.h"
-#endif // WIN32
+#endif // _WINDOWS
 
 
 /*********************************************************************
@@ -170,11 +170,11 @@ class MleMousePolled
 #endif // MLE_XT
 #endif // __linux__
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
     // Handles Win32 mouse messages
     static void  MleMousePolledEventHandler(MleEvent event,
         void *eventData, void *mouseManager);
-#endif // WIN32
+#endif // _WINDOWS
 
   public:
 

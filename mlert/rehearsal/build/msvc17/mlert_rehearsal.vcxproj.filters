@@ -7,12 +7,6 @@
     <ClCompile Include="..\..\..\common\src\foundation\3dchar.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\common\src\foundation\loaddwp.cxx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\common\src\foundation\loadSet.cxx">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\common\src\foundation\MleActor.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -92,6 +86,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\common\src\foundation\MleStageClass.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\common\src\foundation\loadSet.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\common\src\foundation\loaddwp.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\common\src\foundation\player.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -211,6 +214,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleStageFuncs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\src\foundation\mle\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

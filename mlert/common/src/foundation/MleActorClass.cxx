@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -56,13 +56,13 @@
 // (classes + members) and a hash table of 20 for both
 // actor classes and actor members.
 //
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 MleActorClassDict MleActorClass::g_registry(20);
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
@@ -72,85 +72,85 @@ MleActorClassDict MleActorClass::g_registry(20);
 MleDSOLoader MleActorClass::g_loader;
 
 MleActorClass::MleActorClass(const char *name,
-	MleActor *(*c)(void),const char *superclass)
+    MleActor *(*c)(void),const char *superclass)
 : MleDwpStrKeyDict(20), m_propDatasetDict(3)
 {
     /* Set the class name. */
-#ifdef WIN32
+#ifdef _WINDOWS
     m_name = _strdup(name);
 #else
     m_name = strdup(name);
 #endif
 
-	/* Set the editor names. */
-	m_editorName = 0;
-	m_contentEditorName = 0;
+    /* Set the editor names. */
+    m_editorName = 0;
+    m_contentEditorName = 0;
 
-	/* Remember the creation func. */
-	create = c;
+    /* Remember the creation func. */
+    create = c;
 
-	/* Look up the superclass info. */
-	MleActorClass *super = (MleActorClass *)g_registry.find(superclass);
+    /* Look up the superclass info. */
+    MleActorClass *super = (MleActorClass *)g_registry.find(superclass);
 
-	/* Copy the superclass members into the local space. */
-	if ( super )
-	{
-		/* Use the dictionary iterator. */
-		MleActorMemberIter iter(super);
-		const MleActorMember *member;
+    /* Copy the superclass members into the local space. */
+    if ( super )
+    {
+        /* Use the dictionary iterator. */
+        MleActorMemberIter iter(super);
+        const MleActorMember *member;
         while ( (member = iter.getMember()) )
-		{
-			set(iter.getName(),new MleActorMember(*member));
-			iter.next();
-		}
-	}
+        {
+            set(iter.getName(),new MleActorMember(*member));
+            iter.next();
+        }
+    }
 
-	/* Put self into the global Actor class registry ... */
-	MleActorClass *tmp = (MleActorClass *)g_registry.find(name);
-	if (tmp == NULL)  // ... but only if it hasn't been registered yet.
-	    g_registry.set(name,this);
+    /* Put self into the global Actor class registry ... */
+    MleActorClass *tmp = (MleActorClass *)g_registry.find(name);
+    if (tmp == NULL)  // ... but only if it hasn't been registered yet.
+        g_registry.set(name,this);
 }
 
 MleActorClass::MleActorClass(const char *name,
-	MleActor *(*c)(void),const char *superclass, 
-	const char* e, const char* ce)
+    MleActor *(*c)(void),const char *superclass, 
+    const char* e, const char* ce)
 : MleDwpStrKeyDict(20), m_propDatasetDict(3)
 {
-	/* Set the class and editor names. */
-#ifdef WIN32
+    /* Set the class and editor names. */
+#ifdef _WINDOWS
     m_name = _strdup(name);
-	m_editorName = (e) ? _strdup(e) : _strdup("");
-	m_contentEditorName = (ce) ? _strdup(ce) : _strdup("");
+    m_editorName = (e) ? _strdup(e) : _strdup("");
+    m_contentEditorName = (ce) ? _strdup(ce) : _strdup("");
 #else
     m_name = strdup(name);
-	m_editorName = (e) ? strdup(e) : strdup("");
-	m_contentEditorName = (ce) ? strdup(ce) : strdup("");
+    m_editorName = (e) ? strdup(e) : strdup("");
+    m_contentEditorName = (ce) ? strdup(ce) : strdup("");
 #endif
 
 
-	/* Remember the creation func. */
-	create = c;
+    /* Remember the creation func. */
+    create = c;
 
-	/* Look up the superclass info. */
-	MleActorClass *super = (MleActorClass *)g_registry.find(superclass);
+    /* Look up the superclass info. */
+    MleActorClass *super = (MleActorClass *)g_registry.find(superclass);
 
-	/* Copy the superclass members into the local space. */
-	if ( super )
-	{
-		/* Use the dictionary iterator. */
-		MleActorMemberIter iter(super);
-		const MleActorMember *member;
+    /* Copy the superclass members into the local space. */
+    if ( super )
+    {
+        /* Use the dictionary iterator. */
+        MleActorMemberIter iter(super);
+        const MleActorMember *member;
         while ( (member = iter.getMember()) )
-		{
-			set(iter.getName(),new MleActorMember(*member));
-			iter.next();
-		}
-	}
+        {
+            set(iter.getName(),new MleActorMember(*member));
+            iter.next();
+        }
+    }
 
-	/* Put self into the global Actor class registry ... */
-	MleActorClass *tmp = (MleActorClass *)g_registry.find(name);
-	if (tmp == NULL)  // ... but only if it hasn't been registered yet.
-	    g_registry.set(name,this);
+    /* Put self into the global Actor class registry ... */
+    MleActorClass *tmp = (MleActorClass *)g_registry.find(name);
+    if (tmp == NULL)  // ... but only if it hasn't been registered yet.
+        g_registry.set(name,this);
 }
 
 MleActorClass::~MleActorClass()
@@ -186,23 +186,23 @@ MleActorClass::~MleActorClass()
 void *
 MleActorClass::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleActorClass::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 /*
-	This function returns a new instance of an actor of this class.
+    This function returns a new instance of an actor of this class.
 */
 MleActor *
 MleActorClass::createInstance(void) const
 {
-	return (*create)();
+    return (*create)();
 }
 
 /*
@@ -211,11 +211,11 @@ MleActorClass::createInstance(void) const
 void
 MleActorClass::addMember(const char *name,const char *type,MlePropertyEntry *entry)
 {
-	/* Create the new member object. */
-	MleActorMember *member = new MleActorMember(type,entry);
+    /* Create the new member object. */
+    MleActorMember *member = new MleActorMember(type,entry);
 
-	/* Put the new property into the dictionary. */
-	set(name,member);
+    /* Put the new property into the dictionary. */
+    set(name,member);
 }
 
 /*
@@ -250,37 +250,37 @@ MleActorClass::removeMember(const char *name)
 const MleActorMember *
 MleActorClass::findMember(const char *name) const
 {
-	/* Get the pointer from the registry. */
-	return (const MleActorMember *)MleDwpStrKeyDict::find(name);
+    /* Get the pointer from the registry. */
+    return (const MleActorMember *)MleDwpStrKeyDict::find(name);
 }
 
 void
 MleActorClass::addMemberDataset(const char *propName,
-	const char *propDatasetName)
+    const char *propDatasetName)
 {
     int i, count;
     MlePtrArray *propNameArray;
 
     if (! propDatasetName || ! propName)
-		return;
+        return;
 
     propNameArray = (MlePtrArray *) m_propDatasetDict.find(propDatasetName);
     if (propNameArray)
-	{
-		count = propNameArray->getSize();
-		for(i = 0; i < count; i++)
-		{
-			if(strcmp((char *) ((*propNameArray)[i]), propName) == 0)
-			return;
-		}
-		propNameArray->add((void *) propName);
+    {
+        count = propNameArray->getSize();
+        for(i = 0; i < count; i++)
+        {
+            if(strcmp((char *) ((*propNameArray)[i]), propName) == 0)
+            return;
+        }
+        propNameArray->add((void *) propName);
     }
     else
-	{
-		propNameArray = new MlePtrArray(1);
-		propNameArray->add((void *) propName);
+    {
+        propNameArray = new MlePtrArray(1);
+        propNameArray->add((void *) propName);
 
-		m_propDatasetDict.set(propDatasetName, propNameArray);
+        m_propDatasetDict.set(propDatasetName, propNameArray);
     }
 }
 
@@ -297,72 +297,72 @@ class MleActorMemberEntry : public MleDwpStrKeyDictEntry
 {
   public:
 
-	/**
-	 * The destructor.
-	 */
-	virtual ~MleActorMemberEntry() { delete (MleActorMember *)m_value; }
+    /**
+     * The destructor.
+     */
+    virtual ~MleActorMemberEntry() { delete (MleActorMember *)m_value; }
 
-	/**
-	 * Override operator new.
-	 *
-	 * @param tSize The size, in bytes, to allocate.
-	 */
-	void* operator new(size_t tSize);
+    /**
+     * Override operator new.
+     *
+     * @param tSize The size, in bytes, to allocate.
+     */
+    void* operator new(size_t tSize);
 
-	/**
-	 * Override operator delete.
-	 *
-	 * @param p A pointer to the memory to delete.
-	 */
+    /**
+     * Override operator delete.
+     *
+     * @param p A pointer to the memory to delete.
+     */
     void  operator delete(void *p);
 };
 
 void *
 MleActorMemberEntry::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleActorMemberEntry::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 /*
-	This function overrides MleDwpStrKeyDict::makeEntry() to
-	return an entry of the above type.
+    This function overrides MleDwpStrKeyDict::makeEntry() to
+    return an entry of the above type.
 */
 MleDwpDictEntry *
 MleActorClass::makeEntry(void)
 {
-	return new MleActorMemberEntry;
+    return new MleActorMemberEntry;
 }
 
 /*
-	This static function looks up an actor class from a name.
+    This static function looks up an actor class from a name.
 */
 MleActorClass *
 MleActorClass::find(const char *name)
 {
-	MleActorClass *ac;	// Actor class return.
+    MleActorClass *ac;    // Actor class return.
 
-	// Try to look up the actor class in the registry.
-	ac = (MleActorClass *)g_registry.find(name);
+    // Try to look up the actor class in the registry.
+    ac = (MleActorClass *)g_registry.find(name);
 
-	// Return the actor class if we found it.
-	if ( ac )
-		return ac;
-	
-	// Otherwise, try to load the class from a DSO.
-	g_loader.loadClass(name);
+    // Return the actor class if we found it.
+    if ( ac )
+        return ac;
+    
+    // Otherwise, try to load the class from a DSO.
+    g_loader.loadClass(name);
 
-	// Now try to look it up again.
-	ac = (MleActorClass *)g_registry.find(name);
+    // Now try to look it up again.
+    ac = (MleActorClass *)g_registry.find(name);
 
-	// Return it whether we succeeded or not.
-	return ac;
+    // Return it whether we succeeded or not.
+    return ac;
 }
 
 // This defines the MleActorClassDictEntry subclass for a dictionary
@@ -372,23 +372,23 @@ class MleActorClassDictEntry : public MleDwpStrKeyDictEntry
 {
   public:
 
-	/**
-	 * The destructor.
-	 */
-	virtual ~MleActorClassDictEntry() { delete (MleActorClass *)m_value; }
+    /**
+     * The destructor.
+     */
+    virtual ~MleActorClassDictEntry() { delete (MleActorClass *)m_value; }
 
-	/**
-	 * Override operator new.
-	 *
-	 * @param tSize The size, in bytes, to allocate.
-	 */
-	void* operator new(size_t tSize);
+    /**
+     * Override operator new.
+     *
+     * @param tSize The size, in bytes, to allocate.
+     */
+    void* operator new(size_t tSize);
 
-	/**
-	 * Override operator delete.
-	 *
-	 * @param p A pointer to the memory to delete.
-	 */
+    /**
+     * Override operator delete.
+     *
+     * @param p A pointer to the memory to delete.
+     */
     void  operator delete(void *p);
 
 };
@@ -396,70 +396,70 @@ class MleActorClassDictEntry : public MleDwpStrKeyDictEntry
 MleDwpDictEntry *
 MleActorClassDict::makeEntry(void)
 {
-	return new MleActorClassDictEntry;
+    return new MleActorClassDictEntry;
 }
 
 void *
 MleActorClassDict::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleActorClassDict::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 void *
 MleActorClassDictEntry::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleActorClassDictEntry::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 MleActorMember::MleActorMember(const char *t,MlePropertyEntry *e)
 {
-	m_type = MleDwpDatatype::findType(t);
+    m_type = MleDwpDatatype::findType(t);
 
-	if ( m_type == NULL )
-	{
-		fprintf(stderr, "The workprint data type \"%s\" could not be found.\n",t);
-		MLE_ASSERT(m_type!=NULL);
-	}
-	
-	m_entry = e;
+    if ( m_type == NULL )
+    {
+        fprintf(stderr, "The workprint data type \"%s\" could not be found.\n",t);
+        MLE_ASSERT(m_type!=NULL);
+    }
+    
+    m_entry = e;
 }
 
 void *
 MleActorMember::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleActorMember::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 void *
 MleActorMemberIter::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleActorMemberIter::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }

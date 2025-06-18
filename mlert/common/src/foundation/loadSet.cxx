@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2003-2021 Wizzer Works
+// Copyright (c) 2003-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -97,10 +97,10 @@ _mlCreateSet(MleDwpSet *wpi)
     MleDwpItem *prop = wpi->getFirstChild();
     while ( prop )
     {
-#if defined(WIN32)
+#if defined(_WINDOWS)
         if ( prop->isa("MleDwpProperty") )
 #else
-		if ( prop->isa(MleDwpProperty::typeId) )
+        if ( prop->isa(MleDwpProperty::typeId) )
 #endif
             set->poke(((MleDwpProperty *)prop)->getName(),
                 &((MleDwpProperty *)prop)->m_data);
@@ -115,8 +115,8 @@ _mlCreateSet(MleDwpSet *wpi)
 //   This function relies on extern functions to deliver a workprint
 //   specification of the Set to load:
 //
-//	MleDwpSet *_mlGetWorkprintSet(const char *setname);
-//	void _mlReleaseWorkprintSet(MleDwpItem *item);
+//    MleDwpSet *_mlGetWorkprintSet(const char *setname);
+//    void _mlReleaseWorkprintSet(MleDwpItem *item);
 //
 //   The first should return a pointer to a workprint Set, which may
 //   contain other configuring items.  The second is a call to release
@@ -125,40 +125,40 @@ _mlCreateSet(MleDwpSet *wpi)
 MleSet *
 mlLoadSet(const char *id)
 {
-	// Declare functions.
-	extern MleDwpSet *_mlGetWorkprintSet(const char *setname);
-	extern void _mlReleaseWorkprintSet(MleDwpItem *item);
+    // Declare functions.
+    extern MleDwpSet *_mlGetWorkprintSet(const char *setname);
+    extern void _mlReleaseWorkprintSet(MleDwpItem *item);
 
-	// Get the workprint item.
-	MleDwpSet *wpset = _mlGetWorkprintSet(id);
-	if ( wpset == NULL )
-	{
-		printf("can't find set %s in workprint.\n",id);
-		return NULL;
-	}
+    // Get the workprint item.
+    MleDwpSet *wpset = _mlGetWorkprintSet(id);
+    if ( wpset == NULL )
+    {
+        printf("can't find set %s in workprint.\n",id);
+        return NULL;
+    }
 
-	// Create the Set.
-	MleSet *set = _mlCreateSet(wpset);
-	if(! set)
-	{
-		printf("error creating %s, a set of type %s.\n",
-			wpset->getName(), wpset->getType());
-		// release the workprint
+    // Create the Set.
+    MleSet *set = _mlCreateSet(wpset);
+    if(! set)
+    {
+        printf("error creating %s, a set of type %s.\n",
+            wpset->getName(), wpset->getType());
+        // release the workprint
         _mlReleaseWorkprintSet(wpset);
         return NULL;
-	}
+    }
 
-	// Run the initialization function.
-	set->init();
+    // Run the initialization function.
+    set->init();
 
-	// Put the set in the registry.
-	set->registerInstance(wpset->getName());
+    // Put the set in the registry.
+    set->registerInstance(wpset->getName());
 
-	// Release the workprint.
-	_mlReleaseWorkprintSet(wpset);
+    // Release the workprint.
+    _mlReleaseWorkprintSet(wpset);
 
-	// and return the set.
-	return set;
+    // and return the set.
+    return set;
 }
 
 #endif /* MLE_DIGITAL_WORKPRINT */
@@ -217,7 +217,7 @@ _mlCreateSet(int id)
     tmpSetChunk = setChunk;
     unsigned char *&setChunkRef = tmpSetChunk;
     parseStream(setChunkRef, setChunk, setChunk + setChunkLength,
-		MLE_CHUNK_SET);
+        MLE_CHUNK_SET);
 
     delete [] setChunk;
 
@@ -236,13 +236,13 @@ mlLoadSet(const int id)
     MLE_ASSERT(id < mlRTSetLength);
 
     if (! mlRTSet[id].ptr)
-	{
-		// Find the Set chunk in the playprint, create the Set,
-		// and initialize the Set property values.
-		_mlCreateSet(id);
+    {
+        // Find the Set chunk in the playprint, create the Set,
+        // and initialize the Set property values.
+        _mlCreateSet(id);
 
-		// Run the initialization function.
-		(mlRTSet[id].ptr)->init();
+        // Run the initialization function.
+        (mlRTSet[id].ptr)->init();
     }
 
     return mlRTSet[id].ptr;

@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2003-2024 Wizzer Works
+// Copyright (c) 2003-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@
 // Include system header files.
 #include <stdio.h>
 #include <memory.h>
-#ifdef WIN32
+#ifdef _WINDOWS
 // include system header files
 #include <string.h>
 #endif 
@@ -99,13 +99,13 @@ static void (*mlLoadErrorCB)(MleDwpActor *wpActor) = NULL;
  */
 static MleActor *_mlCreateActor(MleDwpActor *wpa)
 {
-    int i;	// Loop variable,
+    int i;    // Loop variable,
 
     // We need to find two things, the template and the actor class.
     //   First, find the root
     MleDwpItem *root = wpa;
     while ( root->getParent() )
-	    root = root->getParent();
+        root = root->getParent();
 
     // Declare the actor class name.
     //   Here we initialize to the type specified in the actor.  This can
@@ -115,11 +115,11 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
     const char *acname = wpa->getActorClass();
 
     // Now search for the template.
-#if defined(WIN32)
-	// Note: Use string type method instead of typeId mechanism. The typeId
+#if defined(_WINDOWS)
+    // Note: Use string type method instead of typeId mechanism. The typeId
     // method doesn't work for Windows because the global address space for
-	// the DWP.dll is different than the one used by the mle runtime.
-	MleDwpFinder tmplFinder("MleDwpActorTemplate",wpa->getActorClass());
+    // the DWP.dll is different than the one used by the mle runtime.
+    MleDwpFinder tmplFinder("MleDwpActorTemplate",wpa->getActorClass());
 #else
     MleDwpFinder tmplFinder(MleDwpActorTemplate::typeId,wpa->getActorClass());
 #endif
@@ -156,11 +156,11 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
     if (actor) actor->registerInstance(wpa->getName());
     
     // Get ready to find properties and set them.
-#if defined(WIN32)
-	// Note: Use string type method instead of typeId mechanism. The typeId
+#if defined(_WINDOWS)
+    // Note: Use string type method instead of typeId mechanism. The typeId
     // method doesn't work for Windows because the global address space for
-	// the DWP.dll is different than the one used by the mle runtime.
-	MleDwpFinder propFinder("MleDwpProperty",NULL,1);
+    // the DWP.dll is different than the one used by the mle runtime.
+    MleDwpFinder propFinder("MleDwpProperty",NULL,1);
 #else
     MleDwpFinder propFinder(MleDwpProperty::typeId,NULL,1);
 #endif
@@ -170,13 +170,13 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
     // If there is a template, set those properties first.
     if ( tmpl )
     {
-		// Execute the finder.
-		propFinder.find(tmpl);
-		nProps = propFinder.getNumItems();
-		prop = (MleDwpProperty **)propFinder.getItems();
+        // Execute the finder.
+        propFinder.find(tmpl);
+        nProps = propFinder.getNumItems();
+        prop = (MleDwpProperty **)propFinder.getItems();
 
-		for ( i = 0; i < nProps; i++ )
-			actor->poke(prop[i]->getName(),&prop[i]->m_data);
+        for ( i = 0; i < nProps; i++ )
+            actor->poke(prop[i]->getName(),&prop[i]->m_data);
     }
 
     // Set the properties in the actor.
@@ -185,15 +185,15 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
     prop = (MleDwpProperty **)propFinder.getItems();
 
     for ( i = 0; i < nProps; i++ )
-		actor->poke(prop[i]->getName(),&prop[i]->m_data);
+        actor->poke(prop[i]->getName(),&prop[i]->m_data);
 
     // Find the role binding if any.
     MleDwpFinder delFinder;
-#if defined(WIN32)
-	// Note: Use string type method instead of typeId mechanism. The typeId
+#if defined(_WINDOWS)
+    // Note: Use string type method instead of typeId mechanism. The typeId
     // method doesn't work for Windows because the global address space for
-	// the DWP.dll is different than the one used by the mle runtime.
-	delFinder.setType("MleDwpRoleBinding");
+    // the DWP.dll is different than the one used by the mle runtime.
+    delFinder.setType("MleDwpRoleBinding");
 #else
     delFinder.setType(MleDwpRoleBinding::typeId);
 #endif
@@ -202,14 +202,14 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
     // Search the actor first, then the template.
     binding = (MleDwpRoleBinding *)delFinder.find(wpa);
     if ( binding == NULL && tmpl )
-	    binding = (MleDwpRoleBinding *)delFinder.find(tmpl);
-	
+        binding = (MleDwpRoleBinding *)delFinder.find(tmpl);
+    
     if ( binding )
     {
-		// Determine the Set.
+        // Determine the Set.
 
         // Get the Set here.
-		MleDwpStrKeyDict *setInstances = MleSet::getInstanceRegistry();
+        MleDwpStrKeyDict *setInstances = MleSet::getInstanceRegistry();
         MleSet::g_currentSet = (MleSet *) setInstances->find(
             binding->getSet());
 
@@ -218,15 +218,15 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
         {
             MleSet::g_currentSet = mlLoadSet(binding->getSet());
 
-	    // if there is no forum at this point, that is an error
-	}
+        // if there is no forum at this point, that is an error
+    }
 
-	// Test for a real binding.
-	//   It is allowed for a binding to have a set specified but
-	//   not a role.  This is so that actors may be created
-	//   with a MleSet::g_currentSet set but no role.
-	if ( binding->getName() && strcmp(binding->getName(),"NULL") )
-	{
+    // Test for a real binding.
+    //   It is allowed for a binding to have a set specified but
+    //   not a role.  This is so that actors may be created
+    //   with a MleSet::g_currentSet set but no role.
+    if ( binding->getName() && strcmp(binding->getName(),"NULL") )
+    {
         MleRole *(*createRole)(MleActor*) =
             MleRoleClass::find(binding->getName());
         
@@ -235,7 +235,7 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
             // Try loading the DSO.
             if ( mlLoadDSO(binding->getName()) )
                 printf("_mlCreateActor: ERROR loading DSO for %s.\n",
-	        binding->getName());
+            binding->getName());
 
             // Try to look up the function again.
             createRole =
@@ -244,7 +244,7 @@ static MleActor *_mlCreateActor(MleDwpActor *wpa)
 
         if ( createRole )
             (*createRole)(actor);
-	}
+    }
     }
 
     return actor;
@@ -301,7 +301,7 @@ MleGroup *_mlLoadGroup(MleDwpGroup* wpGroup)
     int i,j; // Loop variables.
 
     int numActors = 0;
-    MleSet **sets = NULL;	// Array of actors' sets.
+    MleSet **sets = NULL;    // Array of actors' sets.
 
     if ( wpGroup == NULL )
     {
@@ -316,11 +316,11 @@ MleGroup *_mlLoadGroup(MleDwpGroup* wpGroup)
 
     // Now look for actors.
     MleDwpFinder actorFinder;
-#if defined(WIN32)
-	// Note: Use string type method instead of typeId mechanism. The typeId
+#if defined(_WINDOWS)
+    // Note: Use string type method instead of typeId mechanism. The typeId
     // method doesn't work for Windows because the global address space for
-	// the DWP.dll is different than the one used by the mle runtime.
-	actorFinder.setType("MleDwpActor");
+    // the DWP.dll is different than the one used by the mle runtime.
+    actorFinder.setType("MleDwpActor");
 #else
     actorFinder.setType(MleDwpActor::typeId);
 #endif
@@ -334,14 +334,14 @@ MleGroup *_mlLoadGroup(MleDwpGroup* wpGroup)
         // And call the convenience function to create it.
         MleActor *actor = _mlCreateActor((MleDwpActor *)wpa);
 
-	    // Remember 1-based index.
-	    //   This is a hack because the dictionary returns 0 if
-	    //   a key is not present.  Since 0 is a real value, we
-	    //   have to have a different encoding for it.  A fix
-	    //   would be to use a dictionary that returns ints that
-	    //   has a separate mechanism for notifying that a key
-	    //   is not present.
-	    // Register with the group.
+        // Remember 1-based index.
+        //   This is a hack because the dictionary returns 0 if
+        //   a key is not present.  Since 0 is a real value, we
+        //   have to have a different encoding for it.  A fix
+        //   would be to use a dictionary that returns ints that
+        //   has a separate mechanism for notifying that a key
+        //   is not present.
+        // Register with the group.
         group->m_dictionary.set(wpa->getName(), (void*) (1 + numActors));
 
         // Check to see if actor got created.
@@ -350,10 +350,10 @@ MleGroup *_mlLoadGroup(MleDwpGroup* wpGroup)
         //   actor to be a particular type.
         if ( actor == NULL )
         {
-			//If we have a client callback, then
-			// inform them of the DSO error.
-			if (mlLoadErrorCB)
-				(*mlLoadErrorCB)(wpa);
+            //If we have a client callback, then
+            // inform them of the DSO error.
+            if (mlLoadErrorCB)
+                (*mlLoadErrorCB)(wpa);
 
             printf("_mlLoadGroup: ***** ERROR creating actor %s.\n",
                 wpa->getName());
@@ -361,42 +361,42 @@ MleGroup *_mlLoadGroup(MleDwpGroup* wpGroup)
         }
 
         // Put the roles in the registry if they exist
-	    //   and assign them to the set.
+        //   and assign them to the set.
         MLE_ASSERT(wpa->getName());
         if ( actor->getRole() )
-		{
-	        // Remember 1-based index.
-	        //   This is a hack because the dictionary returns 0 if
-	        //   a key is not present.  Since 0 is a real value, we
-	        //   have to have a different encoding for it.  A fix
-	        //   would be to use a dictionary that returns ints that
-	        //   has a separate mechanism for notifying that a key
-	        //   is not present.
+        {
+            // Remember 1-based index.
+            //   This is a hack because the dictionary returns 0 if
+            //   a key is not present.  Since 0 is a real value, we
+            //   have to have a different encoding for it.  A fix
+            //   would be to use a dictionary that returns ints that
+            //   has a separate mechanism for notifying that a key
+            //   is not present.
             actorDict.set(wpa->getName(), (void *)(numActors + 1));
-	        actor->getRole()->m_set = MleSet::g_currentSet;
-		}
+            actor->getRole()->m_set = MleSet::g_currentSet;
+        }
 
         // Add to list.
-	    // we keep an array of actors and their forums
+        // we keep an array of actors and their forums
         group->add(actor);
         sets = (MleSet **)mlRealloc(sets,
             (numActors + 1)*sizeof(MleActor *));
         sets[numActors] = MleSet::g_currentSet;
-	    numActors++;
+        numActors++;
     }
 
     // Create an array that flags whether actor's roles have been attached.
     int *attached = (int *)mlMalloc(numActors*sizeof(int));
     for ( j = 0; j < numActors; j++ )
-		attached[j] = 0;
+        attached[j] = 0;
 
     // Now look for delegate attachments.
     MleDwpFinder atFinder;
-#if defined(WIN32)
-	// Note: Use string type method instead of typeId mechanism. The typeId
+#if defined(_WINDOWS)
+    // Note: Use string type method instead of typeId mechanism. The typeId
     // method doesn't work for Windows because the global address space for
-	// the DWP.dll is different than the one used by the mle runtime.
-	atFinder.setType("MleDwpRoleAttachment");
+    // the DWP.dll is different than the one used by the mle runtime.
+    atFinder.setType("MleDwpRoleAttachment");
 #else
     atFinder.setType(MleDwpRoleAttachment::typeId);
 #endif
@@ -412,26 +412,26 @@ MleGroup *_mlLoadGroup(MleDwpGroup* wpGroup)
         MLE_ASSERT(da->getChild());
 
         // Look up the parent and child dels from the dict.
-	    //   convert from 1-based indexed to 0-based index
-	    //   We use 1-based indices in the dictionary because the
-	    //   dictionary returns 0 as an error condition for key not found.
-	    long parentIndex = (long)actorDict.find(da->getParent());
-	    long childIndex = (long)actorDict.find(da->getChild());
+        //   convert from 1-based indexed to 0-based index
+        //   We use 1-based indices in the dictionary because the
+        //   dictionary returns 0 as an error condition for key not found.
+        long parentIndex = (long)actorDict.find(da->getParent());
+        long childIndex = (long)actorDict.find(da->getChild());
 
         MleRole *parent = NULL;
         MleRole *child = NULL;
-	    if ( parentIndex )
-	         parent = (*group)[parentIndex - 1]->getRole();
-	    if ( childIndex )
-	        child = (*group)[childIndex - 1]->getRole();
+        if ( parentIndex )
+             parent = (*group)[parentIndex - 1]->getRole();
+        if ( childIndex )
+            child = (*group)[childIndex - 1]->getRole();
 
         // Make sure both exist.
         if ( parent == NULL || child == NULL )
             printf("_mlLoadGroup: can't find roles for parent %s (0x%p) or child %s (0x%p).\n",da->getParent(),parent,da->getChild(),child);
-	    else if ( sets[parentIndex] != sets[childIndex] )
+        else if ( sets[parentIndex] != sets[childIndex] )
             printf("_mlLoadGroup: set mismatch between parent %s and child %s.\n",da->getParent(),da->getChild());
-	    else
-	        sets[parentIndex]->attach(parent,child);
+        else
+            sets[parentIndex]->attach(parent,child);
             
         // Now remove the child from the registry.
         //   We do this so no child can be given more
@@ -440,24 +440,24 @@ MleGroup *_mlLoadGroup(MleDwpGroup* wpGroup)
         //   the set.
         actorDict.remove(da->getChild());
 
-	    // Mark the actor as having been attached.
-	    //   This is an additional means to ensure that no child will
-	    //   be given more than one parent.  It also allows determining
-	    //   easily which children have no parent by array traversal.
-	    if ( childIndex )
-		    attached[childIndex - 1] = 1;
+        // Mark the actor as having been attached.
+        //   This is an additional means to ensure that no child will
+        //   be given more than one parent.  It also allows determining
+        //   easily which children have no parent by array traversal.
+        if ( childIndex )
+            attached[childIndex - 1] = 1;
     }
 
     /* Now anything left should be parented directly to the forum. */
     for ( j = 0; j < numActors; j++ )
     {
-	    // Get the role.
+        // Get the role.
         MleRole *role = (*group)[j]->getRole();
-	
-	    // Make sure we want to do this.
-	    //   The set array entry will be non-NULL only if this role
-    	//   is not already a child of some other role.
-	    if ( !attached[j] && sets[j] && role )
+    
+        // Make sure we want to do this.
+        //   The set array entry will be non-NULL only if this role
+        //   is not already a child of some other role.
+        if ( !attached[j] && sets[j] && role )
             sets[j]->attach(NULL, role);
     }
 
@@ -465,8 +465,8 @@ MleGroup *_mlLoadGroup(MleDwpGroup* wpGroup)
     // Call resolve edit function as well.
     for ( i = 0; i < numActors; i++ )
     {
-	    // Set the set this actor was placed in.
-	    MleSet::g_currentSet = sets[i];
+        // Set the set this actor was placed in.
+        MleSet::g_currentSet = sets[i];
 
         (*group)[i]->init();
         (*group)[i]->resolveEdit();
@@ -593,7 +593,7 @@ MleScene *_mlLoadScene(MleDwpScene* wpScene)
     
     MleScene *scene = _mlCreateScene(wpScene);
     if (NULL == scene) {
-	    return NULL;
+        return NULL;
     }
 
     // mlLoadScene() always puts it\'s result into g_currentScene
@@ -605,7 +605,7 @@ MleScene *_mlLoadScene(MleDwpScene* wpScene)
     // First, find the root.
     MleDwpItem *root = wpScene;
     while ( root->getParent() )
-	root = root->getParent();
+    root = root->getParent();
 
     // Now look for groups.
     MleDwpFinder groupFinder;
@@ -614,70 +614,70 @@ MleScene *_mlLoadScene(MleDwpScene* wpScene)
     groupFinder.find(wpScene);
     for ( j = 0; j < groupFinder.getNumItems(); j++ )
     {
-	    // Get an group.
-	    MleDwpGroup *wpg;
-	    MleDwpItem *item = (MleDwpItem *)groupFinder.getItems()[j];
-#if defined(WIN32)
-		if (item->isa("MleDwpGroup"))
+        // Get an group.
+        MleDwpGroup *wpg;
+        MleDwpItem *item = (MleDwpItem *)groupFinder.getItems()[j];
+#if defined(_WINDOWS)
+        if (item->isa("MleDwpGroup"))
 #else
-	    if (MleDwpGroup::typeId == item->getTypeId())
+        if (MleDwpGroup::typeId == item->getTypeId())
 #endif
-		{
-		    wpg = (MleDwpGroup *)item;
-	    }
-#if defined(WIN32)
-		else if (item->isa("MleDwpGroupRef"))
+        {
+            wpg = (MleDwpGroup *)item;
+        }
+#if defined(_WINDOWS)
+        else if (item->isa("MleDwpGroupRef"))
 #else
-	    else if (MleDwpGroupRef::typeId == item->getTypeId())
+        else if (MleDwpGroupRef::typeId == item->getTypeId())
 #endif
-		{
-		    // Find Group in workprint from GroupRef in this scene.
-		    wpg = _mlGetWorkprintGroup(item->getName());
-		    if (wpg == NULL)
-		    {
-			    printf("_mlLoadScene: GroupRef named %s not found\n", item->getName());
-			    continue;
-		    }
-	    } 
-	    else {
-		    MLE_ASSERT(MleDwpGroup::typeId == item->getTypeId() ||
-			      MleDwpGroupRef::typeId == item->getTypeId());
-	    }
+        {
+            // Find Group in workprint from GroupRef in this scene.
+            wpg = _mlGetWorkprintGroup(item->getName());
+            if (wpg == NULL)
+            {
+                printf("_mlLoadScene: GroupRef named %s not found\n", item->getName());
+                continue;
+            }
+        } 
+        else {
+            MLE_ASSERT(MleDwpGroup::typeId == item->getTypeId() ||
+                  MleDwpGroupRef::typeId == item->getTypeId());
+        }
 
-	    // Remember 1-based index.
-	    //   This is a hack because the dictionary returns 0 if
-	    //   a key is not present.  Since 0 is a real value, we
-	    //   have to have a different encoding for it.  A fix
-	    //   would be to use a dictionary that returns ints that
-	    //   has a separate mechanism for notifying that a key
-	    //   is not present.
-	    // Register with the scene.
-	    scene->m_dictionary.set(wpg->getName(), (void*) (1+numGroups));
+        // Remember 1-based index.
+        //   This is a hack because the dictionary returns 0 if
+        //   a key is not present.  Since 0 is a real value, we
+        //   have to have a different encoding for it.  A fix
+        //   would be to use a dictionary that returns ints that
+        //   has a separate mechanism for notifying that a key
+        //   is not present.
+        // Register with the scene.
+        scene->m_dictionary.set(wpg->getName(), (void*) (1+numGroups));
 
-	    // And call the convenience function to create it.
-	    MleGroup *group = _mlLoadGroup((MleDwpGroup *)wpg);
+        // And call the convenience function to create it.
+        MleGroup *group = _mlLoadGroup((MleDwpGroup *)wpg);
 
-	    // Check to see if group got created.
-	    if ( group == NULL )
-	    {
-		    printf("_mlLoadScene: ERROR creating group %s.\n",
-			   wpg->getName());
-		    continue;
-	    }
+        // Check to see if group got created.
+        if ( group == NULL )
+        {
+            printf("_mlLoadScene: ERROR creating group %s.\n",
+               wpg->getName());
+            continue;
+        }
 
-#if defined(WIN32)
-		if (item->isa("MleDwpGroupRef"))
+#if defined(_WINDOWS)
+        if (item->isa("MleDwpGroupRef"))
 #else
-	    if (MleDwpGroupRef::typeId == item->getTypeId())
+        if (MleDwpGroupRef::typeId == item->getTypeId())
 #endif
-		{
-		    // Find now release the wire-loaded Group.
-		    _mlReleaseWorkprintGroup(wpg);
-	    }
+        {
+            // Find now release the wire-loaded Group.
+            _mlReleaseWorkprintGroup(wpg);
+        }
 
-	    // The scene holds a reference to each group.
-	    scene->add(group);
-	    numGroups++;
+        // The scene holds a reference to each group.
+        scene->add(group);
+        numGroups++;
     }
 
     // Call the init() function on the scene containing the groups.
@@ -758,12 +758,12 @@ mlLoadMediaRef(const char *id, void* /*userData*/)
 
         // Cache the entries for processing by the MediaRef class.
         if (! mediaRef->load(numEntries,(void *)entries))
-		{
-			wpMediaRef->releaseTargetEntries(&entries);
+        {
+            wpMediaRef->releaseTargetEntries(&entries);
             return NULL;
-		}
+        }
 
-		wpMediaRef->releaseTargetEntries(&entries);
+        wpMediaRef->releaseTargetEntries(&entries);
     }
 
     // XXX - register with instance registry here (for tools?)
@@ -778,31 +778,31 @@ mlLoadMediaRef(const char *id, void* /*userData*/)
 MleScene *
 mlLoadBootScene(MleDwpItem *item)
 {
-	// First, find the root.
-	MleDwpItem *root = item;
-	MleDwpItem *parent;
-	while ( NULL != (parent = root->getParent()) ) {
-		root = parent;
-	}
+    // First, find the root.
+    MleDwpItem *root = item;
+    MleDwpItem *parent;
+    while ( NULL != (parent = root->getParent()) ) {
+        root = parent;
+    }
 
-	// Look for scenes.
-	MleDwpFinder sceneFinder;
-#if defined(WIN32)
-	// Note: Use string type method instead of typeId mechanism. The typeId
+    // Look for scenes.
+    MleDwpFinder sceneFinder;
+#if defined(_WINDOWS)
+    // Note: Use string type method instead of typeId mechanism. The typeId
     // method doesn't work for Windows because the global address space for
-	// the DWP.dll is different than the one used by the mle runtime.
-	sceneFinder.setType("MleDwpScene");
+    // the DWP.dll is different than the one used by the mle runtime.
+    sceneFinder.setType("MleDwpScene");
 #else
-	sceneFinder.setType(MleDwpScene::typeId);
+    sceneFinder.setType(MleDwpScene::typeId);
 #endif
-	sceneFinder.setFindAll(TRUE);
-	sceneFinder.find(root); 
+    sceneFinder.setFindAll(TRUE);
+    sceneFinder.find(root); 
 
-	// get the first scene.
-	MleDwpScene *wps = (MleDwpScene *)sceneFinder.getItem();
+    // get the first scene.
+    MleDwpScene *wps = (MleDwpScene *)sceneFinder.getItem();
 
-	// The first scene is the boot scene, by convention.
-	return mlLoadScene(wps);
+    // The first scene is the boot scene, by convention.
+    return mlLoadScene(wps);
 }
 
 #endif /* Digital Workprint loading. */
@@ -821,13 +821,13 @@ mlGenRegistryKeyFromMedia(int id)
     int *key = (int *) mlMalloc(4);
 
     // ((id<<8) & 0xfff0)
-#ifdef WIN32 
+#ifdef _WINDOWS 
     *key = ((((id)&0x7f)<<1)|(((id)&0x3f80)<<2)| \
             (((id)&0x1fc000)<<3)|0x00010101);
 #else
     *key = ((((id)&0x7f)<<25)|(((id)&0x3f80)<<10)| \
             (((id)&0x1fc000)>>5)|0x01010100);
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
     return (char *) key;
 }
@@ -865,7 +865,7 @@ mlLoadMediaRef(const int id, void* /*userData*/)
     // create a new MediaRef of specified type.
     mediaRef = (*mlRTMediaRef[mrefInfoData.m_type].constructor)();
     if ( mediaRef != NULL )
-	{
+    {
         // load MediaRef data
         mediaRef->load(mrefInfoData.m_numMrefs,(void *)g_theTitle->m_dpp);
     }
@@ -879,122 +879,122 @@ mlLoadMediaRef(const int id, void* /*userData*/)
 
 MleGroup *mlLoadGroup(const int indexToPpTOC)
 {
-	extern MleSet **_mleSetArray;	// declared in MleActorGC.cxx
-	unsigned int length;
-	size_t nRead;
+    extern MleSet **_mleSetArray;    // declared in MleActorGC.cxx
+    unsigned int length;
+    size_t nRead;
 
-	FILE *file = g_theTitle->m_dpp->getFp();
-	// XXX -- fix when PP API is available
+    FILE *file = g_theTitle->m_dpp->getFp();
+    // XXX -- fix when PP API is available
 
-	mlFSeek(file,g_theTitle->m_dpp->getTOCOffset(indexToPpTOC)+4,SEEK_SET);
-	nRead = mlFRead(&length,sizeof(length),1,file);
+    mlFSeek(file,g_theTitle->m_dpp->getTOCOffset(indexToPpTOC)+4,SEEK_SET);
+    nRead = mlFRead(&length,sizeof(length),1,file);
   
-	unsigned char *actorGroupChunk = new unsigned char[length];
-	unsigned char *chunkPtr = actorGroupChunk;
-	unsigned char *&chunkRef = chunkPtr;
+    unsigned char *actorGroupChunk = new unsigned char[length];
+    unsigned char *chunkPtr = actorGroupChunk;
+    unsigned char *&chunkRef = chunkPtr;
   
-	nRead = mlFRead(actorGroupChunk, length, 1, file);
+    nRead = mlFRead(actorGroupChunk, length, 1, file);
 
-	// XXX Should also get the group type from the DPP (before 1st actor)
-	// to create here with a call to mleCreateGroup(<type>).
-	int groupIndex;
-	groupIndex = readInt(chunkRef, actorGroupChunk, actorGroupChunk + length);
-	MleGroup *group = (*mlRTGroupClass[groupIndex].constructor)();
-	if ( group == NULL )
-	{
-		  return NULL;
-	}
+    // XXX Should also get the group type from the DPP (before 1st actor)
+    // to create here with a call to mleCreateGroup(<type>).
+    int groupIndex;
+    groupIndex = readInt(chunkRef, actorGroupChunk, actorGroupChunk + length);
+    MleGroup *group = (*mlRTGroupClass[groupIndex].constructor)();
+    if ( group == NULL )
+    {
+          return NULL;
+    }
 
-	int numActors = readIndex(chunkRef, actorGroupChunk,
-		actorGroupChunk + length);
-	chunkInitialization(numActors);
-	parseStream(chunkRef, actorGroupChunk, actorGroupChunk + length,
-	    MLE_CHUNK_GROUP);
-	delete actorGroupChunk;
-	for (int i = 0; i < g_actorRegistryPtr - g_actorRegistry; i++)
-	{
-		// Set the current Set.
-		MleSet::g_currentSet = _mleSetArray[i];
+    int numActors = readIndex(chunkRef, actorGroupChunk,
+        actorGroupChunk + length);
+    chunkInitialization(numActors);
+    parseStream(chunkRef, actorGroupChunk, actorGroupChunk + length,
+        MLE_CHUNK_GROUP);
+    delete actorGroupChunk;
+    for (int i = 0; i < g_actorRegistryPtr - g_actorRegistry; i++)
+    {
+        // Set the current Set.
+        MleSet::g_currentSet = _mleSetArray[i];
 
-		// XXX Why not dispense with actor registry and use the group?
-		// Well, the registry holds at least the actor\'s table index
-		// and delegate as well, so isn\'t 100% redundant.
-		group->add(g_actorRegistry[i].m_actor);
+        // XXX Why not dispense with actor registry and use the group?
+        // Well, the registry holds at least the actor\'s table index
+        // and delegate as well, so isn\'t 100% redundant.
+        group->add(g_actorRegistry[i].m_actor);
 
-		g_actorRegistry[i].m_actor->init();
-	}
+        g_actorRegistry[i].m_actor->init();
+    }
 
-	// Now finish the init sequence.
-	group->init();
+    // Now finish the init sequence.
+    group->init();
 
-	//
-	// Initialize the MleSet::g_currentSet back to NULL since this
-	// variable is only valid during actor's init() function.
-	//
-	MleSet::g_currentSet = NULL;
+    //
+    // Initialize the MleSet::g_currentSet back to NULL since this
+    // variable is only valid during actor's init() function.
+    //
+    MleSet::g_currentSet = NULL;
 
-	// Clean up before exit.
-	delete g_actorRegistry;
-	delete _mleSetArray;
+    // Clean up before exit.
+    delete g_actorRegistry;
+    delete _mleSetArray;
 
-	return group;
+    return group;
 }
 
 
 MleScene *mlLoadScene(const int indexToPpTOC)
 {
-	extern MleSet **_mleSetArray;	// Declared in MleGroupGC.cxx.
-	unsigned int length;
-	size_t nRead;
+    extern MleSet **_mleSetArray;    // Declared in MleGroupGC.cxx.
+    unsigned int length;
+    size_t nRead;
 
-	FILE *file = g_theTitle->m_dpp->getFp();
+    FILE *file = g_theTitle->m_dpp->getFp();
 
-	// XXX -- fix when DPP API is available
-	mlFSeek(file,g_theTitle->m_dpp->getTOCOffset(indexToPpTOC)+4,SEEK_SET);
-	nRead = mlFRead(&length,sizeof(length),1,file);
+    // XXX -- fix when DPP API is available
+    mlFSeek(file,g_theTitle->m_dpp->getTOCOffset(indexToPpTOC)+4,SEEK_SET);
+    nRead = mlFRead(&length,sizeof(length),1,file);
   
-	unsigned char *sceneChunk = new unsigned char[length];
-	unsigned char *chunkPtr = sceneChunk;
-	unsigned char *&chunkRef = chunkPtr;
-	nRead = mlFRead(sceneChunk, length, 1, file);
+    unsigned char *sceneChunk = new unsigned char[length];
+    unsigned char *chunkPtr = sceneChunk;
+    unsigned char *&chunkRef = chunkPtr;
+    nRead = mlFRead(sceneChunk, length, 1, file);
 
-	// XXX Should also get the scene type from the sceneClass[indexToPpTOC]
-	// in order to create the right scene type object, not just MleScene, here.
-	int sceneIndex = readInt(chunkRef, sceneChunk, sceneChunk + length);
-	MleScene *scene = (*mlRTSceneClass[sceneIndex].constructor)();
-	if ( scene == NULL )
-	{
-		return NULL;
-	}
+    // XXX Should also get the scene type from the sceneClass[indexToPpTOC]
+    // in order to create the right scene type object, not just MleScene, here.
+    int sceneIndex = readInt(chunkRef, sceneChunk, sceneChunk + length);
+    MleScene *scene = (*mlRTSceneClass[sceneIndex].constructor)();
+    if ( scene == NULL )
+    {
+        return NULL;
+    }
 
-	// mlLoadScene() always puts it\'s result into currentScene
-	// and does this before the groups are loaded and before its
-	// init() call, in case the groups or the init()
-	// call must use it.
-	scene->changeCurrentScene( scene );
+    // mlLoadScene() always puts it\'s result into currentScene
+    // and does this before the groups are loaded and before its
+    // init() call, in case the groups or the init()
+    // call must use it.
+    scene->changeCurrentScene( scene );
 
-	// For each group in the scene, read its index (into global
-	// list of groups) and then load that group.
-	// Format of the chunk is
-	// [ numGroups, [ g0index, g1index, ... gNumIndex ] ]
-	//
-	int numGroups = readInt(chunkRef, sceneChunk, sceneChunk + length);
-	for (int i = 0; i < numGroups; i++)
-	{
-		// readInt() increments the chunk ptr, so just call repeatedly
-		// XXX Kinda funny that the ReadInt() we use resides in actorgc.cxx
-		int groupIndex = readInt(chunkRef, sceneChunk, sceneChunk + length);
+    // For each group in the scene, read its index (into global
+    // list of groups) and then load that group.
+    // Format of the chunk is
+    // [ numGroups, [ g0index, g1index, ... gNumIndex ] ]
+    //
+    int numGroups = readInt(chunkRef, sceneChunk, sceneChunk + length);
+    for (int i = 0; i < numGroups; i++)
+    {
+        // readInt() increments the chunk ptr, so just call repeatedly
+        // XXX Kinda funny that the ReadInt() we use resides in actorgc.cxx
+        int groupIndex = readInt(chunkRef, sceneChunk, sceneChunk + length);
 
-		scene->add(mlLoadGroup( groupIndex ));
-	}
+        scene->add(mlLoadGroup( groupIndex ));
+    }
 
-	// Now finish the init sequence.
-	scene->init();
+    // Now finish the init sequence.
+    scene->init();
 
-	// Clean up before exit.
-	delete sceneChunk;
+    // Clean up before exit.
+    delete sceneChunk;
 
-	return scene;
+    return scene;
 }
 
 

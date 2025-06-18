@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -53,13 +53,13 @@
 // instantiated from a group may refer to this variable in their
 // constructor to get a handle to the set that contains them.
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the current Set can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 MleSet *MleSet::g_currentSet;
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
@@ -87,7 +87,7 @@ MleSet::~MleSet(void)
 #ifdef MLE_DIGITAL_WORKPRINT
     unregisterInstance();
     if (m_name)
-		mlFree(m_name);
+        mlFree(m_name);
 #endif /* MLE_REHEARSAL */
 }
 
@@ -95,29 +95,29 @@ MleSet::~MleSet(void)
 void
 MleSet::init(void)
 {
-	// The base class does nothing.
+    // The base class does nothing.
 }
 
 
 void *
 MleSet::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 
 void
 MleSet::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 
 void
 MleSet::attach(MleRole * /* parent */, MleRole * /* child */)
 {
-	// Does nothing in the base class.
+    // Does nothing in the base class.
 }
 
 
@@ -141,13 +141,13 @@ MleSet::isa(const char *type) const
 #include "mle/DwpDataUnion.h"
 #include "mle/DwpDatatype.h"
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 MleDwpStrKeyDict MleSet::g_instanceRegistry;
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
@@ -174,7 +174,7 @@ MleSet::getClass(void)
 {
     // If there is a cached value, return it.
     if ( m_setClass )
-		return m_setClass;
+        return m_setClass;
 
     // Look it up in the registry.
     m_setClass = MleSetClass::find(getTypeName());
@@ -190,15 +190,15 @@ MleSet::poke(const char *property,MleDwpDataUnion *value)
 
     // Make sure the set class is present.
     if ( getClass() == NULL )
-	    return 0;
+        return 0;
 
     // Get the member corresponding to the property name.
     const MleSetMember *member = m_setClass->findMember(property);
     if ( member == NULL )
     {
-	    printf("property %s not present on %s.\n",
-		    property,getTypeName());
-	    return 1;
+        printf("property %s not present on %s.\n",
+            property,getTypeName());
+        return 1;
     }
 
     // Transfer the value.
@@ -206,17 +206,17 @@ MleSet::poke(const char *property,MleDwpDataUnion *value)
 
     if ( value->m_datatype != member->getType() )
     {
-		printf("type mismatch in setting property %s on %s (%s and %s).\n",
-			property,getTypeName(),
-			value->m_datatype->getName(),
-			member->getType()->getName());
-		return 1;
+        printf("type mismatch in setting property %s on %s (%s and %s).\n",
+            property,getTypeName(),
+            value->m_datatype->getName(),
+            member->getType()->getName());
+        return 1;
     }
 
     //value->m_datatype->get(value,(char *)this + member->getOffset());
-	MlePropertyEntry *entry = member->getEntry();
-	// TBD: the following will probably not work without some munging of MleDwpDataUnion. Need testing.
-	entry->setProperty(this, entry->name, (unsigned char *)value);
+    MlePropertyEntry *entry = member->getEntry();
+    // TBD: the following will probably not work without some munging of MleDwpDataUnion. Need testing.
+    entry->setProperty(this, entry->name, (unsigned char *)value);
 
     return 0;
 }
@@ -233,7 +233,7 @@ MleSet::setName(char *newName)
     unregisterInstance();
     
     if (m_name)
-		mlFree(m_name);
+        mlFree(m_name);
 
     registerInstance(newName);
 }
@@ -246,7 +246,7 @@ MleSet::setName(char *newName)
 void
 MleSet::registerInstance(const char* n)
 {
-#ifdef WIN32
+#ifdef _WINDOWS
    m_name = _strdup(n);
 #else
    m_name = strdup(n);
@@ -265,10 +265,10 @@ MleSet::unregisterInstance(void)
     // or we could put a removeValue in the dict class
 
     for (MleDwpDictIter iter(g_instanceRegistry); iter.getValue(); iter.next()) {
-		if ((MleSet*) iter.getValue() == this) {
-			g_instanceRegistry.remove(iter.getKey());
-			break;
-		}
+        if ((MleSet*) iter.getValue() == this) {
+            g_instanceRegistry.remove(iter.getKey());
+            break;
+        }
     }
 }
 

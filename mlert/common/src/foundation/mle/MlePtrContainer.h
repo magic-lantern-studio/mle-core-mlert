@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -114,14 +114,14 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
 
 
     /**
-	 * @brief Clear the specified element from the array.
-	 *
+     * @brief Clear the specified element from the array.
+     *
      * This function removes an element from the array without compressing
      * out the empty location.  See remove().  We must provide clear() so
      * that the dictionary lookup in find() continues to work after a pointer
      * is dropped from the initial list.
-	 *
-	 * @param index The element to clear.
+     *
+     * @param index The element to clear.
      */
     void clear( const int index )
     { MlePtrArray::m_array[index] = NULL; }
@@ -129,10 +129,10 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
 
     /**
      * @brief Clear by pointer value.
-	 *
-	 * Search through the array and clear the pointer if found.
-	 *
-	 * @param ptr The pointer to clear.
+     *
+     * Search through the array and clear the pointer if found.
+     *
+     * @param ptr The pointer to clear.
      */
     void clear(ITEM ptr)
     {
@@ -146,8 +146,8 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
 
 
     /**
-	 * @brief Initialize the array.
-	 *
+     * @brief Initialize the array.
+     *
      * This function is a hook to do any initialization
      * Typically, the scene or group may schedule itself here.
      */
@@ -155,11 +155,11 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
 
 
     /**
-	 * @brief Find the element in the container.
-	 *
+     * @brief Find the element in the container.
+     *
      * @param pointer Given the pointer, find its index in the container.
-	 *
-	 * @return The index of the element is returned.
+     *
+     * @return The index of the element is returned.
      */
     int find( const ITEM ptr )
     { 
@@ -173,34 +173,34 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
 
 #ifdef MLE_DIGITAL_WORKPRINT
 
-	/**
+    /**
      * @brief Get the container's name.
-	 *
+     *
      * The tools need this.  The user code can instead use the
      * macro mle\<container-type\>RefTo(), eg mlSceneRefTo(), which
      * is valid at both rehearsal as a character string and at run time
      * as an integer.
-	 *
-	 * @return The name of the container is returned.
+     *
+     * @return The name of the container is returned.
      */
     char* getName( void ) { return m_name; }
 
-	/**
-	 * @brief Set the container's name.
-	 *
-	 * @param nm The name of the container to set.
-	 */
+    /**
+     * @brief Set the container's name.
+     *
+     * @param nm The name of the container to set.
+     */
     void setName( char * nm )
-	{ 
-	    if (m_name) {
-		    delete m_name; 
-		}
-#ifdef WIN32
-	    m_name = (nm) ? _strdup(nm) : NULL;
+    { 
+        if (m_name) {
+            delete m_name; 
+        }
+#ifdef _WINDOWS
+        m_name = (nm) ? _strdup(nm) : NULL;
 #else
-	    m_name = (nm) ? strdup(nm) : NULL;
+        m_name = (nm) ? strdup(nm) : NULL;
 #endif
-	}
+    }
 
     // How to locate a group loaded in a scene from the DWP,
     // where the group's name is known at compile time and so can be
@@ -208,10 +208,10 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
     // Note that these lookups are only valid until the group is removed,
     // but are never valid for groups that the programmer adds to the scene.
     ITEM find( const char *id )
-	{ 
-	    long index = -1 + (long) m_dictionary.find(id);
-	    return (index >= 0) ? (*this)[index] : NULL;
-	}
+    { 
+        long index = -1 + (long) m_dictionary.find(id);
+        return (index >= 0) ? (*this)[index] : NULL;
+    }
 
     // How to find groups in a scene at rehearsal time.
     // The dictionary stores pairs of (string, 1+index) of the ITEM within
@@ -221,14 +221,14 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
 
     // Sub-class must define these methods in order to have workprint
     // loading.  XXX
-    //	  virtual MleScene*	load( MleDwpScene* wpScene );	
-    //	  virtual MleScene*	load(const char* id);
+    //      virtual MleScene*    load( MleDwpScene* wpScene );    
+    //      virtual MleScene*    load(const char* id);
 
 #else /* MLE_DIGITAL_WORKPRINT */
 
     /**
-	 * @brief Find the element in the container.
-	 *
+     * @brief Find the element in the container.
+     *
      * At runtime the MlePPGroup_* macro converts to int for us
      * so we can lookup the element easily.
      */
@@ -237,7 +237,7 @@ template <class ITEM> class MlePtrContainer : public MleTPtrArray<ITEM>
 
     // Sub-class must define this method in order to support playprint
     // loading.  XXX
-	//	   virtual MleScene* load( const int indexToPpTOC );
+    // virtual MleScene* load( const int indexToPpTOC );
 
 #endif /* MLE_REHEARSAL */
 

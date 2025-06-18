@@ -11,7 +11,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -48,9 +48,9 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#ifdef WIN32
+#ifdef _WINDOWS
 #include <io.h>
-#else /* ! WIN32 */
+#else /* ! _WINDOWS */
 #include <unistd.h>
 #endif 
 
@@ -78,11 +78,11 @@ Mle3dTransition* Mle3dSnippet::getTransition(Mle3dSnippet* snippet, char* nameSe
 
     if (snippet && nameSearch && strlen(nameSearch))
        for (unsigned int i = 0; i < snippet->m_numTransitions; i++)
-	   { 
+       { 
            temp = Mle3dSnippet::getTransition(snippet,i);
            if (temp && !strcmp(temp->m_name,nameSearch))
            {
-			   result = temp;
+               result = temp;
                i = snippet->m_numTransitions;
            }
        }
@@ -97,7 +97,7 @@ Mle3dTransition** Mle3dSnippet::getTransitionList(Mle3dSnippet* snippet)
   
     if (snippet)
     {
-		transitionList=new Mle3dTransition*[snippet->m_numTransitions];
+        transitionList=new Mle3dTransition*[snippet->m_numTransitions];
         for (unsigned int i = 0; i < snippet->m_numTransitions; i++)
             transitionList[i] = Mle3dSnippet::getTransition(snippet,i);
     }
@@ -126,10 +126,10 @@ Mle3dSnippet* Mle3dCharacter::getSnippet(Mle3dCharacter* character, char* nameSe
             temp = Mle3dCharacter::getSnippet(character,i);
             if (temp && !strcmp(temp->m_name,nameSearch))
             {
-				result = temp;
+                result = temp;
                 i = character->m_numSnippets;
             }
-		}
+        }
 
     return result;
 }
@@ -141,7 +141,7 @@ Mle3dSnippet** Mle3dCharacter::getSnippetList(Mle3dCharacter* character)
   
     if (character)
     {
-		snippetList = new Mle3dSnippet*[character->m_numSnippets];
+        snippetList = new Mle3dSnippet*[character->m_numSnippets];
         for (unsigned int i = 0; i < character->m_numSnippets; i++)
             snippetList[i] = Mle3dCharacter::getSnippet(character,i);
     }
@@ -167,13 +167,13 @@ Mle3dCharacter* Mle3dCharacterRegistry::getCharacter(Mle3dCharacterRegistry* reg
     Mle3dCharacter* temp;
     
     for (unsigned int i = 0; i < registry->m_numCharacters;i++)
-	{
-	    temp = Mle3dCharacterRegistry::getCharacter(registry,i);
+    {
+        temp = Mle3dCharacterRegistry::getCharacter(registry,i);
             if (strcmp(temp->m_name,nameSearch) == 0)
-			{
-	            result = temp;
-	            break;
-			}
+            {
+                result = temp;
+                break;
+            }
     }
     
     return result;
@@ -183,67 +183,67 @@ Mle3dCharacter* Mle3dCharacterRegistry::getCharacter(Mle3dCharacterRegistry* reg
 #ifdef BINARY_REGISTRY
 Mle3dCharacterRegistry* Mle3dCharacterRegistry::read(char* filename)
 {
-	Mle3dCharacterRegistry* registry = NULL;
+    Mle3dCharacterRegistry* registry = NULL;
   
     if (filename)
-	{
+    {
         unsigned int filesize = 0;
         int statcheck = open(filename,O_RDONLY);
         if (statcheck >= 0)
-		{
-	        struct stat status;
-	        fstat(statcheck,&status);
-	        filesize = status.st_size;
-	        close(statcheck);
-	  
-		    if (filesize)
-			{
-			    FILE* in = fopen(filename,"rb");
-			    if (in != NULL)
-				{
-			        registry = (Mle3dCharacterRegistry*)malloc(filesize);
-			        if (fread(registry,filesize,1,in) == 0)
-					{
-				        registry = NULL;
-					}
-			        fclose(in);
-			  
-			        if (registry)
-					{
-						// First-pass check to make sure file has magic number for character registry
-				        char* magic = MLE_3D_CHAR_MAGIC;
-				        unsigned long* check = (unsigned long*)magic;
-				        if (*check != registry->magicNumber)
-						{
-							fprintf(stderr,"%s%s%s","Mle3dCharacterRegistry::Error--file ",filename,
-						        " is not a Magic Lantern character registry.\n");
-					        delete [] registry;
-					        registry = NULL;
-						}
-					}
-			  
-			        if (registry)
-					{
-						// Second-pass check to see if character information in file is possibly invalid
-				        unsigned int check = 0;
-				        for (unsigned int i = 0; i < registry->numCharacters; i++)
-				            if (registry->characterOffset[i] > check)
-					            check=registry->characterOffset[i];
-				        if (check > filesize)
-						{
-							delete [] registry;
-					        registry = NULL;
-						}
-					}
-				}
-			}
-	  
-	        if (! registry)
-	            fprintf(stderr,"Mle3dCharacterRegistry::Error--Could not load character(s) from file %s.\n",filename);
-		}
+        {
+            struct stat status;
+            fstat(statcheck,&status);
+            filesize = status.st_size;
+            close(statcheck);
+      
+            if (filesize)
+            {
+                FILE* in = fopen(filename,"rb");
+                if (in != NULL)
+                {
+                    registry = (Mle3dCharacterRegistry*)malloc(filesize);
+                    if (fread(registry,filesize,1,in) == 0)
+                    {
+                        registry = NULL;
+                    }
+                    fclose(in);
+              
+                    if (registry)
+                    {
+                        // First-pass check to make sure file has magic number for character registry
+                        char* magic = MLE_3D_CHAR_MAGIC;
+                        unsigned long* check = (unsigned long*)magic;
+                        if (*check != registry->magicNumber)
+                        {
+                            fprintf(stderr,"%s%s%s","Mle3dCharacterRegistry::Error--file ",filename,
+                                " is not a Magic Lantern character registry.\n");
+                            delete [] registry;
+                            registry = NULL;
+                        }
+                    }
+              
+                    if (registry)
+                    {
+                        // Second-pass check to see if character information in file is possibly invalid
+                        unsigned int check = 0;
+                        for (unsigned int i = 0; i < registry->numCharacters; i++)
+                            if (registry->characterOffset[i] > check)
+                                check=registry->characterOffset[i];
+                        if (check > filesize)
+                        {
+                            delete [] registry;
+                            registry = NULL;
+                        }
+                    }
+                }
+            }
+      
+            if (! registry)
+                fprintf(stderr,"Mle3dCharacterRegistry::Error--Could not load character(s) from file %s.\n",filename);
+        }
         else
-	        fprintf(stderr,"Mle3dCharacterRegistry::Error--Could not find character registry file %s.\n",filename);
-	}
+            fprintf(stderr,"Mle3dCharacterRegistry::Error--Could not find character registry file %s.\n",filename);
+    }
     else
         fprintf(stderr,"Mle3dCharacterRegistry::Error--No filename given for character registry.\n");
   
@@ -254,39 +254,39 @@ Mle3dCharacterRegistry* Mle3dCharacterRegistry::read(char* filename)
 
 Mle3dCharacterRegistry* Mle3dCharacterRegistry::read(char* filename)
 {
-	Mle3dCharacterRegistry* registry = NULL;
+    Mle3dCharacterRegistry* registry = NULL;
   
     if (filename) 
     {
-		unsigned int filesize = 0;
-#ifdef WIN32
+        unsigned int filesize = 0;
+#ifdef _WINDOWS
         int statcheck = _open(filename,O_RDONLY);
 #else
         int statcheck = open(filename,O_RDONLY);
 #endif
         if (statcheck >= 0) 
         {
-			struct stat status;
-	        fstat(statcheck,&status);
-	        filesize = status.st_size;
-#ifdef WIN32
-	        _close(statcheck);
+            struct stat status;
+            fstat(statcheck,&status);
+            filesize = status.st_size;
+#ifdef _WINDOWS
+            _close(statcheck);
 #else
-	        close(statcheck);
+            close(statcheck);
 #endif
-	  
-	        if (filesize) 
+      
+            if (filesize) 
             {
-				FILE* in = fopen(filename,"ra");
-	            if (in != NULL) 
+                FILE* in = fopen(filename,"ra");
+                if (in != NULL) 
                 {
-					char magic[MLE_NAME_LENGTH];
-					int nItems;
+                    char magic[MLE_NAME_LENGTH];
+                    int nItems;
                     nItems = fscanf(in,"%s",magic);
 
                     if (magic && (!strcmp(magic,MLE_3D_CHAR_MAGIC)))
                     {
-						registry = new Mle3dCharacterRegistry;
+                        registry = new Mle3dCharacterRegistry;
 
                         // Read Character Registry
                         nItems = fscanf(in,"%s",registry->m_name);
@@ -302,7 +302,7 @@ printf("Number of characters is %d\n",registry->m_numCharacters);
                         // Read Characters
                         for (unsigned int i = 0; i < registry->m_numCharacters; i++)
                         {
-							Mle3dCharacter* character = new Mle3dCharacter;
+                            Mle3dCharacter* character = new Mle3dCharacter;
                             registry->m_character[i] = character;
                             nItems = fscanf(in,"%s",character->m_name);
 #ifdef MLE_DEBUG 
@@ -319,7 +319,7 @@ printf("Number of snippets is %d\n",character->m_numSnippets);
                             // Read Snippets
                             for (unsigned int j = 0; j < character->m_numSnippets; j++)
                             {
-								Mle3dSnippet* snippet = new Mle3dSnippet;
+                                Mle3dSnippet* snippet = new Mle3dSnippet;
                                 character->m_snippet[j] = snippet;
 
                                 nItems = fscanf(in,"%s",snippet->m_name);
@@ -342,7 +342,7 @@ printf("Number of transitions is %d\n",snippet->m_numTransitions);
                                 // Read Transitions
                                 for (unsigned int k = 0; k < snippet->m_numTransitions; k++)
                                 {
-									Mle3dTransition* transition = new Mle3dTransition;
+                                    Mle3dTransition* transition = new Mle3dTransition;
                                     snippet->m_transition[k] = transition;
 
                                     nItems = fscanf(in,"%s",transition->m_name);
@@ -370,20 +370,20 @@ printf("Transition target snippet name is %s\n",transition->m_targetName);
 printf("Transition changes frame from %d to %d\n",transition->m_fromFrame,transition->m_toFrame);
 #endif
 
-								}
-							}
-						}
-					}
+                                }
+                            }
+                        }
+                    }
 
-		            fclose(in);
-				}
-	       }
-	  
-	       if (! registry)
-	           fprintf(stderr,"Mle3dCharacterRegistry::Error--Could not load character(s) from file %s.\n",filename);
+                    fclose(in);
+                }
+           }
+      
+           if (! registry)
+               fprintf(stderr,"Mle3dCharacterRegistry::Error--Could not load character(s) from file %s.\n",filename);
        }
        else
-	       fprintf(stderr,"Mle3dCharacterRegistry::Error--Could not find character registry file %s.\n",filename);
+           fprintf(stderr,"Mle3dCharacterRegistry::Error--Could not find character registry file %s.\n",filename);
    }
    else
        fprintf(stderr,"Mle3dCharacterRegistry::Error--No filename given for character registry.\n");
@@ -397,13 +397,13 @@ printf("Transition changes frame from %d to %d\n",transition->m_fromFrame,transi
 void Mle3dTransition::print(Mle3dTransition* t, FILE* out)
 {
     if (!out) out = stdout;
-	if (t)
-	{ 
-	    fprintf(out,"Name=%s\n",t->m_name);
-	    fprintf(out,"            event=%s\n",t->m_event);
-	    fprintf(out,"            fromFrame=%d\n",t->m_fromFrame);
-	    fprintf(out,"            toFrame=%d\n",t->m_toFrame);
-	}
+    if (t)
+    { 
+        fprintf(out,"Name=%s\n",t->m_name);
+        fprintf(out,"            event=%s\n",t->m_event);
+        fprintf(out,"            fromFrame=%d\n",t->m_fromFrame);
+        fprintf(out,"            toFrame=%d\n",t->m_toFrame);
+    }
 }
 
 
@@ -411,16 +411,16 @@ void Mle3dSnippet::print(Mle3dSnippet* snippet, FILE* out)
 {
     if (!out) out = stdout;
     if (snippet)
-	{ 
-	    fprintf(out,"Name=%s\n",snippet->m_name);
-	    fprintf(out,"            startFrame=%d\n",snippet->m_startFrame);
-	    fprintf(out,"            endFrame=%d\n",snippet->m_endFrame);
-	    fprintf(out,"            Transitions:\n");
+    { 
+        fprintf(out,"Name=%s\n",snippet->m_name);
+        fprintf(out,"            startFrame=%d\n",snippet->m_startFrame);
+        fprintf(out,"            endFrame=%d\n",snippet->m_endFrame);
+        fprintf(out,"            Transitions:\n");
 
         Mle3dTransition** transitionList = Mle3dSnippet::getTransitionList(snippet);
         for (unsigned int i = 0; i < snippet->m_numTransitions; i++)
             Mle3dTransition::print(transitionList[i],out);
-	}
+    }
 }
 
 
@@ -434,12 +434,12 @@ void Mle3dCharacter::print(Mle3dCharacter* character, FILE* out)
      
         Mle3dSnippet* snippet;
         for (unsigned int i = 0; i < character->m_numSnippets; i++)
-		{ 
+        { 
              snippet = Mle3dCharacter::getSnippet(character,i);
              fprintf(out,"Snippet %d:\n",i);
              Mle3dSnippet::print(snippet,out);
-		}
-	}
+        }
+    }
 }
 
 
@@ -447,12 +447,12 @@ void Mle3dCharacterRegistry::print(Mle3dCharacterRegistry* registry, FILE* out)
 {
     if (!out) out = stdout;
     if (registry)
-	{
-		fprintf(out,"Registry name=%s\n",registry->m_name);
+    {
+        fprintf(out,"Registry name=%s\n",registry->m_name);
         fprintf(out,"Number of Characters=%d\n",registry->m_numCharacters);
         for (unsigned int i = 0; i < registry->m_numCharacters; i++)
             Mle3dCharacter::print(Mle3dCharacterRegistry::getCharacter(registry,i),out);
-	}
+    }
 }
 
 #endif /* MLE_DEBUG */

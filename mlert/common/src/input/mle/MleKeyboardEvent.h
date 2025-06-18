@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -55,9 +55,9 @@
 #endif // MLE_XT
 #endif /* MLE_REHEARSAL */
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #include <windows.h>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 /**
  * @brief Macro constant
@@ -139,10 +139,10 @@ CLASS
 
      EXAMPLE
         Any character key
-	    Backspace
-	    Enter (i.e., Return)
+         Backspace
+         Enter (i.e., Return)
         Escape
-	    Tab
+         Tab
      END
 
      That is, there is no corresponding keyup event for a keydown event for 'A'.
@@ -215,7 +215,7 @@ class MLE_RUNTIME_API MleKeyboardEvent
     // be passed back to the event handler.
     //
     MlBoolean registerCB(MleKeyboardCallbackName keyboardEvent,
-	  MleKeyboardEventCallback callbackFn, void* clientData);
+       MleKeyboardEventCallback callbackFn, void* clientData);
 
     // Unregisters an existing callback. Returns TRUE if the callback
     // was actually removed (i.e., when it was not registered
@@ -248,7 +248,7 @@ class MLE_RUNTIME_API MleKeyboardEvent
     // For the SGI platform, the platformEvent is of type XKeyEvent, whereas
     // for the Win32 platform it is Win32CallData.
     unsigned int translateToCharacter(void *platformEvent,
-	    void *buffer, int bufferSize, MlBoolean ascii);
+         void *buffer, int bufferSize, MlBoolean ascii);
 
   private:
 
@@ -259,28 +259,28 @@ class MLE_RUNTIME_API MleKeyboardEvent
 #ifdef MLE_XT
   // Handles Xt keyboard events.
   static void MleKeyboardEvent::EventHandler(Widget widget,
-					    XPointer keyboardManager,
-					    XEvent *event);
+                             XPointer keyboardManager,
+                             XEvent *event);
 #endif // MLE_XT
 #endif /* __linux__ */
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
   // Handles Win32 WM_KEYDOWN events.
-  static void WM_KEYDOWN_EventHandler(FwEvent event,
-				      void *callData,
-				      void *clientData);
+  static void WM_KEYDOWN_EventHandler(MleEvent event,
+                          void *callData,
+                          void *clientData);
 
   // Handles Win32 WM_KEYUP events.
-  static void WM_KEYUP_EventHandler(FwEvent event,
-				    void *callData,
-				    void *clientData);
+  static void WM_KEYUP_EventHandler(MleEvent event,
+                        void *callData,
+                        void *clientData);
 
   // Handles Win32 WM_CHAR events.
-  static void WM_CHAR_EventHandler(FwEvent event,
-				   void *callData,
-				   void *clientData);
+  static void WM_CHAR_EventHandler(MleEvent event,
+                       void *callData,
+                       void *clientData);
 
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
   protected:
 
@@ -299,13 +299,13 @@ class MLE_RUNTIME_API MleKeyboardEvent
 
   protected:
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 
   // Was the last event a keydown event? This is used for a workaround
   // for a bug in the Win32 API function MapVirtualKey.
   MlBoolean m_lastEventKeyDown;
 
-#endif // WIN32
+#endif // _WINDOWS
 };
 
 

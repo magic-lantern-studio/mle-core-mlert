@@ -1,3 +1,45 @@
+/** @defgroup MleInput Magic Lantern Runtime Engine Input Library API */
+
+/**
+ * @file MleKeyboardEvent.cxx
+ * @ingroup MleInput
+ */
+
+// COPYRIGHT_BEGIN
+//
+// The MIT License (MIT)
+//
+// Copyright (c) 2015-2025 Wizzer Works
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
+//  For information concerning this header file, contact Mark S. Millard,
+//  of Wizzer Works at msm@wizzerworks.com.
+//
+//  More information concerning Wizzer Works may be found at
+//
+//      http://www.wizzerworks.com
+//
+// COPYRIGHT_END
+
+#ifndef __MLE_KEYBOARDEVENT_H_
+#define __MLE_KEYBOARDEVENT_H_
 
 
 /************************Begin common includes***********************/
@@ -7,19 +49,19 @@
 
 
 /***************************Begin SGI includes***********************/
-#if defined(FW_REHEARSAL) || defined(__sgi)
+#if defined(MLE_REHEARSAL)
 // Need SGI platform data structure access
 #include "fw/sgiplatform.h"
-#endif // FW_REHEARSAL or __sgi
+#endif // MLE_REHEARSAL
 /***************************End SGI includes*************************/
 
 
 /***************************Begin Win32 includes*********************/
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #include <windows.h>
 // Need Win32 platform data structure access
 #include "fw/comstg.h"
-#endif // WIN32
+#endif // _WINDOWS
 /***************************End Win32 includes***********************/
 
 
@@ -36,12 +78,12 @@ FwKeyboardEvent *FwKeyboardEvent::keyboardManager = NULL;
 FwKeyboardEvent::FwKeyboardEvent(void)
 {
   // Get the platform data
-#if defined(FW_REHEARSAL) || defined(__sgi)
+#if defined(MLE_REHEARSAL)
   FwSGIPlatformData *platformData = (FwSGIPlatformData *)theTitle->platformData;
-#endif // FW_REHEARSAL or __sgi
-#if defined(WIN32)
+#endif // MLE_REHEARSAL
+#if defined(_WINDOWS)
   FwWin32Data *platformData = (FwWin32Data *)theTitle->platformData;
-#endif // WIN32
+#endif // _WINDOWS
   FW_ASSERT(platformData);
 
   // Install and register only one keyboard manager (of any type) per title at any one time.
@@ -49,7 +91,7 @@ FwKeyboardEvent::FwKeyboardEvent(void)
   FwKeyboardEvent::keyboardManager = this;
   platformData->keyboardManager = FW_INPUT_DEVICE_MANAGER_INSTANTIATED;
 
-#if defined(FW_REHEARSAL) || defined(__sgi)
+#if defined(MLE_REHEARSAL)
   // Get the widget for the window's rendering area.
   FW_ASSERT(platformData->widget);
 
@@ -76,9 +118,9 @@ FwKeyboardEvent::FwKeyboardEvent(void)
 		       (XtEventHandler) FwKeyboardEvent::EventHandler,
 		       this,
 		       XtListHead);
-#endif // FW_REHEARSAL or __sgi
+#endif // MLE_REHEARSAL
   
-#if defined(WIN32)
+#if defined(_WINDOWS)
   theTitle->eventMgr->installEventCB(
 	 (FwEvent) WM_KEYDOWN,
          (FwCallback) FwKeyboardEvent::WM_KEYDOWN_EventHandler,
@@ -91,7 +133,7 @@ FwKeyboardEvent::FwKeyboardEvent(void)
 	 (FwEvent) WM_CHAR,
          (FwCallback) FwKeyboardEvent::WM_CHAR_EventHandler,
          this);
-#endif // WIN32
+#endif // _WINDOWS
 
   // Initialize callback registry
   keyDownCallback.callbackFn = NULL;
@@ -101,9 +143,9 @@ FwKeyboardEvent::FwKeyboardEvent(void)
   keyCallback.callbackFn = NULL;
   keyCallback.clientData = NULL;
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
   lastEventKeyDown = FALSE;
-#endif // WIN32
+#endif // _WINDOWS
 }
 
 FwKeyboardEvent::~FwKeyboardEvent(void)
@@ -111,7 +153,7 @@ FwKeyboardEvent::~FwKeyboardEvent(void)
   // Remove all callbacks
   unregisterAllCB();
 
-#if defined(FW_REHEARSAL) || defined(__sgi)  
+#if defined(MLE_REHEARSAL)
   // Get platform-independent data
   FwSGIPlatformData *platformData = (FwSGIPlatformData *)theTitle->platformData;
 
@@ -136,15 +178,15 @@ FwKeyboardEvent::~FwKeyboardEvent(void)
 			 False,
 			 (XtEventHandler) FwKeyboardEvent::EventHandler,
 			 this);
-#endif // FW_REHEARSAL or __sgi
+#endif // MLE_REHEARSAL
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
   FwWin32Data *platformData = (FwWin32Data *)theTitle->platformData;
 
   theTitle->eventMgr->uninstallEvent((FwEvent) WM_KEYDOWN);
   theTitle->eventMgr->uninstallEvent((FwEvent) WM_KEYUP);
   theTitle->eventMgr->uninstallEvent((FwEvent) WM_CHAR);
-#endif // WIN32
+#endif // _WINDOWS
 
   // Release keyboard manager control
   FwKeyboardEvent::keyboardManager = NULL;
@@ -220,12 +262,12 @@ FwBoolean
 FwKeyboardEvent::keyboardManagerInstalled(void)
 {
   // Get the platform data
-#if defined(FW_REHEARSAL) || defined(__sgi)
+#if defined(MLE_REHEARSAL)
   FwSGIPlatformData *platformData = (FwSGIPlatformData *)theTitle->platformData;
-#endif // FW_REHEARSAL or __sgi
-#if defined(WIN32)
+#endif // MLE_REHEARSAL
+#if defined(_WINDOWS)
   FwWin32Data *platformData = (FwWin32Data *)theTitle->platformData;
-#endif // WIN32
+#endif // _WINDOWS
   FW_ASSERT(platformData);
 
   return platformData->keyboardManager;
@@ -234,7 +276,7 @@ FwKeyboardEvent::keyboardManagerInstalled(void)
 unsigned int
 FwKeyboardEvent::getKeySym(void *platformEvent)
 {
-#if defined(FW_REHEARSAL) || defined(__sgi)
+#if defined(MLE_REHEARSAL)
   KeySym keysym;
   XKeyEvent* keyEvent  = (XKeyEvent *) platformEvent;
   XComposeStatus compose;
@@ -244,9 +286,9 @@ FwKeyboardEvent::getKeySym(void *platformEvent)
   
   count = XLookupString(keyEvent, buffer, buffersize,
 			&keysym, &compose);
-#endif // FW_REHEARSAL or __sgi
+#endif // MLE_REHEARSAL
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #if 0
   unsigned int keysym;
   Win32CallData *data = (Win32CallData *) platformEvent;
@@ -257,7 +299,7 @@ FwKeyboardEvent::getKeySym(void *platformEvent)
   Win32CallData *data = (Win32CallData *) platformEvent;
   unsigned int keysym = data->wParam;
 
-#endif // WIN32
+#endif // _WINDOWS
 
   return keysym;
 }
@@ -270,7 +312,7 @@ FwKeyboardEvent::translateToCharacter(void *platformEvent,
 {
   unsigned int count = 0;
 
-#if defined(FW_REHEARSAL) || defined(__sgi)
+#if defined(MLE_REHEARSAL)
   XKeyEvent* keyEvent  = (XKeyEvent *) platformEvent;
   KeySym keysym;
   XComposeStatus compose;
@@ -280,9 +322,9 @@ FwKeyboardEvent::translateToCharacter(void *platformEvent,
   else {
     // xxx unicode not handled
   }
-#endif // FW_REHEARSAL or __sgi
+#endif // MLE_REHEARSAL
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
   unsigned int keysym = 0;
   unsigned char lpbKeyState[256];  // key state array
   Win32CallData *data = (Win32CallData *) platformEvent;
@@ -295,7 +337,7 @@ FwKeyboardEvent::translateToCharacter(void *platformEvent,
     count = ToAscii(keysym, scanCode, &lpbKeyState[0], (unsigned short *)buffer, 0);
   else
     count = ToUnicode(keysym, scanCode, &lpbKeyState[0], (unsigned short *)buffer, bufferSize, 0);
-#endif // WIN32
+#endif // _WINDOWS
 
   return count;
 }
@@ -363,7 +405,7 @@ FwKeyboardEvent::dispatch(void *platformEvent,  FwKeyboardCallbackName eventType
 }
 
 
-#if defined(FW_REHEARSAL) || defined(__sgi)
+#if defined(MLE_REHEARSAL)
 void
 FwKeyboardEvent::EventHandler(Widget /* widget */,
 			      XPointer m,
@@ -381,10 +423,10 @@ FwKeyboardEvent::EventHandler(Widget /* widget */,
     break;
   }
 }
-#endif // FW_REHEARSAL or __sgi
+#endif // MLE_REHEARSAL
 
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 
 void
 FwKeyboardEvent::WM_KEYDOWN_EventHandler(FwEvent event,
@@ -434,7 +476,9 @@ FwKeyboardEvent::WM_CHAR_EventHandler(FwEvent event,
 }
 
 
-#endif // WIN32
+#endif // _WINDOWS
 
 
 // End Event Handlers ******************************************
+
+#endif /* __MLE_KEYBOARDEVENT_H */

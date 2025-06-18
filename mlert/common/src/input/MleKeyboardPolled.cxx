@@ -3,15 +3,13 @@
 /**
  * @file MleKeyboardPolled.cxx
  * @ingroup MleInput
- *
- * @author Mark S. Millard
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2000-2020 Wizzer Works
+// Copyright (c) 2000-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,14 +55,14 @@
 #include "mle/MleKeyboardPolled.h"
 #include "mle/MlePlatformData.h"
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Include Magic Lantern event manager.
 #include "mle/MleEventDispatcher.h"
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 //#define MLE_KEY_DEBUG 1
 
-#if defined(WIN32) && defined(MLE_KEY_DEBUG)
+#if defined(_WINDOWS) && defined(MLE_KEY_DEBUG)
 #include <windows.h>
 #include <stdio.h>
 #include <conio.h>
@@ -81,19 +79,19 @@ printf ( const char * format, ... )
     OutputDebugString ( pbuf );
     return 0;
 }
-#endif /* WIN32 and MLE_KEY_DEBUG */
+#endif /* _WINDOWS and MLE_KEY_DEBUG */
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 // Holds global keyboard manager (polled).
 MleKeyboardPolled *MleKeyboardPolled::g_keyboardManager = NULL;
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 MleKeyboardPolled::MleKeyboardPolled(void)
 {
@@ -102,22 +100,22 @@ MleKeyboardPolled::MleKeyboardPolled(void)
         m_keysDownTable[i] = 0;
   
     // Get the platform data.
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #ifdef MLE_REHEARSAL
-	MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
+    MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
 #else /* !MLE_REHEARSAL */
     MleWin32PlatformData *platformData = (MleWin32PlatformData *)g_theTitle->m_platformData;
 #endif /* !MLE_REHEARSAL */
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 #if defined(__linux__) || defined(__APPLE__)
 #ifdef MLE_REHEARSAL
-	MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
+    MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
 #else
 #if defined(MLE_XT)
-	MleXtPlatformData *platformData = (MleXtPlatformData *)g_theTitle->m_platformData;
+    MleXtPlatformData *platformData = (MleXtPlatformData *)g_theTitle->m_platformData;
 #else
-	/* Default Unknown. */
-	MlePlatformData *platformData = (MlePlatformData *)g_theTitle->m_platformData;
+    /* Default Unknown. */
+    MlePlatformData *platformData = (MlePlatformData *)g_theTitle->m_platformData;
 #endif /* MLE_XT */
 #endif /* MLE_REHEARSAL */
 #endif /* __linux__ || __APPLE__ */
@@ -125,7 +123,7 @@ MleKeyboardPolled::MleKeyboardPolled(void)
 
     // Install and register only one keyboard manager (of any type) per title at any one time.
     //MLE_ASSERT(platformData->hasKeyboardManager == MLE_INPUT_DEVICE_MANAGER_NOT_INSTANTIATED);
-	MLE_ASSERT(! platformData->hasKeyboardManager());
+    MLE_ASSERT(! platformData->hasKeyboardManager());
     MleKeyboardPolled::g_keyboardManager = this;
     platformData->setKeyboardManager(MLE_INPUT_DEVICE_MANAGER_INSTANTIATED);
 
@@ -137,24 +135,24 @@ MleKeyboardPolled::MleKeyboardPolled(void)
 
     // Add focus event handler.
     if (platformData->m_focusEventHandlerRefCount == 0)
-	{
-		XtAddEventHandler(platformData->m_widget,
-			(FocusChangeMask | EnterWindowMask | LeaveWindowMask),
-			False,
-			(XtEventHandler) MleFocusChange,
-			NULL);
+    {
+        XtAddEventHandler(platformData->m_widget,
+            (FocusChangeMask | EnterWindowMask | LeaveWindowMask),
+            False,
+            (XtEventHandler) MleFocusChange,
+            NULL);
 
-		platformData->m_inFocus = FALSE; // Assume not now in focus.
-	}
+        platformData->m_inFocus = FALSE; // Assume not now in focus.
+    }
     platformData->m_focusEventHandlerRefCount += 1;
 
     // Add keyboard event handler (highest possible priority).
     XtInsertEventHandler(platformData->m_widget,
-		(KeyPressMask | KeyReleaseMask),
-		False,
-		(XtEventHandler) MleKeyboardPolled::MleKeyboardPolledEventHandler,
-		this,
-		XtListHead);
+        (KeyPressMask | KeyReleaseMask),
+        False,
+        (XtEventHandler) MleKeyboardPolled::MleKeyboardPolledEventHandler,
+        this,
+        XtListHead);
   
     platformData->m_keyboardActive = FALSE;
 
@@ -172,48 +170,48 @@ MleKeyboardPolled::MleKeyboardPolled(void)
 #endif /* MLE_QT */
 #endif /* __linux__ */
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 
 // Todo: Not sure how to handle these event callbacks in rehearsal
 // mode, ala Inventor Stage.
 //#ifndef MLE_REHEARSAL
     // Add keyboard message handler callbacks.
     g_theTitle->m_theEventMgr->installEventCB(
-	    (MleEvent) WM_KEYDOWN,
+        (MleEvent) WM_KEYDOWN,
         (MleCallback) MleKeyboardPolled::WM_KEYDOWN_EventHandler,
         this);
     g_theTitle->m_theEventMgr->installEventCB(
-	    (MleEvent) WM_KEYUP,
+        (MleEvent) WM_KEYUP,
         (MleCallback) MleKeyboardPolled::WM_KEYUP_EventHandler,
         this);
     g_theTitle->m_theEventMgr->installEventCB(
-	    (MleEvent) WM_CHAR,
+        (MleEvent) WM_CHAR,
         (MleCallback) MleKeyboardPolled::WM_CHAR_EventHandler,
         this);
 //#endif /* !MLE_REHEARSAL */
 
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 }
 
 MleKeyboardPolled::~MleKeyboardPolled(void)
 {
     // Get platform-independent data.
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #ifdef MLE_REHEARSAL
-	MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
+    MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
 #else /* !MLE_REHEARSAL */
     MleWin32PlatformData *platformData = (MleWin32PlatformData *)g_theTitle->m_platformData;
 #endif /* !MLE_REHEARSAL */
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 #if defined(__linux__) || defined(__APPLE__)
 #ifdef MLE_REHEARSAL
-	MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
+    MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
 #else
 #if defined(MLE_XT)
-	MleXtPlatformData *platformData = (MleXtPlatformData *)g_theTitle->m_platformData;
+    MleXtPlatformData *platformData = (MleXtPlatformData *)g_theTitle->m_platformData;
 #else
-	MlePlatformData *platformData = (MlePlatformData *)g_theTitle->m_platformData;
+    MlePlatformData *platformData = (MlePlatformData *)g_theTitle->m_platformData;
 #endif /* MLE_XT */
 #endif /* MLE_REHEARSAL */
 #endif /* __linux__ */
@@ -228,17 +226,17 @@ MleKeyboardPolled::~MleKeyboardPolled(void)
     // Remove focus event handlers if I am only user.
     if (platformData->m_focusEventHandlerRefCount == 0)
         XtRemoveEventHandler(platformData->m_widget,
-		    (FocusChangeMask | EnterWindowMask | LeaveWindowMask),
-			False,
-			(XtEventHandler) MleFocusChange,
-			NULL);
+            (FocusChangeMask | EnterWindowMask | LeaveWindowMask),
+            False,
+            (XtEventHandler) MleFocusChange,
+            NULL);
 
     // Remove keyboard-specific event handlers.
     XtRemoveEventHandler(platformData->m_widget,
-	    (KeyPressMask | KeyReleaseMask),
-		False,
-		(XtEventHandler) MleKeyboardPolled::MleKeyboardPolledEventHandler,
-		this);
+        (KeyPressMask | KeyReleaseMask),
+        False,
+        (XtEventHandler) MleKeyboardPolled::MleKeyboardPolledEventHandler,
+        this);
 
 #endif /* MLE_XT */
 #ifdef MLE_QT
@@ -248,7 +246,7 @@ MleKeyboardPolled::~MleKeyboardPolled(void)
 #endif /* MLE_QT */
 #endif /* __linux__ */
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 
 // Todo: Not sure how to handle these event callbacks in rehearsal
 // mode, ala Inventor Stage.
@@ -259,7 +257,7 @@ MleKeyboardPolled::~MleKeyboardPolled(void)
     g_theTitle->m_theEventMgr->uninstallEvent((MleEvent) WM_CHAR);
 //#endif /* !MLE_REHEARSAL */
 
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
     // Release keyboard manager resource.
     platformData->setKeyboardManager(MLE_INPUT_DEVICE_MANAGER_NOT_INSTANTIATED);
@@ -283,12 +281,12 @@ MleKeyboardPolled::keyboardIsActive(void)
 #endif /* MLE_REHEARSAL */
 #endif /* __linux__ */
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
     HWND win = GetFocus();
 
     if (win)
         result = TRUE;
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
     return result;
 }
@@ -301,10 +299,10 @@ MleKeyboardPolled::keyDown(unsigned int keysym)
     for (int i = 0 ; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
     {
         if (m_keysDownTable[i] == keysym)
-		{
+        {
             result = TRUE;
             break;
-		}
+        }
     }
 
     return (result);
@@ -312,10 +310,10 @@ MleKeyboardPolled::keyDown(unsigned int keysym)
 
 MlBoolean
 MleKeyboardPolled::getInputString(
-	char* /* buffer */,
-	int /* bufferSize */,
-	int /* eoc */,
-	int /* timeout */)
+    char* /* buffer */,
+    int /* bufferSize */,
+    int /* eoc */,
+    int /* timeout */)
 {
     MLE_ASSERT(0);
     // Todo: implement this.
@@ -334,41 +332,41 @@ MleKeyboardPolled::keyWentDown(unsigned int keysym)
 #endif /* MLE_KEY_DEBUG */
 
     for (i = 0 ; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
-	{
+    {
         if (m_keysDownTable[i] == keysym)
-		{
+        {
 #if defined(MLE_KEY_DEBUG)
             printf("MleKeyboardPolled: KEY ALREADY THERE: 0x%x\n", keysym);
 #endif /* MLE_KEY_DEBUG */
            alreadyThere = TRUE;
-		}
-	}
+        }
+    }
 
     if (alreadyThere == FALSE)
-	{
-		for (i = 0 ; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
-		{
-			if (m_keysDownTable[i] == 0)
-			{
+    {
+        for (i = 0 ; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
+        {
+            if (m_keysDownTable[i] == 0)
+            {
 #if defined(MLE_KEY_DEBUG)
                 printf("MleKeyboardPolled: KEY STORED: 0x%x\n", keysym);
 #endif /* MLE_KEY_DEBUG */
-				m_keysDownTable[i] = keysym;
-				break;
-			}
-		}
-	}
+                m_keysDownTable[i] = keysym;
+                break;
+            }
+        }
+    }
 
-	if ((alreadyThere == FALSE) &
+    if ((alreadyThere == FALSE) &
         (i == MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN))
-	{
+    {
 #if defined(MLE_KEY_DEBUG)
         printf("MleKeyboardPolled: KEY STACK OVERFLOW: 0x%x\n", keysym);
 #endif /* MLE_KEY_DEBUG */
-		m_keysDownTable[0] = keysym;
-		for (int i = 1 ; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
-			m_keysDownTable[i] = 0;
-	}
+        m_keysDownTable[0] = keysym;
+        for (int i = 1 ; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
+            m_keysDownTable[i] = 0;
+    }
 }
 
 void
@@ -379,77 +377,77 @@ MleKeyboardPolled::keyWentUp(unsigned int keysym)
 #endif /* MLE_KEY_DEBUG */
   
     for (int i= 0; i < MLE_MAX_NUMBER_OF_SIMULTANEOUS_KEYS_DOWN ; i++)
-	{
+    {
         if (m_keysDownTable[i] == keysym)
-		{
+        {
 #if defined(MLE_KEY_DEBUG)
             printf("MleKeyboardPolled: KEY REMOVED: 0x%x\n", keysym);
 #endif /* MLE_KEY_DEBUG */
-			m_keysDownTable[i] = 0;
-			break;
-		}
-	}
+            m_keysDownTable[i] = 0;
+            break;
+        }
+    }
 }
 
 void *
 MleKeyboardPolled::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleKeyboardPolled::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 #if defined(__linux__) || defined(__APPLE__)
 #if defined(MLE_XT)
 void 
 MleKeyboardPolled::MleFocusChange(
-	Widget   /* widget */,
-	XPointer /* clientData */,
-	XEvent *event)
+    Widget   /* widget */,
+    XPointer /* clientData */,
+    XEvent *event)
 {
 #if defined(__linux__)
 #ifdef MLE_REHEARSAL
-	MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
+    MleIvPlatformData *platformData = (MleIvPlatformData *)g_theTitle->m_platformData;
 #else
-	MleXtPlatformData *platformData = (MleXtPlatformData *)g_theTitle->m_platformData;
+    MleXtPlatformData *platformData = (MleXtPlatformData *)g_theTitle->m_platformData;
 #endif /* MLE_REHEARSAL */
 #endif /* __linux__ */
 
     switch(event->type)
-	{
-		case FocusIn:
-			platformData->m_inFocus = TRUE;
-			platformData->m_keyboardActive = TRUE;
-			break;
-		case FocusOut:
-			platformData->m_inFocus = FALSE;
-			platformData->m_keyboardActive = FALSE;
-			break;
-		case EnterNotify:
-			if (event->xcrossing.focus)
-				platformData->m_keyboardActive = TRUE;
-			else
-				platformData->m_keyboardActive = FALSE;
-			break;
-		case LeaveNotify:
-			if (platformData->m_inFocus)
-				platformData->m_keyboardActive = FALSE;
-			else
-				platformData->m_keyboardActive = TRUE;
-			break;
-	}
+    {
+        case FocusIn:
+            platformData->m_inFocus = TRUE;
+            platformData->m_keyboardActive = TRUE;
+            break;
+        case FocusOut:
+            platformData->m_inFocus = FALSE;
+            platformData->m_keyboardActive = FALSE;
+            break;
+        case EnterNotify:
+            if (event->xcrossing.focus)
+                platformData->m_keyboardActive = TRUE;
+            else
+                platformData->m_keyboardActive = FALSE;
+            break;
+        case LeaveNotify:
+            if (platformData->m_inFocus)
+                platformData->m_keyboardActive = FALSE;
+            else
+                platformData->m_keyboardActive = TRUE;
+            break;
+    }
 }
 
 void
 MleKeyboardPolled::MleKeyboardPolledEventHandler(
-	Widget /* widget */,
-	XPointer m,
-	XEvent *event)
+    Widget /* widget */,
+    XPointer m,
+    XEvent *event)
 {
     XKeyEvent *keyEvent = (XKeyEvent *) event;
     MleKeyboardPolled *mgr = (MleKeyboardPolled *) m;
@@ -460,20 +458,20 @@ MleKeyboardPolled::MleKeyboardPolledEventHandler(
     int count = 0;
   
     switch (event->type)
-	{
-		case KeyPress:
-			count = XLookupString(keyEvent, buffer, buffersize,
-			    &keysym, &compose);
-			buffer[count] = 0;
-			mgr->keyWentDown(keysym);
-			break;
-		case KeyRelease:
-			count = XLookupString(keyEvent, buffer, buffersize,
-			    &keysym, &compose);
-			buffer[count] = 0;
-			mgr->keyWentUp(keysym);
-			break;
-	}
+    {
+        case KeyPress:
+            count = XLookupString(keyEvent, buffer, buffersize,
+                &keysym, &compose);
+            buffer[count] = 0;
+            mgr->keyWentDown(keysym);
+            break;
+        case KeyRelease:
+            count = XLookupString(keyEvent, buffer, buffersize,
+                &keysym, &compose);
+            buffer[count] = 0;
+            mgr->keyWentUp(keysym);
+            break;
+    }
 }
 #endif /* MLE_XT */
 #ifdef MLE_QT
@@ -524,32 +522,32 @@ MleKeyboardPolled::QT_KEYRELEASE_EventHandler(MleEvent event,
 #endif /* MLE_QT */
 #endif /* __linux__ */
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 void
 MleKeyboardPolled::WM_KEYDOWN_EventHandler(
-	MleEvent /* event */,
-	void* eventData,
-	void* clientData)
+    MleEvent /* event */,
+    void* eventData,
+    void* clientData)
 {
     Win32CallData *data = (Win32CallData *) eventData;
     MleKeyboardPolled *mgr = (MleKeyboardPolled *) clientData;
     unsigned int keysym = data->wParam;
 
     if (! (((keysym >= MLE_KEY_0) && (keysym <= MLE_KEY_z))
-	    || (keysym == MLE_KEY_BackSpace)
-	    || (keysym == MLE_KEY_Return)
-	    || (keysym == MLE_KEY_Escape)
-	    || (keysym == MLE_KEY_Tab)))
-	{
+        || (keysym == MLE_KEY_BackSpace)
+        || (keysym == MLE_KEY_Return)
+        || (keysym == MLE_KEY_Escape)
+        || (keysym == MLE_KEY_Tab)))
+    {
         mgr->keyWentDown(keysym);
-	}
+    }
 }
 
 void
 MleKeyboardPolled::WM_KEYUP_EventHandler(
-	MleEvent /* event */,
-	void* eventData,
-	void* clientData)
+    MleEvent /* event */,
+    void* eventData,
+    void* clientData)
 {
 #define WINDOWS_CAPS_LOCK_KEYSYM 0x14
 #define _SHIFT_KEY_UP() ((GetKeyState(VK_SHIFT) & 0x1000) == 0x0000)
@@ -561,21 +559,21 @@ MleKeyboardPolled::WM_KEYUP_EventHandler(
 
     if (((keysym >= MLE_KEY_A) && (keysym <= MLE_KEY_Z)) &&
         (_SHIFT_KEY_UP() && capsLockUp))
-	{
+    {
         keysym += 32; // shift key is up -> lower-case character
-	}
+    }
     mgr->keyWentUp(keysym);
 }
 
 void
 MleKeyboardPolled::WM_CHAR_EventHandler(
-	MleEvent /* event */,
-	void* eventData,
-	void* clientData)
+    MleEvent /* event */,
+    void* eventData /* event call data */,
+    void* clientData /* event data */)
 {
     Win32CallData *data = (Win32CallData *) eventData;
     MleKeyboardPolled *mgr = (MleKeyboardPolled *) clientData;
 
     mgr->keyWentDown(data->wParam);
 }
-#endif /* WIN32 */
+#endif /* _WINDOWS */

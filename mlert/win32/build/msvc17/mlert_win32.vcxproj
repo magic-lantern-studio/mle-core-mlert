@@ -202,7 +202,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;../../../win32/include;$(MLE_ROOT)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DIGITAL_PLAYPRINT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DIGITAL_PLAYPRINT;NDEBUG;_WINDOWS;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -286,8 +286,8 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_HOME)/Core/util/common/include;$(MLE_HOME)/Core/util/win32/include;$(MLE_HOME)/Core/math/common/include;$(MLE_HOME)/DigitalPlayprint/runtime/common/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_DEBUG;MLE_DIGITAL_PLAYPRINT;MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_ROOT)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>MLE_DEBUG;MLE_DIGITAL_PLAYPRINT;MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;_DEBUG;_WINDOWS;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -373,7 +373,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_ROOT)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_DEBUG;MLE_DIGITAL_PLAYPRINT;MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MLE_DEBUG;MLE_DIGITAL_PLAYPRINT;MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;_DEBUG;_WINDOWS;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -459,8 +459,8 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_HOME)/Core/util/common/include;../../../win32/include;$(MLE_HOME)/Core/math/common/include;$(MLE_HOME)/DigitalPlayprint/runtime/common/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DIGITAL_PLAYPRINT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;../../../win32/include;$(MLE_ROOT)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DIGITAL_PLAYPRINT;NDEBUG;_WINDOWS;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <StructMemberAlignment>4Bytes</StructMemberAlignment>

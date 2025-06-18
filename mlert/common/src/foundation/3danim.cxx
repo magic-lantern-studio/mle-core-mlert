@@ -4,9 +4,6 @@
  * @file 3danim.cxx
  * @ingroup MleFoundation
  *
- * @author Mark S. Millard
- * @date May 1, 2003
- *
  * This file implements 3D animation registry structures.
  */
 
@@ -14,7 +11,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -51,9 +48,9 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#ifdef WIN32
+#ifdef _WINDOWS
 #include <io.h>
-#else /* ! WIN32 */
+#else /* ! _WINDOWS */
 #include <unistd.h>
 #endif 
 
@@ -172,7 +169,7 @@ Mle3dAnimationRegistry* Mle3dAnimationRegistry::read(char* filename)
 					if (registry)
 					{
 						// First-pass check to make sure file has magic number for animation registry.
-	#ifdef WIN32
+	#ifdef _WINDOWS
 						char* magic = MLE_3D_ANIM_MAGIC_LITTLE_ENDIAN;
 	#else
 						char* magic = MLE_3D_ANIM_MAGIC;

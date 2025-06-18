@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,13 +52,13 @@
 // Include Digital Workprint header files.
 #include "mle/DwpDatatype.h"
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 MleSetClassDict MleSetClass::g_registry(16);
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
@@ -67,108 +67,108 @@ MleSetClassDict MleSetClass::g_registry(16);
 MleDSOLoader MleSetClass::g_loader;
 
 MleSetClass::MleSetClass(const char *name,
-	MleSet *(*c)(void),const char *superclass)
+    MleSet *(*c)(void),const char *superclass)
 : MleDwpStrKeyDict()
 {
-	/* Set the editor name. */
-	m_editorName = 0;
-	m_contentEditorName = 0;
+    /* Set the editor name. */
+    m_editorName = 0;
+    m_contentEditorName = 0;
 
-	/* Remember the creation func. */
-	create = c;
+    /* Remember the creation func. */
+    create = c;
 
-	/* Look up the superclass info. */
-	MleSetClass *super = (MleSetClass *)g_registry.find(superclass);
+    /* Look up the superclass info. */
+    MleSetClass *super = (MleSetClass *)g_registry.find(superclass);
 
-	/* Copy the superclass members into the local space. */
-	if ( super )
-	{
-		/* Use the dictionary iterator. */
-		MleSetMemberIter iter(super);
-		const MleSetMember *member;
+    /* Copy the superclass members into the local space. */
+    if ( super )
+    {
+        /* Use the dictionary iterator. */
+        MleSetMemberIter iter(super);
+        const MleSetMember *member;
         while ( (member = iter.getMember()) )
-		{
-			set(iter.getName(),new MleSetMember(*member));
-			iter.next();
-		}
-	}
+        {
+            set(iter.getName(),new MleSetMember(*member));
+            iter.next();
+        }
+    }
 
-	/* Put self into the registry. */
-	g_registry.set(name,this);
+    /* Put self into the registry. */
+    g_registry.set(name,this);
 }
 
 MleSetClass::MleSetClass(const char *name,
-	MleSet *(*c)(void),const char *superclass, 
-	const char* e, const char* ce)
+    MleSet *(*c)(void),const char *superclass, 
+    const char* e, const char* ce)
 : MleDwpStrKeyDict()
 {
-	/* Set the editor name. */
-#ifdef WIN32
-	m_editorName = (e) ? _strdup(e) : _strdup("");
-	m_contentEditorName = (ce) ? _strdup(ce) : _strdup("");
+    /* Set the editor name. */
+#ifdef _WINDOWS
+    m_editorName = (e) ? _strdup(e) : _strdup("");
+    m_contentEditorName = (ce) ? _strdup(ce) : _strdup("");
 #else
-	m_editorName = (e) ? strdup(e) : strdup("");
-	m_contentEditorName = (ce) ? strdup(ce) : strdup("");
+    m_editorName = (e) ? strdup(e) : strdup("");
+    m_contentEditorName = (ce) ? strdup(ce) : strdup("");
 #endif
 
-	/* Remember the creation func */
-	create = c;
+    /* Remember the creation func */
+    create = c;
 
-	/* Look up the superclass info */
-	MleSetClass *super = (MleSetClass *)g_registry.find(superclass);
+    /* Look up the superclass info */
+    MleSetClass *super = (MleSetClass *)g_registry.find(superclass);
 
-	/* Copy the superclass members into the local space. */
-	if ( super )
-	{
-		/* use the dictionary iterator */
-		MleSetMemberIter iter(super);
-		const MleSetMember *member;
+    /* Copy the superclass members into the local space. */
+    if ( super )
+    {
+        /* use the dictionary iterator */
+        MleSetMemberIter iter(super);
+        const MleSetMember *member;
         while ( (member = iter.getMember()) )
-		{
-			set(iter.getName(),new MleSetMember(*member));
-			iter.next();
-		}
-	}
+        {
+            set(iter.getName(),new MleSetMember(*member));
+            iter.next();
+        }
+    }
 
-	/* Put self into the registry. */
-	g_registry.set(name,this);
+    /* Put self into the registry. */
+    g_registry.set(name,this);
 }
 
 MleSetClass::~MleSetClass()
 {
-	if (m_editorName != NULL) free(m_editorName);
-	if (m_contentEditorName != NULL) free(m_contentEditorName);
+    if (m_editorName != NULL) free(m_editorName);
+    if (m_contentEditorName != NULL) free(m_contentEditorName);
 }
 /*
-	This function returns a new instance of an forum of this class.
+    This function returns a new instance of an forum of this class.
 */
 MleSet *
 MleSetClass::createInstance(void) const
 {
-	return (*create)();
+    return (*create)();
 }
 
 /*
-	This function adds a new property type to the forum class.
+    This function adds a new property type to the forum class.
 */
 void
 MleSetClass::addMember(const char *name,const char *type,MlePropertyEntry *entry)
 {
-	/* Create the new member object. */
-	MleSetMember *member = new MleSetMember(type,entry);
+    /* Create the new member object. */
+    MleSetMember *member = new MleSetMember(type,entry);
 
-	/* Put the new property into the dictionary. */
-	set(name,member);
+    /* Put the new property into the dictionary. */
+    set(name,member);
 }
 
 /*
-	This function looks up a property.
+    This function looks up a property.
 */
 const MleSetMember *
 MleSetClass::findMember(const char *name) const
 {
-	/* Get the pointer from the registry. */
-	return (const MleSetMember *)MleDwpStrKeyDict::find(name);
+    /* Get the pointer from the registry. */
+    return (const MleSetMember *)MleDwpStrKeyDict::find(name);
 }
 
 // this defines the MleDwpDictEntry subclass for a dictionary of
@@ -176,57 +176,57 @@ MleSetClass::findMember(const char *name) const
 // the MleSetMember when the dictionary entry is deleted.
 class MleSetMemberEntry : public MleDwpStrKeyDictEntry
 {
-	public:
+    public:
 
-		~MleSetMemberEntry() { delete (MleSetMember *)m_value; }
+        ~MleSetMemberEntry() { delete (MleSetMember *)m_value; }
 };
 
 /*
-	This function overrides MleDwpStrKeyDict::makeEntry() to
-	return an entry of the above type.
+    This function overrides MleDwpStrKeyDict::makeEntry() to
+    return an entry of the above type.
 */
 MleDwpDictEntry *
 MleSetClass::makeEntry(void)
 {
-	return new MleSetMemberEntry;
+    return new MleSetMemberEntry;
 }
 
 /*
-	This static function looks up an forum class from a name.
+    This static function looks up an forum class from a name.
 */
 MleSetClass *
 MleSetClass::find(const char *name)
 {
-	MleSetClass *ac;	// set class return.
+    MleSetClass *ac;    // set class return.
 
-	// Try to look up the forum class in the registry.
-	ac = (MleSetClass *)g_registry.find(name);
+    // Try to look up the forum class in the registry.
+    ac = (MleSetClass *)g_registry.find(name);
 
-	// Return the forum class if we found it.
-	if ( ac )
-		return ac;
-	
-	// Otherwise, try to load the class from a DSO.
-	g_loader.loadClass(name);
+    // Return the forum class if we found it.
+    if ( ac )
+        return ac;
+    
+    // Otherwise, try to load the class from a DSO.
+    g_loader.loadClass(name);
 
-	// Now try to look it up again.
-	ac = (MleSetClass *)g_registry.find(name);
+    // Now try to look it up again.
+    ac = (MleSetClass *)g_registry.find(name);
 
-	// Return it whether we succeeded or not.
-	return ac;
+    // Return it whether we succeeded or not.
+    return ac;
 }
 
 void *
 MleSetClass::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleSetClass::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 // This defines the MleSetClassDictEntry subclass for a dictionary
@@ -236,93 +236,93 @@ class MleSetClassDictEntry : public MleDwpStrKeyDictEntry
 {
   public:
 
-	/**
-	 * The destructor.
-	 */
-	~MleSetClassDictEntry() { delete (MleSetClass *)m_value; }
+    /**
+     * The destructor.
+     */
+    ~MleSetClassDictEntry() { delete (MleSetClass *)m_value; }
 
-			/**
-	 * Override operator new.
-	 *
-	 * @param tSize The size, in bytes, to allocate.
-	 */
-	void* operator new(size_t tSize);
+            /**
+     * Override operator new.
+     *
+     * @param tSize The size, in bytes, to allocate.
+     */
+    void* operator new(size_t tSize);
 
-	/**
-	 * Override operator delete.
-	 *
-	 * @param p A pointer to the memory to delete.
-	 */
+    /**
+     * Override operator delete.
+     *
+     * @param p A pointer to the memory to delete.
+     */
     void  operator delete(void *p);
 };
 
 void *
 MleSetClassDictEntry::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleSetClassDictEntry::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 MleDwpDictEntry *
 MleSetClassDict::makeEntry(void)
 {
-	return new MleSetClassDictEntry;
+    return new MleSetClassDictEntry;
 }
 
 void *
 MleSetClassDict::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleSetClassDict::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 MleSetMember::MleSetMember(const char *t,MlePropertyEntry *e)
 {
-	m_type = MleDwpDatatype::findType(t);
+    m_type = MleDwpDatatype::findType(t);
 
-	if ( m_type == NULL )
-	{
-		fprintf(stderr, "The workprint data type \"%s\" could not be found.\n",t);
-		MLE_ASSERT(m_type!=NULL);
-	}
-	
-	m_entry = e;
+    if ( m_type == NULL )
+    {
+        fprintf(stderr, "The workprint data type \"%s\" could not be found.\n",t);
+        MLE_ASSERT(m_type!=NULL);
+    }
+    
+    m_entry = e;
 }
 
 void *
 MleSetMember::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleSetMember::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 void *
 MleSetMemberIter::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleSetMemberIter::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }

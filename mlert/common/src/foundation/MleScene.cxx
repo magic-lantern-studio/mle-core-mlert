@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -40,9 +40,9 @@
 
 
 // Include system header files.
-#ifdef WIN32
+#ifdef _WINDOWS
 #include <string.h>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 #include <stdio.h>
 
 // Include Magic Lantern header files.
@@ -84,8 +84,8 @@ MleScene::MleScene(void)
   : MlePtrContainer<MleGroup*>(8)
 {
 #ifdef MLE_DIGITAL_WORKPRINT
-	m_name = NULL;
-	m_sceneClass = NULL;
+    m_name = NULL;
+    m_sceneClass = NULL;
 #endif /* MLE_DIGITAL_WORKPRINT */
 }
 
@@ -98,8 +98,8 @@ MleScene::~MleScene(void)
     }
 
 #ifdef MLE_DIGITAL_WORKPRINT
-	this->unregisterInstance();
-	if (m_name) mlFree(m_name);
+    this->unregisterInstance();
+    if (m_name) mlFree(m_name);
 #endif /* MLE_DIGITAL_WORKPRINT */
 
     // Make sure we\'re no longer listed as the globally active scene.
@@ -119,15 +119,15 @@ MleScene::init(void)
 void *
 MleScene::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 
 void
 MleScene::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 
@@ -156,13 +156,13 @@ MleScene::initClass(void)
     new MleSceneClass("MleScene",_mlCreateMleScene,"");
 }
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 MleDwpStrKeyDict MleScene::g_instanceRegistry;
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
@@ -171,7 +171,7 @@ MleDwpStrKeyDict MleScene::g_instanceRegistry;
 void
 MleScene::registerInstance(const char* name)
 {
-#ifdef WIN32
+#ifdef _WINDOWS
    this->m_name = _strdup(name);
 #else
    this->m_name = strdup(name);
@@ -188,12 +188,12 @@ MleScene::unregisterInstance()
     // or we could put a removeValue in the dict class
 
     for (MleDwpDictIter iter(g_instanceRegistry); iter.getValue(); iter.next())
-	{
-		if ((MleScene*) iter.getValue() == this)
-		{
-			g_instanceRegistry.remove(iter.getKey());
-			break;
-		}
+    {
+        if ((MleScene*) iter.getValue() == this)
+        {
+            g_instanceRegistry.remove(iter.getKey());
+            break;
+        }
     }
 }
 
@@ -203,14 +203,14 @@ MleScene::unregisterInstance()
 const MleSceneClass *
 MleScene::getClass(void)
 {
-	// If there is a cached value, return it.
-	if ( m_sceneClass )
-		return m_sceneClass;
-	
-	// Look it up in the registry.
-	m_sceneClass = MleSceneClass::find(getTypeName());
+    // If there is a cached value, return it.
+    if ( m_sceneClass )
+        return m_sceneClass;
+    
+    // Look it up in the registry.
+    m_sceneClass = MleSceneClass::find(getTypeName());
 
-	return m_sceneClass;
+    return m_sceneClass;
 }
 
 #endif /* MLE_DIGITAL_WORKPRINT */
@@ -230,18 +230,18 @@ extern MleScene* mlLoadScene(const char* id);
 MleScene *
 MleScene::load(MleDwpScene* wpScene)
 {
-	if ( wpScene == NULL ) {
-		printf("mlLoadScene: Cant find scene in workprint.\n");
-		return NULL;
-	}
+    if ( wpScene == NULL ) {
+        printf("mlLoadScene: Cant find scene in workprint.\n");
+        return NULL;
+    }
 
-	return mlLoadScene( wpScene );
+    return mlLoadScene( wpScene );
 }
 
 MleScene *
 MleScene::load(const char* id)
 {
-	return mlLoadScene( id );
+    return mlLoadScene( id );
 }
 
 #endif /* MLE_DIGITAL_WORKPRINT */
@@ -291,7 +291,7 @@ MleScene*
 MleScene::changeCurrentScene( MleScene *newScene )
 {
     // Swap old for new.
-	//
+    //
     // Do it this way so that we\'ve set the new before deleting
     // the old, in case we\'re the old one.
     MleScene *old = getCurrentScene();
@@ -310,12 +310,12 @@ MleScene::changeCurrentScene( MleScene *newScene )
 MleScene *
 MleScene::changeCurrentScene( MleDwpScene *wp )
 {
-	// Build a new scene from the workprint scene.
-	// We count on the load() function to make it current
-	// if necessary. 
-	// load() calls changeCurrentScene(MleScene*), which is 
-	// where you would override the scene changing behavior.
-	return MleScene::load(wp);
+    // Build a new scene from the workprint scene.
+    // We count on the load() function to make it current
+    // if necessary. 
+    // load() calls changeCurrentScene(MleScene*), which is 
+    // where you would override the scene changing behavior.
+    return MleScene::load(wp);
 }
 
 // Changes the current scene to the one loaded from the identifier that
@@ -323,12 +323,12 @@ MleScene::changeCurrentScene( MleDwpScene *wp )
 MleScene *
 MleScene::changeCurrentScene( const char *id )
 {
-	// Build a new scene from the workprint scene.
-	// We count on the load() function to make it current
-	// if necessary. 
-	// load() calls changeCurrentScene(MleScene*), which is 
-	// where you would override the scene changing behavior
-	return MleScene::load(id);
+    // Build a new scene from the workprint scene.
+    // We count on the load() function to make it current
+    // if necessary. 
+    // load() calls changeCurrentScene(MleScene*), which is 
+    // where you would override the scene changing behavior
+    return MleScene::load(id);
 }
 
 #endif /* MLE_DIGITAL_WORKPRINT */
@@ -340,7 +340,7 @@ MleScene::changeCurrentScene( const int indexToPpTOC )
     // Build a new scene from the workprint scene
     // We count on the load() function to make it current
     // if necessary. 
-	//
+    //
     // load() calls changeCurrentScene(MleScene*), which is 
     // where you would override the scene changing behavior
     return MleScene::load(indexToPpTOC);

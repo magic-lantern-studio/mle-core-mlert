@@ -220,7 +220,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_HOME)\include\rehe
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_ROOT)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_DEBUG;MLE_RUNTIME_EXPORTS;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DWP_DLL;MLE_MAKE_DLL;ML_MATH_DEBUG=1;ML_FIXED_POINT=0;WIN32;_DEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_DEBUG;MLE_RUNTIME_EXPORTS;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DWP_DLL;MLE_MAKE_DLL;ML_MATH_DEBUG=1;ML_FIXED_POINT=0;_DEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -281,7 +281,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_ROOT)\include\rehe
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>../../include;../../../common/include;../../../common/src/foundation;../../../common/src/input;$(MLE_ROOT)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_RUNTIME_EXPORTS;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DWP_DLL;MLE_MAKE_DLL;ML_MATH_DEBUG=0;ML_FIXED_POINT=0;WIN32;NDEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MLE_REHEARSAL;MLE_DIGITAL_WORKPRINT;MLE_RUNTIME_EXPORTS;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DWP_DLL;MLE_MAKE_DLL;ML_MATH_DEBUG=0;ML_FIXED_POINT=0;NDEBUG;_WINDOWS;_USRDLL;MLERT_REHEARSAL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -347,26 +347,8 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_ROOT)\include\rehe
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\..\common\src\foundation\loaddwp.cxx">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="..\..\..\common\src\foundation\loadSet.cxx">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
+    <ClCompile Include="..\..\..\common\src\foundation\loaddwp.cxx" />
+    <ClCompile Include="..\..\..\common\src\foundation\loadSet.cxx" />
     <ClCompile Include="..\..\..\common\src\foundation\MleActor.cxx">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -438,6 +420,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_ROOT)\include\rehe
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="..\..\..\common\src\foundation\MleObject.cxx" />
+    <ClCompile Include="..\..\..\common\src\foundation\player.cxx" />
     <ClCompile Include="..\..\..\common\src\input\MleKeyboardPolled.cxx">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -642,6 +625,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_ROOT)\include\rehe
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleGroupClass.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleObject.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleProperty.h" />
+    <ClInclude Include="..\..\..\common\src\foundation\mle\player.h" />
     <ClInclude Include="..\..\..\common\src\input\mle\MleKeyboardEvent.h" />
     <ClInclude Include="..\..\..\common\src\input\mle\MleKeyboardPolled.h" />
     <ClInclude Include="..\..\..\common\src\input\mle\MleKeyMap.h" />

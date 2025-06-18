@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -53,9 +53,9 @@
 #endif /* __linux__ */
 
 /* Win32 includes */
-#ifdef WIN32
+#ifdef _WINDOWS
 #include <windows.h>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 
 // Valid keys supported for the platform.
@@ -71,11 +71,11 @@
 //     MLE_KEY_ALT = 1001,
 
 //     // Characters
-//    #ifdef WIN32
+//    #ifdef _WINDOWS
 //      MLE_KEY_A = VK_A,
 //      MLE_KEY_B = VK_B,
 //      ...
-//    #endif // WIN32
+//    #endif // _WINDOWS
 //    #ifdef __sgi
 //      MLE_KEY_A = XK_A,
 //      MLE_KEY_B = XK_A,
@@ -180,8 +180,8 @@ public:
   //              callbackFn to get platform-independent results.
   //              See typedef for MleMouseEventCB for more information.
   MlBoolean registerCB(int mouseEvent,                 // one of the fwMouseEvents
-		       (MleMouseEventCB *) callbackFn,  // see MleMouseEventCB typedef above
-		       (void *) clientData);           // an arbitrary data structure to
+               (MleMouseEventCB *) callbackFn,  // see MleMouseEventCB typedef above
+               (void *) clientData);           // an arbitrary data structure to
                                                        // pass to the callbackFn
 
   // getButtonStatus - Returns the state of the mouse buttons.
@@ -199,9 +199,9 @@ public:
   //                   buttonN = MLE_BUTTON_UP means that the button just went up.
   //                   Returns FALSE if the event was not a button event.
   MlBoolean getButtonStatus(void *eventData, 
-			    MleMouseButtonState *button1,
-			    MleMouseButtonState *button2,
-			    MleMouseButtonState *button3);
+                MleMouseButtonState *button1,
+                MleMouseButtonState *button2,
+                MleMouseButtonState *button3);
 
   // keyDown - Returns TRUE when the given modifier key is now down.
   //           Mlekey includes modifier keys supported by the

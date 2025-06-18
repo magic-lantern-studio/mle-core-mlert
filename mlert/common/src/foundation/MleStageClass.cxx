@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -58,13 +58,13 @@
 // stage class names and holds a pointer to a function that creates an
 // instance of the stage class.
 //
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 MleStageClassDict MleStageClass::g_registry(16);
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
@@ -79,7 +79,7 @@ MleDSOLoader MleStageClass::g_loader;
 // Constructor.
 //
 MleStageClass::MleStageClass(const char *name, MleStage *(*c)(void),
-	const char *superclass)
+   const char *superclass)
 : MleDwpStrKeyDict()
 {
     //
@@ -96,15 +96,15 @@ MleStageClass::MleStageClass(const char *name, MleStage *(*c)(void),
     // Copy the superclass members into the local space.
     //
     if (super)
-	{
-		MleStageMemberIter iter(super);
-		const MleStageMember *member;
+   {
+      MleStageMemberIter iter(super);
+      const MleStageMember *member;
 
         while ( (member = iter.getMember()) )
-		{
-			set(iter.getName(), new MleStageMember(*member));
-			iter.next();
-		}
+      {
+         set(iter.getName(), new MleStageMember(*member));
+         iter.next();
+      }
     }
 
     //
@@ -172,7 +172,7 @@ MleStageClass::find(const char *name)
     // Return the stage class if we found it.
     //
     if(stageClass)
-	return stageClass;
+   return stageClass;
     
     //
     // Otherwise, try to load the class from a DSO.
@@ -197,10 +197,10 @@ MleStageClass::find(const char *name)
 //
 class MleStageMemberEntry : public MleDwpStrKeyDictEntry
 {
-	public:
+   public:
 
-		~MleStageMemberEntry()
-		{ delete ((MleStageMember *) m_value); }
+      ~MleStageMemberEntry()
+      { delete ((MleStageMember *) m_value); }
 };
 
 
@@ -217,14 +217,14 @@ MleStageClass::makeEntry(void)
 void *
 MleStageClass::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+   void *p = mlMalloc(tSize);
+   return p;
 }
 
 void
 MleStageClass::operator delete(void *p)
 {
-	mlFree(p);
+   mlFree(p);
 }
 
 //
@@ -236,37 +236,37 @@ class MleStageClassDictEntry : public MleDwpStrKeyDictEntry
 {
   public:
 
-	/**
-	 * The desctructor.
-	 */
-	~MleStageClassDictEntry() { delete ((MleStageClass *) m_value); }
+   /**
+    * The desctructor.
+    */
+   ~MleStageClassDictEntry() { delete ((MleStageClass *) m_value); }
 
-	/**
-	 * Override operator new.
-	 *
-	 * @param tSize The size, in bytes, to allocate.
-	 */
-	void* operator new(size_t tSize);
+   /**
+    * Override operator new.
+    *
+    * @param tSize The size, in bytes, to allocate.
+    */
+   void* operator new(size_t tSize);
 
-	/**
-	 * Override operator delete.
-	 *
-	 * @param p A pointer to the memory to delete.
-	 */
+   /**
+    * Override operator delete.
+    *
+    * @param p A pointer to the memory to delete.
+    */
     void  operator delete(void *p);
 };
 
 void *
 MleStageClassDictEntry::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+   void *p = mlMalloc(tSize);
+   return p;
 }
 
 void
 MleStageClassDictEntry::operator delete(void *p)
 {
-	mlFree(p);
+   mlFree(p);
 }
 
 //
@@ -282,14 +282,14 @@ MleStageClassDict::makeEntry(void)
 void *
 MleStageClassDict::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+   void *p = mlMalloc(tSize);
+   return p;
 }
 
 void
 MleStageClassDict::operator delete(void *p)
 {
-	mlFree(p);
+   mlFree(p);
 }
 
 MleStageMember::MleStageMember(const char *t, MlePropertyEntry *e)
@@ -297,10 +297,10 @@ MleStageMember::MleStageMember(const char *t, MlePropertyEntry *e)
     m_type = MleDwpDatatype::findType(t);
 
     if (m_type == NULL)
-	{
-		fprintf(stderr,
-			"The workprint data type \"%s\" could not be found.\n", t);
-		MLE_ASSERT(m_type != NULL);
+   {
+      fprintf(stderr,
+         "The workprint data type \"%s\" could not be found.\n", t);
+      MLE_ASSERT(m_type != NULL);
     }
     
     m_entry = e;
@@ -309,25 +309,25 @@ MleStageMember::MleStageMember(const char *t, MlePropertyEntry *e)
 void *
 MleStageMember::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+   void *p = mlMalloc(tSize);
+   return p;
 }
 
 void
 MleStageMember::operator delete(void *p)
 {
-	mlFree(p);
+   mlFree(p);
 }
 
 void *
 MleStageMemberIter::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+   void *p = mlMalloc(tSize);
+   return p;
 }
 
 void
 MleStageMemberIter::operator delete(void *p)
 {
-	mlFree(p);
+   mlFree(p);
 }

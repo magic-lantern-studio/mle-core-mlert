@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -48,12 +48,12 @@
 #include <QtGlobal>
 #include <Inventor/Qt/SoQt.h>
 #endif /* MLE_QT */
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #include <winsock2.h>
 #ifdef Q_OS_WIN
 // Qt platform on Windows.
 #endif /* Q_OS_WIN */
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 #if defined(__linux__) || defined(__APPLE__)
 #ifdef Q_OS_UNIX
 // Qt platform on Unix
@@ -112,7 +112,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
     /**
      * @brief Base class destructor does nothing; here for subclassing.
-	 */
+     */
     MleStage();
 
     /**
@@ -188,10 +188,10 @@ class MLE_RUNTIME_API MleStage : public MleObject
     // is so that particular stages, such as ones that use inventor,
     // can control the select blocking in the main loop.
     virtual int doSelect(int nfds, 
-			 fd_set *readfds,
-			 fd_set *writefds,
-			 fd_set *exceptfds,
-			 struct timeval *userTimeOut);
+             fd_set *readfds,
+             fd_set *writefds,
+             fd_set *exceptfds,
+             struct timeval *userTimeOut);
 #endif /* __linux__ */
 
 #endif /* MLE_DIGITAL_WORKPRINT */
@@ -235,14 +235,14 @@ class MLE_RUNTIME_API MleStage : public MleObject
     virtual Display* getDisplay(void);
 #endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #ifdef Q_OS_WIN
     // Qt platform on Windows.
 #else /* Q_OS_WIN */
     // Not a Qt platform.
     virtual HWND getWindow(void);
 #endif /* ! Q_OS_WIN */
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
     virtual void setOffscreen(int flag);
     
@@ -309,10 +309,10 @@ class MLE_RUNTIME_API MleStage : public MleObject
                                void* clientData), void* clientData = NULL);
 #endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
-#if defined(WIN32)
+#if defined(_WINDOWS)
     void setRightMouseCallback(void (*rightMouseCB)(MSG* e,
                                void* clientData), void* clientData = NULL);
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
     // Getting the file descriptor
     // XXX - this should be an abstract method, but
@@ -387,7 +387,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
     virtual void reparentWindow(Window parentWindow);
 #endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #ifdef Q_OS_WIN
     // Qt platform on Windows.
 #else /* Q_OS_WIN */
@@ -395,7 +395,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
 
     virtual void reparentWindow(HWND parentWindow);
 #endif /* ! Q_OS_WIN */
-#endif /* WIN32 */
+#endif /* _WINDOWS */
     
     // Recalculates the clipping planes if auto clipping planes enabled.
     // Should be called anytime an actor property changes that could
@@ -426,14 +426,14 @@ class MLE_RUNTIME_API MleStage : public MleObject
     void (*rightMouseCB)(XEvent* e,void *clientData);
 #endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #ifdef Q_OS_WIN
     // Qt platform on Windows.
 #else /* Q_OS_WIN */
     // Not a Qt platform.
-	void (*rightMouseCB)(MSG* e,void *clientData);
+    void (*rightMouseCB)(MSG* e,void *clientData);
 #endif /* ! Q_OS_WIN */
-#endif /* WIN32 */
+#endif /* _WINDOWS */
     void *m_pickClientData;
     void *m_unpickClientData;
     void *m_openClientData;
@@ -456,14 +456,14 @@ class MLE_RUNTIME_API MleStage : public MleObject
     static int checkForDoubleClick(XButtonEvent* event);
 #endif /* ! Q_OS_UNIX */
 #endif /* _linux__ */
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #ifdef Q_OS_WIN
     // Qt platform for Windows.
 #else /* Q_OS_WIN */
     // Not a Qt platform.
     static int checkForDoubleClick(MSG* event);
 #endif /* ! Q_OS_WIN */
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 #endif /* MLE_REHEARSAL */
 
@@ -544,8 +544,8 @@ class MLE_RUNTIME_API MleStage : public MleObject
 #define MLE_STAGE_SOURCE(C,S) \
     const char *C::getTypeName(void) const { return #C; } \
     int C::isa(const char *type) const { \
-	if ( !strcmp(type,#C) ) return 1; \
-	else return S::isa(type); \
+    if ( !strcmp(type,#C) ) return 1; \
+    else return S::isa(type); \
     } \
     C *C::cast(MleStage *stage) { \
         MLE_ASSERT(stage->isa(#C)); \
@@ -598,7 +598,7 @@ class MLE_RUNTIME_API MleStage : public MleObject
 #if 0
 #define mlRegisterStageMember(STAGE,MEMBER,TYPE) \
     MleStageClass::find(#STAGE)->addMember( \
-		#MEMBER,#TYPE,((char *)&((STAGE *)0)->MEMBER) - (char *)0)
+        #MEMBER,#TYPE,((char *)&((STAGE *)0)->MEMBER) - (char *)0)
 #else
 #define mleRegisterStageMember(STAGE,MEMBER,TYPE) \
     MlePropertyEntry *entryFor##MEMBER = new MlePropertyEntry(); \
@@ -626,5 +626,5 @@ class MLE_RUNTIME_API MleStage : public MleObject
 #define MLE_STAGE_ABSTRACT_SOURCE(C,S)
 
 #endif /* MLE_DIGITAL_PLAYPRINT */
-	
+
 #endif /* __MLE_STAGE_H_ */

@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,9 +57,9 @@
 
 
 /***************************Begin Win32 includes*********************/
-#if defined(WIN32)
+#if defined(_WINDOWS)
 //#include "mle/comstg.h"
-#endif // WIN32
+#endif // _WINDOWS
 /***************************End Win32 includes***********************/
 
 
@@ -76,9 +76,9 @@ MleMousePolled::MleMousePolled(void)
 #if defined(MLE_REHEARSAL) || defined(__sgi)
   MleSGIPlatformData *platformData = (MleSGIPlatformData *)g_theTitle->m_platformData;
 #endif // MLE_REHEARSAL or __sgi
-#if defined(WIN32)
+#if defined(_WINDOWS)
   MleWin32PlatformData *platformData = (MleWin32PlatformData *)g_theTitle->m_platformData;
-#endif // WIN32
+#endif // _WINDOWS
   MLE_ASSERT(platformData);
 
   // Install and register only one mouse manager per title at any one time.
@@ -95,37 +95,37 @@ MleMousePolled::MleMousePolled(void)
 
   // Add mouse event handler (highest possible priority).
   XtInsertEventHandler(platformData->widget,
-		       (ButtonPressMask |
-			ButtonReleaseMask |
-			PointerMotionMask),
-		       False,
-		       (XtEventHandler) MleMousePolled::MleMousePolledEventHandler,
-		       this,
-		       XtListHead);
+               (ButtonPressMask |
+            ButtonReleaseMask |
+            PointerMotionMask),
+               False,
+               (XtEventHandler) MleMousePolled::MleMousePolledEventHandler,
+               this,
+               XtListHead);
 #endif // MLE_REHEARSAL or __sgi
-#if defined(WIN32)
+#if defined(_WINDOWS)
   g_theTitle->m_theEventMgr->installEventCB((MleEvent) WM_LBUTTONDOWN,
-				     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
-				     this);
+                     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
+                     this);
   g_theTitle->m_theEventMgr->installEventCB((MleEvent) WM_LBUTTONUP,
-				     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
-				     this);
+                     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
+                     this);
   g_theTitle->m_theEventMgr->installEventCB((MleEvent) WM_MBUTTONDOWN,
-				     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
-				     this);
+                     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
+                     this);
   g_theTitle->m_theEventMgr->installEventCB((MleEvent) WM_MBUTTONUP,
-				     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
-				     this);
+                     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
+                     this);
   g_theTitle->m_theEventMgr->installEventCB((MleEvent) WM_RBUTTONDOWN,
-				     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
-				     this);
+                     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
+                     this);
   g_theTitle->m_theEventMgr->installEventCB((MleEvent) WM_RBUTTONUP,
-				     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
-				     this);
+                     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
+                     this);
   g_theTitle->m_theEventMgr->installEventCB((MleEvent) WM_MOUSEMOVE,
-				     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
-				     this);
-#endif // WIN32
+                     (MleCallback) MleMousePolled::MleMousePolledEventHandler,
+                     this);
+#endif // _WINDOWS
 
   // Initialize mouse state
   controlKeyDown = shiftKeyDown = FALSE;
@@ -140,22 +140,22 @@ MleMousePolled::~MleMousePolled(void)
 #if defined(MLE_REHEARSAL) || defined(__sgi)
   MleSGIPlatformData *platformData = (MleSGIPlatformData *)g_theTitle->m_platformData;
 #endif // MLE_REHEARSAL or __sgi
-#if defined(WIN32)
+#if defined(_WINDOWS)
   MleWin32PlatformData *platformData = (MleWin32PlatformData *)g_theTitle->m_platformData;
-#endif // WIN32
+#endif // _WINDOWS
   MLE_ASSERT(platformData);
 
 #if defined(MLE_REHEARSAL) || defined(__sgi)
   // Remove mouse event handler
     XtRemoveEventHandler(platformData->widget,
-			 (ButtonPressMask |
-			  ButtonReleaseMask |
-			  PointerMotionMask),
-			 False,
-			 (XtEventHandler) MleMousePolled::MleMousePolledEventHandler,
-			 this);
+             (ButtonPressMask |
+              ButtonReleaseMask |
+              PointerMotionMask),
+             False,
+             (XtEventHandler) MleMousePolled::MleMousePolledEventHandler,
+             this);
 #endif // MLE_REHEARSAL or __sgi
-#if defined(WIN32)
+#if defined(_WINDOWS)
   // Remove Win32 message handler
   g_theTitle->m_theEventMgr->uninstallEvent((MleEvent) WM_LBUTTONDOWN);
   g_theTitle->m_theEventMgr->uninstallEvent((MleEvent) WM_LBUTTONUP);
@@ -164,7 +164,7 @@ MleMousePolled::~MleMousePolled(void)
   g_theTitle->m_theEventMgr->uninstallEvent((MleEvent) WM_RBUTTONDOWN);
   g_theTitle->m_theEventMgr->uninstallEvent((MleEvent) WM_RBUTTONUP);
   g_theTitle->m_theEventMgr->uninstallEvent((MleEvent) WM_MOUSEMOVE);
-#endif // WIN32
+#endif // _WINDOWS
 
   // Signal released mouse manager resources
   //platformData->m_mouseManager = MLE_INPUT_DEVICE_MANAGER_NOT_INSTANTIATED;
@@ -180,9 +180,9 @@ MleMousePolled::getNumberOfButtons(void)
   return 3;
 #endif // MLE_REHEARSAL or __sgi
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
   return 2;
-#endif // WIN32
+#endif // _WINDOWS
 }
 
 void
@@ -241,17 +241,17 @@ MleMousePolled::updateModifiers(unsigned int modifiers)
   shiftKeyDown = (MlBoolean) (modifiers & ShiftMask);
 #endif // MLE_REHEARSAL or __sgi
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
   controlKeyDown = (MlBoolean) (modifiers & MK_CONTROL);
   shiftKeyDown = (MlBoolean) (modifiers & MK_SHIFT);
-#endif // WIN32
+#endif // _WINDOWS
 }
 
 #if defined(MLE_REHEARSAL) || defined(__sgi) 
 void
 MleMousePolled::MleMousePolledEventHandler(Widget /* w */,
-					 XPointer mouseManager,
-					 XEvent *event)
+                     XPointer mouseManager,
+                     XEvent *event)
 {
   MleMousePolled *mgr = (MleMousePolled *) mouseManager;
   XButtonReleasedEvent *buttonEvent = (XButtonReleasedEvent *) event;
@@ -268,9 +268,9 @@ MleMousePolled::MleMousePolledEventHandler(Widget /* w */,
       mgr->buttonIsDown[0] = TRUE;
     else {
       if (buttonEvent->button == Button2)
-	mgr->buttonIsDown[1] = TRUE;
+    mgr->buttonIsDown[1] = TRUE;
       else
-	mgr->buttonIsDown[2] = TRUE;
+    mgr->buttonIsDown[2] = TRUE;
     }
     mgr->updateModifiers(buttonEvent->state);
     break;
@@ -279,9 +279,9 @@ MleMousePolled::MleMousePolledEventHandler(Widget /* w */,
       mgr->buttonIsDown[0] = FALSE;
     else {
       if (buttonEvent->button == Button2)
-	mgr->buttonIsDown[1] = FALSE;
+    mgr->buttonIsDown[1] = FALSE;
       else
-	mgr->buttonIsDown[2] = FALSE;
+    mgr->buttonIsDown[2] = FALSE;
     }
     mgr->updateModifiers(buttonEvent->state);
     break;
@@ -290,11 +290,11 @@ MleMousePolled::MleMousePolledEventHandler(Widget /* w */,
 #endif // MLE_REHEARSAL or __sgi
 
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 void
 MleMousePolled::MleMousePolledEventHandler(MleEvent event,
-					 void* eventData,
-					 void* manager)
+                     void* eventData,
+                     void* manager)
 {
   Win32CallData *data = (Win32CallData *) eventData;
   MleMousePolled *mgr = (MleMousePolled *) manager;
@@ -339,7 +339,7 @@ MleMousePolled::MleMousePolledEventHandler(MleEvent event,
     break;
   }
 }
-#endif // WIN32
+#endif // _WINDOWS
 // End Event Handlers ******************************************
 
 

@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -51,13 +51,13 @@
 // This registry is indexed by mediaref class names and holds a pointer
 // to a function that creates an instance of the mediaref class.
 //
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 MleDwpStrKeyDict MleMediaRefClass::g_registry(16);
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
@@ -100,12 +100,12 @@ MleMediaRef *(*MleMediaRefClass::find(const char *name))(void)
 void *
 MleMediaRefClass::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleMediaRefClass::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }

@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -83,15 +83,15 @@ MleRole::~MleRole()
 void *
 MleRole::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 
 void
 MleRole::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 
@@ -104,13 +104,13 @@ MleRole::addChild(MleRole * /* child */)
 void
 MleRole::setAttribute(const char * /* name */, void * /* value */)
 {
-	// Do nothing in the base class.
+    // Do nothing in the base class.
 }
 
 void *
 MleRole::getAttribute(const char * /* name */)
 {
-	return NULL;
+    return NULL;
 }
 
 #ifdef MLE_DIGITAL_WORKPRINT
@@ -118,22 +118,22 @@ MleRole::getAttribute(const char * /* name */)
 const char *
 MleRole::getTypeName(void) const
 {
-	return "MleRole";
+    return "MleRole";
 }
 
 int
 MleRole::isa(const char *type) const
 {
-	return !strcmp(type,"MleRole");
+    return !strcmp(type,"MleRole");
 }
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 MleDwpDict MleRole::g_pickRegistry;
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif

@@ -40,13 +40,13 @@
 
 // Include system header files.
 #if defined(MLE_DEBUG)
-#ifdef WIN32
+#ifdef _WINDOWS
 #include <string.h>
 #else
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 #endif /* MLE_DEBUG */
 
 // Include Magic Lantern header files.
@@ -105,14 +105,14 @@ MleScheduler::MleScheduler(unsigned int phases, unsigned int items)
     MLE_ASSERT(phases > 0);
     m_phaseArray = new MleSchedulerPhase* [phases];
     m_maxPhases = phases;
-	
+    
     // Start all the phases empty
     m_inUsePhases = 0;
     for(index = 0; index<phases; index++)
     {
-	    m_phaseArray[index] = NULL;
+        m_phaseArray[index] = NULL;
     }
-	
+    
     // set initSize to specified size.
     m_initSize = items;
     m_memLink = NULL;
@@ -127,24 +127,24 @@ MleScheduler::~MleScheduler()
 {
     // Delete the contents of the phase array first, then the
     // array itself
-	
+    
     // Iterate through the phases
     MleSchedulerIterator iter(this);
     for (MleSchedulerPhase* phase = iter.firstPhase();
-	     phase != NULL;
-	     phase = iter.nextPhase())
+         phase != NULL;
+         phase = iter.nextPhase())
     {
-	    removePhase(phase);
-	    delete phase;
+        removePhase(phase);
+        delete phase;
     }
 
     delete[] m_phaseArray;
 
     while (m_memLink)
     {
-	  MleSchedulerItem *next = m_memLink->m_next;
-	  delete m_memLink;
-	  m_memLink = next;
+      MleSchedulerItem *next = m_memLink->m_next;
+      delete m_memLink;
+      m_memLink = next;
     }
 }
 
@@ -172,25 +172,25 @@ MleScheduler::~MleScheduler()
 void
 MleScheduler::init(void)
 {
-	g_theActorPhase       = insertPhase();
-	g_thePostActorPhase   = insertPhase();
-	g_thePreRolePhase     = insertPhase();
-	g_theRolePhase        = insertPhase();
-	g_theSetPhase         = insertPhase();
-	g_theStagePhase       = insertPhase();
+    g_theActorPhase       = insertPhase();
+    g_thePostActorPhase   = insertPhase();
+    g_thePreRolePhase     = insertPhase();
+    g_theRolePhase        = insertPhase();
+    g_theSetPhase         = insertPhase();
+    g_theStagePhase       = insertPhase();
 }
 
 void *
 MleScheduler::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleScheduler::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 //
@@ -205,48 +205,48 @@ MleSchedulerPhase*
 MleScheduler::insertPhase(MleSchedulerPhase* phase, MleSchedulerPhase* beforePhase)
 {
 
-	// As a convenience, allocate a phase if the user does 
-	// not provide one.
-	if (NULL == phase) {
-		phase = new MleSchedulerPhase;
-		if (NULL == phase) {
-			return NULL;
-		}
-		phase->m_first = NULL;
-	}
+    // As a convenience, allocate a phase if the user does 
+    // not provide one.
+    if (NULL == phase) {
+        phase = new MleSchedulerPhase;
+        if (NULL == phase) {
+            return NULL;
+        }
+        phase->m_first = NULL;
+    }
 
-	// Find index of the location at which to insert this phase.
-	unsigned int insertPoint;
-	if (NULL == beforePhase) {
-		insertPoint = m_inUsePhases;
-	}
-	else {
-		for (insertPoint=0; insertPoint<m_inUsePhases; insertPoint++) {
-			if (m_phaseArray[insertPoint] == beforePhase) {
-				break;
-			}
-		}
-		// If we fell through the loop, then we must insert
-		// at [inUsePhases] which is one past the end.
-	}
+    // Find index of the location at which to insert this phase.
+    unsigned int insertPoint;
+    if (NULL == beforePhase) {
+        insertPoint = m_inUsePhases;
+    }
+    else {
+        for (insertPoint=0; insertPoint<m_inUsePhases; insertPoint++) {
+            if (m_phaseArray[insertPoint] == beforePhase) {
+                break;
+            }
+        }
+        // If we fell through the loop, then we must insert
+        // at [inUsePhases] which is one past the end.
+    }
 
-	// Reallocate if necessary
-	if (m_inUsePhases >= m_maxPhases) {
-		m_maxPhases = MAX(m_inUsePhases, 2*m_maxPhases);
-		m_phaseArray = (MleSchedulerPhase**) mlRealloc(m_phaseArray, m_maxPhases*sizeof(MleSchedulerPhase*));
-		if (NULL == m_phaseArray) {
-			return NULL;
-		}
-	}
-		
-	// move the phases at and above the insertion point
-	for (unsigned int i=m_inUsePhases; i>insertPoint; i--) {
-		m_phaseArray[i] = m_phaseArray[i-1];
-	}
-	m_inUsePhases++;
+    // Reallocate if necessary
+    if (m_inUsePhases >= m_maxPhases) {
+        m_maxPhases = MAX(m_inUsePhases, 2*m_maxPhases);
+        m_phaseArray = (MleSchedulerPhase**) mlRealloc(m_phaseArray, m_maxPhases*sizeof(MleSchedulerPhase*));
+        if (NULL == m_phaseArray) {
+            return NULL;
+        }
+    }
+        
+    // move the phases at and above the insertion point
+    for (unsigned int i=m_inUsePhases; i>insertPoint; i--) {
+        m_phaseArray[i] = m_phaseArray[i-1];
+    }
+    m_inUsePhases++;
 
-	m_phaseArray[insertPoint] = phase;
-	return m_phaseArray[insertPoint];
+    m_phaseArray[insertPoint] = phase;
+    return m_phaseArray[insertPoint];
 }
 
 //
@@ -256,25 +256,25 @@ MleScheduler::insertPhase(MleSchedulerPhase* phase, MleSchedulerPhase* beforePha
 void
 MleScheduler::removePhase(MleSchedulerPhase* phase)
 {
-	unsigned int removePoint;
+    unsigned int removePoint;
 
-	// Find index of the location at which to remove this phase.
-	for (removePoint=0; removePoint<m_inUsePhases; removePoint++) {
-		if (m_phaseArray[removePoint] == phase) {
-			break;
-		}
-	}
+    // Find index of the location at which to remove this phase.
+    for (removePoint=0; removePoint<m_inUsePhases; removePoint++) {
+        if (m_phaseArray[removePoint] == phase) {
+            break;
+        }
+    }
 
-	// If we fell through the loop, then there is nothing to remove.
-	if (removePoint == m_inUsePhases) {
-		return;
-	}
+    // If we fell through the loop, then there is nothing to remove.
+    if (removePoint == m_inUsePhases) {
+        return;
+    }
 
-	// move the phases at and above the remove point
-	for (unsigned int i=removePoint; i<m_inUsePhases-1; i++) {
-		m_phaseArray[i] = m_phaseArray[i+1];
-	}
-	m_inUsePhases--;
+    // move the phases at and above the remove point
+    for (unsigned int i=removePoint; i<m_inUsePhases-1; i++) {
+        m_phaseArray[i] = m_phaseArray[i+1];
+    }
+    m_inUsePhases--;
 }
 
 void
@@ -304,29 +304,29 @@ MleScheduler::go(MleSchedulerPhase *phase)
     
     // Assert that go() is not being called recursively
     MLE_ASSERT(m_iterator == NULL);
-	
+    
 #ifdef MLE_DEBUG
 // This conditional code checks that the 
 // phase being run is actually owned by the scheduler.  So the phase
 // that you pass to go() must be owned by this scheduler.  
 // If it\'s not, then you could be mixing free lists and REALLY get
 // in trouble on deleting a phase.  So at least we prevent it during
-// the debug compilation.	
+// the debug compilation.    
 
     {
-	    MlBoolean phaseFound = FALSE;
+        MlBoolean phaseFound = FALSE;
 
-	    MleSchedulerIterator iter(this);
-	    for ( MleSchedulerPhase *p = iter.firstPhase();
-		  NULL != p;
-		  p = iter.nextPhase() ) 
-	    {
-		    if (p == phase) {
-			    phaseFound = TRUE;
-			    break;
-		    }
-	    }
-	    MLE_ASSERT(TRUE == phaseFound); // MleScheduler::go(phase) must use a phase held by the scheduler.
+        MleSchedulerIterator iter(this);
+        for ( MleSchedulerPhase *p = iter.firstPhase();
+          NULL != p;
+          p = iter.nextPhase() ) 
+        {
+            if (p == phase) {
+                phaseFound = TRUE;
+                break;
+            }
+        }
+        MLE_ASSERT(TRUE == phaseFound); // MleScheduler::go(phase) must use a phase held by the scheduler.
     }
 #endif /* MLE_DEBUG */
 
@@ -334,30 +334,30 @@ MleScheduler::go(MleSchedulerPhase *phase)
     m_iterator = phase->m_first;
     while(m_iterator != NULL)
     {
-	    // Check if current item needs to be called
-	    if (--m_iterator->m_count == 0)
-		{
-	        m_iterator->m_func(m_iterator->m_data);
-	        m_iterator->m_count = m_iterator->m_interval;
-		}
-		
-	    // Move on (before possible delete)
-    	m_iterator = m_iterator->m_next;
-		    
-	    // Check if that item needs to be deleted.
-	    if (m_deleteItem != NULL)
-		{
-	        // Splice out of table
-	        *(m_deleteItem->m_prev) = m_deleteItem->m_next;
-	        if (m_deleteItem->m_next != NULL) 
-			{
-		        m_deleteItem->m_next->m_prev = m_deleteItem->m_prev;
-			}
-	        m_deleteItem->m_next = m_freeItem;
-	        m_freeItem = m_deleteItem;
+        // Check if current item needs to be called
+        if (--m_iterator->m_count == 0)
+        {
+            m_iterator->m_func(m_iterator->m_data);
+            m_iterator->m_count = m_iterator->m_interval;
+        }
+        
+        // Move on (before possible delete)
+        m_iterator = m_iterator->m_next;
+            
+        // Check if that item needs to be deleted.
+        if (m_deleteItem != NULL)
+        {
+            // Splice out of table
+            *(m_deleteItem->m_prev) = m_deleteItem->m_next;
+            if (m_deleteItem->m_next != NULL) 
+            {
+                m_deleteItem->m_next->m_prev = m_deleteItem->m_prev;
+            }
+            m_deleteItem->m_next = m_freeItem;
+            m_freeItem = m_deleteItem;
 
-	       m_deleteItem = NULL;
-		}
+           m_deleteItem = NULL;
+        }
     }
 }
 
@@ -369,32 +369,32 @@ MleScheduler::goAll(void)
     MleSchedulerPhase* phase;
     MleSchedulerIterator iter(this);
     for (phase = iter.firstPhase(); 
-	 phase != NULL; 
-	 phase = iter.nextPhase())
+     phase != NULL; 
+     phase = iter.nextPhase())
     {
-	    go(phase);
+        go(phase);
     }
 }
 
 // Insert function into phase table.  
 MleSchedulerItem* MleScheduler::insertFunc(MleSchedulerPhase *phase, 
-				 void (*func)(void*),
-				 void* data,
-				 void* tag, 
-				 unsigned int interval,
-				 unsigned int firstInterval
+                 void (*func)(void*),
+                 void* data,
+                 void* tag, 
+                 unsigned int interval,
+                 unsigned int firstInterval
 #if defined(MLE_DEBUG)
-				 , char *name
+                 , char *name
 #endif
-				 )
+                 )
 {
     MLE_ASSERT(NULL != phase);
-	
+    
     
     // if run out of allocated memory for items
     if (m_freeItem == NULL)
     {
-	    makeItemMemory();
+        makeItemMemory();
     }
 
     // Get a new MleSchedulerItem
@@ -412,26 +412,26 @@ MleSchedulerItem* MleScheduler::insertFunc(MleSchedulerPhase *phase,
     ctrlBlk -> m_count = firstInterval;
 #if defined(MLE_DEBUG)
     if ( name != NULL ) {
-#if defined(WIN32)
-	    ctrlBlk->m_name = _strdup(name);
+#if defined(_WINDOWS)
+        ctrlBlk->m_name = _strdup(name);
 #else
-	    ctrlBlk->m_name = strdup(name);
-#endif /* WIN32 */
+        ctrlBlk->m_name = strdup(name);
+#endif /* _WINDOWS */
     } else {
-	    ctrlBlk->m_name = NULL;
+        ctrlBlk->m_name = NULL;
     }
 #endif
-	
+    
     // Get to end of phase list to perform FIFO inserts
     // NOTE - if this gets to be a time sink could store the insertPt for each list.
     MleSchedulerItem** insertPoint = &phase->m_first;
     while(*insertPoint != NULL)
     {
-	    insertPoint = &((*insertPoint)->m_next);
+        insertPoint = &((*insertPoint)->m_next);
     }
     *insertPoint = ctrlBlk;
     ctrlBlk->m_prev = insertPoint;
-	
+    
 #ifdef MLE_REHEARSAL
     // Register with the deletion monitor.
     MleMonitor::g_deleteNotifier.addCallback(tag,(MleNotifierFunc)notify,this);
@@ -447,24 +447,24 @@ void MleScheduler::remove(MleSchedulerItem* ctrlBlk)
     // Determine if are deleting out from under the go() member function
     if (ctrlBlk != m_iterator)
     {
-	// Splice out of table
-	*(ctrlBlk->m_prev) = ctrlBlk->m_next;
-	if (ctrlBlk->m_next != NULL) 
-	{
-	    ctrlBlk->m_next->m_prev = ctrlBlk->m_prev;
-	}
-	ctrlBlk->m_next = m_freeItem;
-	m_freeItem = ctrlBlk;
+    // Splice out of table
+    *(ctrlBlk->m_prev) = ctrlBlk->m_next;
+    if (ctrlBlk->m_next != NULL) 
+    {
+        ctrlBlk->m_next->m_prev = ctrlBlk->m_prev;
+    }
+    ctrlBlk->m_next = m_freeItem;
+    m_freeItem = ctrlBlk;
 #if defined(MLE_DEBUG)
-	if ( ctrlBlk->m_name != NULL ) {
-	    mlFree(ctrlBlk->m_name);
-	}
+    if ( ctrlBlk->m_name != NULL ) {
+        mlFree(ctrlBlk->m_name);
+    }
 #endif
     }
     else
     {
-	// Tell the go() function to delete it later.
-	m_deleteItem = ctrlBlk;
+    // Tell the go() function to delete it later.
+    m_deleteItem = ctrlBlk;
     }
 }
 
@@ -476,25 +476,25 @@ void MleScheduler::remove(void* tag)
     // Iterate through the phases
     MleSchedulerIterator iter(this);
     for ( MleSchedulerPhase *phase = iter.firstPhase();
-	  NULL != phase;
-	  phase = iter.nextPhase() ) 
+      NULL != phase;
+      phase = iter.nextPhase() ) 
     {
-	// Iterate through the routines in this phase
-	MleSchedulerItem* item = phase->m_first;
-	while(item != NULL)
-	{
-	    // Delete matching tags
-	    if (item->m_tag == tag)
-	    {
-		    MleSchedulerItem* deadItem=item;
-		    item = item->m_next;
-	    	remove(deadItem);
-	    }
-	    else
-	    {
-		    item = item->m_next;
-	    }
-	}
+    // Iterate through the routines in this phase
+    MleSchedulerItem* item = phase->m_first;
+    while(item != NULL)
+    {
+        // Delete matching tags
+        if (item->m_tag == tag)
+        {
+            MleSchedulerItem* deadItem=item;
+            item = item->m_next;
+            remove(deadItem);
+        }
+        else
+        {
+            item = item->m_next;
+        }
+    }
     }
 }
 
@@ -509,23 +509,23 @@ void MleScheduler::dump()
     // Iterate through the phases
     MleSchedulerIterator iter(this);
     for ( MleSchedulerPhase *phase = iter.firstPhase();
-	  NULL != phase;
-	  phase = iter.nextPhase() ) 
+      NULL != phase;
+      phase = iter.nextPhase() ) 
     {
-	printf("    PHASE 0x%p\n", phase);
-	printf("        IDX FUNCPTR  USERDATA TAG      CNT IVL NAME\n");
-	int j = 0;
-	for ( MleSchedulerItem *s=phase->m_first ; s!=NULL ; s=s->m_next ) {
-	    printf("        %3d 0x%p 0x%p 0x%p %3d %3d %s\n",
-		   j,
-		   s->m_func,
-		   s->m_data,
-		   s->m_tag,
-		   s->m_count,
-		   s->m_interval,
-		   s->m_name? s->m_name : "NULL");
-	    j++;
-	}
+    printf("    PHASE 0x%p\n", phase);
+    printf("        IDX FUNCPTR  USERDATA TAG      CNT IVL NAME\n");
+    int j = 0;
+    for ( MleSchedulerItem *s=phase->m_first ; s!=NULL ; s=s->m_next ) {
+        printf("        %3d 0x%p 0x%p 0x%p %3d %3d %s\n",
+           j,
+           s->m_func,
+           s->m_data,
+           s->m_tag,
+           s->m_count,
+           s->m_interval,
+           s->m_name? s->m_name : "NULL");
+        j++;
+    }
     }
 }
 #endif
@@ -538,40 +538,40 @@ void MleScheduler::dump()
 void
 MleScheduler::notify(void *key,MleScheduler *sched)
 {
-	// Remove any entries in the scheduler associated with the tag
+    // Remove any entries in the scheduler associated with the tag
     // sched->remove(key);
 
-	// Really all we need to do is call the remove function.
-	// But duplicating the code here gives us a chance to print
-	// a warning when something is deleted.  This is a rehearsal
-	// service, so failures to remove scheduled functions that
-	// are caught here will not be intercepted after mastering.
+    // Really all we need to do is call the remove function.
+    // But duplicating the code here gives us a chance to print
+    // a warning when something is deleted.  This is a rehearsal
+    // service, so failures to remove scheduled functions that
+    // are caught here will not be intercepted after mastering.
 
     // Iterate through the phases
     MleSchedulerIterator iter(sched);
     for ( MleSchedulerPhase *phase = iter.firstPhase();
-	  NULL != phase;
-	  phase = iter.nextPhase() ) 
+      NULL != phase;
+      phase = iter.nextPhase() ) 
     {
-		// Iterate through the routines in this phase.
-		MleSchedulerItem* item = phase->m_first;
-		while (item != NULL)
-		{
-			// Delete matching tags.
-			if (item->m_tag == key)
-			{
-				MleSchedulerItem* deadItem = item;
-				item = item->m_next;
+        // Iterate through the routines in this phase.
+        MleSchedulerItem* item = phase->m_first;
+        while (item != NULL)
+        {
+            // Delete matching tags.
+            if (item->m_tag == key)
+            {
+                MleSchedulerItem* deadItem = item;
+                item = item->m_next;
 
-				if ( deadItem != sched->m_iterator )
-				printf("MleScheduler warning: a deleted object did not unschedule a function.\n");
-				sched->remove(deadItem);
-			}
-			else
-			{
-				item = item->m_next;
-			}
-		}
+                if ( deadItem != sched->m_iterator )
+                printf("MleScheduler warning: a deleted object did not unschedule a function.\n");
+                sched->remove(deadItem);
+            }
+            else
+            {
+                item = item->m_next;
+            }
+        }
     }
 
 }
@@ -580,16 +580,16 @@ MleScheduler::notify(void *key,MleScheduler *sched)
 /////////////////////////////////////////////////////////////////////////////
 MleSchedulerIterator::MleSchedulerIterator(MleScheduler *sched)
 {
-	scheduler = sched;
+    scheduler = sched;
 
-	// set the current phase index beyond the range of existing 
-	// phases so the user must call firstPhase() to get started.
-	currentPhaseIndex = scheduler->m_inUsePhases;
+    // set the current phase index beyond the range of existing 
+    // phases so the user must call firstPhase() to get started.
+    currentPhaseIndex = scheduler->m_inUsePhases;
 }
 
 MleSchedulerIterator::~MleSchedulerIterator(void)
 {
-	scheduler = NULL;
+    scheduler = NULL;
 }
 //
 // Get a pointer to the first phase in the scheduler.
@@ -597,15 +597,15 @@ MleSchedulerIterator::~MleSchedulerIterator(void)
 MleSchedulerPhase*
 MleSchedulerIterator::firstPhase(void)
 {
-	MLE_ASSERT(NULL != scheduler); // Must have a scheduler to iterate on
+    MLE_ASSERT(NULL != scheduler); // Must have a scheduler to iterate on
 
-	currentPhaseIndex = 0;
-	if (currentPhaseIndex < scheduler->m_inUsePhases) {
-		return scheduler->m_phaseArray[currentPhaseIndex];
-	}
-	else {
-		return NULL;
-	}
+    currentPhaseIndex = 0;
+    if (currentPhaseIndex < scheduler->m_inUsePhases) {
+        return scheduler->m_phaseArray[currentPhaseIndex];
+    }
+    else {
+        return NULL;
+    }
 }
 
 //
@@ -614,12 +614,12 @@ MleSchedulerIterator::firstPhase(void)
 MleSchedulerPhase*
 MleSchedulerIterator::nextPhase(void)
 {
-	if (++currentPhaseIndex < scheduler->m_inUsePhases) {
-		return scheduler->m_phaseArray[currentPhaseIndex];
-	}
-	else {
-		return NULL;
-	}
+    if (++currentPhaseIndex < scheduler->m_inUsePhases) {
+        return scheduler->m_phaseArray[currentPhaseIndex];
+    }
+    else {
+        return NULL;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -647,7 +647,7 @@ void deleteFn(void* parm)
     printf("Test String D MleScheduler.\n");
     if (deleteArg != NULL)
     {
-	((MleScheduler*)parm)->remove(deleteArg);
+    ((MleScheduler*)parm)->remove(deleteArg);
     }
 }
 
@@ -658,7 +658,7 @@ void deleteTagFn(void* parm)
     printf("Test String T MleScheduler.\n");
     if (deleteTagArg != NULL)
     {
-	((MleScheduler*)parm)->remove(deleteTagArg);
+    ((MleScheduler*)parm)->remove(deleteTagArg);
     }
 }
 
@@ -741,7 +741,7 @@ main()
    
 
     return 0;
-}	
+}    
 #else /* MLE_DEBUG */
 
 main ()
@@ -802,179 +802,179 @@ int SchedObj::outLen = 0;
 
 // The array of objects we\'re scheduling.
 MlePtrArray* SchedObj::objArray = NULL;
-int	    SchedObj::objArrayLen = 0;
+int        SchedObj::objArrayLen = 0;
 
 
 void
 SchedObj::update( SchedObj *data )
 {
-	delete new char[8];
-	fprintf(ML_DEBUG_OUTPUT_FILE, "%s", data->getStr());
-	//cout << data;
-	if ((SchedObj::outLen += strlen(data->getStr())) > MARGIN_COL) {
-		//cout << "\n" << flush;
-		fprintf(ML_DEBUG_OUTPUT_FILE, "\n");
-		fflush(ML_DEBUG_OUTPUT_FILE);
-		SchedObj::outLen = 0;
-	}
+    delete new char[8];
+    fprintf(ML_DEBUG_OUTPUT_FILE, "%s", data->getStr());
+    //cout << data;
+    if ((SchedObj::outLen += strlen(data->getStr())) > MARGIN_COL) {
+        //cout << "\n" << flush;
+        fprintf(ML_DEBUG_OUTPUT_FILE, "\n");
+        fflush(ML_DEBUG_OUTPUT_FILE);
+        SchedObj::outLen = 0;
+    }
 }
 
 //ostream& 
 //operator << (ostream& os, SchedObj *obj)
 //{
-//	os << obj->getStr();
-//	return os;
+//    os << obj->getStr();
+//    return os;
 //}
 
 
 void
 scheduleObj( MleScheduler *sched, unsigned int i )
 {
-	// Make a tagged object to schedule
-	char id[16];
-	sprintf(id, "%.3d", i);
-	SchedObj *obj = new SchedObj( id );
-	
-	// Put into the scheduler
-	MLE_ASSERT( NULL != theMleSchedulerPhase);
-	MleSchedulerItem *item = sched->insertFunc
-		(theMleSchedulerPhase, (MleSchedulerFunc)SchedObj::update, obj, id);
-	obj->setItem( item );
+    // Make a tagged object to schedule
+    char id[16];
+    sprintf(id, "%.3d", i);
+    SchedObj *obj = new SchedObj( id );
+    
+    // Put into the scheduler
+    MLE_ASSERT( NULL != theMleSchedulerPhase);
+    MleSchedulerItem *item = sched->insertFunc
+        (theMleSchedulerPhase, (MleSchedulerFunc)SchedObj::update, obj, id);
+    obj->setItem( item );
 
-	// log to stdout
-	fprintf(ML_DEBUG_OUTPUT_FILE, "Add  [%d] = %s\n", i; obj->getStr());
-	fflush(ML_DEBUG_OUTPUT_FILE);
-	//cout << "Add  [" << i << "] = " << obj << "\n" << flush;
+    // log to stdout
+    fprintf(ML_DEBUG_OUTPUT_FILE, "Add  [%d] = %s\n", i; obj->getStr());
+    fflush(ML_DEBUG_OUTPUT_FILE);
+    //cout << "Add  [" << i << "] = " << obj << "\n" << flush;
 
-	// Save for future deletion
-	(*obj->objArray)[obj->objArrayLen++] = (void*) obj;
+    // Save for future deletion
+    (*obj->objArray)[obj->objArrayLen++] = (void*) obj;
 }
 
 SchedObj*
 unscheduleObj( MleScheduler *sched, unsigned int i )
 {
-	MLE_ASSERT(i < SchedObj::objArrayLen);
-	MLE_ASSERT(SchedObj::objArrayLen >= 1);
+    MLE_ASSERT(i < SchedObj::objArrayLen);
+    MLE_ASSERT(SchedObj::objArrayLen >= 1);
 
-	// Find in the array and replace with NULL
-	SchedObj *obj = (SchedObj *) (*SchedObj::objArray)[i];
+    // Find in the array and replace with NULL
+    SchedObj *obj = (SchedObj *) (*SchedObj::objArray)[i];
 
-	if (NULL == obj) {
-		return NULL;
-	}
+    if (NULL == obj) {
+        return NULL;
+    }
 
-	// log to stdout
-	fprintf(ML_DEBUG_OUTPUT_FILE, "Del  [%d] = %s\n", i; obj->getStr());
-	fflush(ML_DEBUG_OUTPUT_FILE);
-	//cout << "Del  [" << i << "]   " << obj << "\n" << flush;
+    // log to stdout
+    fprintf(ML_DEBUG_OUTPUT_FILE, "Del  [%d] = %s\n", i; obj->getStr());
+    fflush(ML_DEBUG_OUTPUT_FILE);
+    //cout << "Del  [" << i << "]   " << obj << "\n" << flush;
 
-	(*SchedObj::objArray)[i] = NULL;
+    (*SchedObj::objArray)[i] = NULL;
 
-	// Now unschedule the update function and delete the object
-	MleSchedulerItem *item = obj->getItem();
-	sched->remove(item);
+    // Now unschedule the update function and delete the object
+    MleSchedulerItem *item = obj->getItem();
+    sched->remove(item);
 
-	return obj;
+    return obj;
 }
 
 int
 main(int argc, char *argv[]) 
 {
-	if (argc != 3) {
-		printf("Usage: %s <insert> <insert/remove>\n\
-	where <insert>         = number of initial schedule insertions\n\
-	      <insert/removes> = number of scheduler operations\n", argv[0]);
-		exit(1);
-	}
-	
-	printf("Exercising scheduler insertion/deletion.\n");
-	fflush(stdout);
+    if (argc != 3) {
+        printf("Usage: %s <insert> <insert/remove>\n\
+    where <insert>         = number of initial schedule insertions\n\
+          <insert/removes> = number of scheduler operations\n", argv[0]);
+        exit(1);
+    }
+    
+    printf("Exercising scheduler insertion/deletion.\n");
+    fflush(stdout);
 
-	int inserts = atoi(argv[1]);
-	int updates = atoi(argv[2]);
+    int inserts = atoi(argv[1]);
+    int updates = atoi(argv[2]);
 
-	if (inserts < 0) {
-		return 0;
-	}
+    if (inserts < 0) {
+        return 0;
+    }
 
-	if (updates < 0) {
-		return 0;
-	}
+    if (updates < 0) {
+        return 0;
+    }
 
-	// Idea is to insert a set of funcs, then to make a number
-	// of updates (insert/delete) to the scheduler.  
-	// To avoid leaking memory, we must keep track of the objects
-	// whose update() function we\'re scheduling, so that we can
-	// delete the object when we unschedule it.
+    // Idea is to insert a set of funcs, then to make a number
+    // of updates (insert/delete) to the scheduler.  
+    // To avoid leaking memory, we must keep track of the objects
+    // whose update() function we\'re scheduling, so that we can
+    // delete the object when we unschedule it.
 
-	SchedObj::objArray = new MlePtrArray(inserts + updates);
-	MleScheduler* theMleScheduler = new MleScheduler(6, inserts + updates);
-	theMleSchedulerPhase = theMleScheduler->insertPhase();
+    SchedObj::objArray = new MlePtrArray(inserts + updates);
+    MleScheduler* theMleScheduler = new MleScheduler(6, inserts + updates);
+    theMleSchedulerPhase = theMleScheduler->insertPhase();
 
-	unsigned int i;
-	for (i=0; i<inserts; i++) {
-		scheduleObj( theMleScheduler, i );
-	}
+    unsigned int i;
+    for (i=0; i<inserts; i++) {
+        scheduleObj( theMleScheduler, i );
+    }
 
-	// init seed for random number generation
-	// any old integral number will do in place of 1.
-	srand( 1 );
+    // init seed for random number generation
+    // any old integral number will do in place of 1.
+    srand( 1 );
 
-	// We know that rand() returns numbers in [0..2^15-1)
+    // We know that rand() returns numbers in [0..2^15-1)
 #define DRAND(j) (double)((j) / 32768.0)
 
-	for (i=0; i<updates; i++) {
+    for (i=0; i<updates; i++) {
 
-		int j = rand();
-		double d = DRAND(j);
-		if (d >= 0.5) {
-			// insert a new one
-			scheduleObj( theMleScheduler, i );
-		}
-		else {
-			// delete an old one
-			// We know that DRAND < 1/2, so multiply
-			// by 2 to get in the range [0..1) and then
-			// scale to size of objArray.
+        int j = rand();
+        double d = DRAND(j);
+        if (d >= 0.5) {
+            // insert a new one
+            scheduleObj( theMleScheduler, i );
+        }
+        else {
+            // delete an old one
+            // We know that DRAND < 1/2, so multiply
+            // by 2 to get in the range [0..1) and then
+            // scale to size of objArray.
 
-			unsigned int origIndex;
-			unsigned int index;
-			origIndex = index = SchedObj::objArrayLen * 2 * d;
+            unsigned int origIndex;
+            unsigned int index;
+            origIndex = index = SchedObj::objArrayLen * 2 * d;
 
-			SchedObj *obj;
-			while (NULL == (obj = unscheduleObj( theMleScheduler, index ))) {
-				index = ++index % SchedObj::objArrayLen;
-				// prevent infinite loop
-				if (index == origIndex) {
-					printf("Ran out of items to unschedule.  Increase number of in/dels.\n");
-					fflush(stdout);
-					return 1;
-				}
-			}
-			delete obj;
-		}
+            SchedObj *obj;
+            while (NULL == (obj = unscheduleObj( theMleScheduler, index ))) {
+                index = ++index % SchedObj::objArrayLen;
+                // prevent infinite loop
+                if (index == origIndex) {
+                    printf("Ran out of items to unschedule.  Increase number of in/dels.\n");
+                    fflush(stdout);
+                    return 1;
+                }
+            }
+            delete obj;
+        }
 
-	}
+    }
 
-	// Final cleanup
-	unsigned int n = SchedObj::objArrayLen;
-	for (i=0; i<n; i++) {
-		SchedObj *obj = unscheduleObj( theMleScheduler, i );
-		if (NULL != obj) {
-			delete obj;
-		}
-	}
-	
-	delete SchedObj::objArray;
-	SchedObj::objArray = NULL;
-	delete theMleScheduler;
+    // Final cleanup
+    unsigned int n = SchedObj::objArrayLen;
+    for (i=0; i<n; i++) {
+        SchedObj *obj = unscheduleObj( theMleScheduler, i );
+        if (NULL != obj) {
+            delete obj;
+        }
+    }
+    
+    delete SchedObj::objArray;
+    SchedObj::objArray = NULL;
+    delete theMleScheduler;
 
-	// 
-	printf("Test passed.\n");
-	fflush(stdout);
-	return 0;
+    // 
+    printf("Test passed.\n");
+    fflush(stdout);
+    return 0;
 }
-	
+    
 #endif /* UNITTEST_2 */
 
 /////////////////////////////////////////////////////////////////////////////
@@ -988,116 +988,116 @@ main(int argc, char *argv[])
 // Global pointer to the only phase we create
 MleSchedulerPhase* THE_MLE_PHASE = NULL;
 
-static char 		*theString = NULL;
-static MleSchedulerItem 	*theItemA = NULL;
-static MleSchedulerItem 	*theItemB = NULL;
-static MleSchedulerItem 	*theItemC = NULL;
-static MleScheduler 		*theMleScheduler = NULL;
+static char         *theString = NULL;
+static MleSchedulerItem     *theItemA = NULL;
+static MleSchedulerItem     *theItemB = NULL;
+static MleSchedulerItem     *theItemC = NULL;
+static MleScheduler         *theMleScheduler = NULL;
 
 void
 funcPrint(void *data)
 {
-	MLE_ASSERT( NULL != data );
+    MLE_ASSERT( NULL != data );
 
-	char *str = (char*) data;
-	printf("%s\n", str);
-	fflush(stdout);
+    char *str = (char*) data;
+    printf("%s\n", str);
+    fflush(stdout);
 }
 
 void
 funcDelete(void *)
 {
-	static MleSchedulerItem *item = NULL;
+    static MleSchedulerItem *item = NULL;
 
-	if (NULL != theString) {
-		printf("%s\n", theString);
-		delete theString;
-		theString = NULL;
-		printf("Removing A\n");
-		theMleScheduler->remove(theItemA);
-		printf("Removing C\n");
-		theMleScheduler->remove(theItemC);
-		printf("Inserting B2\n");
-		item = theMleScheduler->insertFunc
-			(THE_MLE_PHASE, (MleSchedulerFunc)funcDelete, theString, theString );
+    if (NULL != theString) {
+        printf("%s\n", theString);
+        delete theString;
+        theString = NULL;
+        printf("Removing A\n");
+        theMleScheduler->remove(theItemA);
+        printf("Removing C\n");
+        theMleScheduler->remove(theItemC);
+        printf("Inserting B2\n");
+        item = theMleScheduler->insertFunc
+            (THE_MLE_PHASE, (MleSchedulerFunc)funcDelete, theString, theString );
 
-	}
-	else {
-		// remove both copies of myself the second time around
-		printf("Removing B and B2\n");
-		theMleScheduler->remove(theString);
-	}
+    }
+    else {
+        // remove both copies of myself the second time around
+        printf("Removing B and B2\n");
+        theMleScheduler->remove(theString);
+    }
 }
 
 int
 main(int argc, char *argv[]) 
 {
-	if (argc != 1) {
-		printf("Usage: %s\n");
-		fflush(stdout);
-		exit(1);
-	}
-	
-	printf("Attempting to force scheduler to execute removed func.\n");
-	fflush(stdout);
+    if (argc != 1) {
+        printf("Usage: %s\n");
+        fflush(stdout);
+        exit(1);
+    }
+    
+    printf("Attempting to force scheduler to execute removed func.\n");
+    fflush(stdout);
 
-	// set up the global string
-	theString = strdup("This string to be deleted.");
+    // set up the global string
+    theString = strdup("This string to be deleted.");
 
-	// set up the scheduler
-	int nPhases = 1;
-	int nItems = 128;
-	theMleScheduler = new MleScheduler(nPhases, nItems);
-	THE_MLE_PHASE = theMleScheduler->insertPhase();
+    // set up the scheduler
+    int nPhases = 1;
+    int nItems = 128;
+    theMleScheduler = new MleScheduler(nPhases, nItems);
+    THE_MLE_PHASE = theMleScheduler->insertPhase();
 
-	// schedule the three items
-	theItemA = theMleScheduler->insertFunc
-		(THE_MLE_PHASE, (MleSchedulerFunc)funcPrint, "Item A", "Item A" );
-	theItemB = theMleScheduler->insertFunc
-		(THE_MLE_PHASE, (MleSchedulerFunc)funcDelete, theString, theString );
-	theItemC = theMleScheduler->insertFunc
-		(THE_MLE_PHASE, (MleSchedulerFunc)funcPrint, "Item C", "Item C" );
+    // schedule the three items
+    theItemA = theMleScheduler->insertFunc
+        (THE_MLE_PHASE, (MleSchedulerFunc)funcPrint, "Item A", "Item A" );
+    theItemB = theMleScheduler->insertFunc
+        (THE_MLE_PHASE, (MleSchedulerFunc)funcDelete, theString, theString );
+    theItemC = theMleScheduler->insertFunc
+        (THE_MLE_PHASE, (MleSchedulerFunc)funcPrint, "Item C", "Item C" );
 
-	// Should fail on third callback.
-	printf("Executing 1 with {A, B, C}.\n");
-	fflush(stdout);
-	theMleScheduler->go(THE_MLE_PHASE);
-	theMleScheduler->go(THE_MLE_PHASE);
-	delete theMleScheduler;
+    // Should fail on third callback.
+    printf("Executing 1 with {A, B, C}.\n");
+    fflush(stdout);
+    theMleScheduler->go(THE_MLE_PHASE);
+    theMleScheduler->go(THE_MLE_PHASE);
+    delete theMleScheduler;
 
-	theMleScheduler = new MleScheduler(nPhases, nItems);
-	THE_MLE_PHASE = theMleScheduler->insertPhase();
+    theMleScheduler = new MleScheduler(nPhases, nItems);
+    THE_MLE_PHASE = theMleScheduler->insertPhase();
 
-	printf("Executing 2 with {B, B}.\n");
-	fflush(stdout);
-	theItemB = theMleScheduler->insertFunc
-	       (THE_MLE_PHASE, (MleSchedulerFunc)funcDelete, theString, theString );
-	theMleScheduler->go(THE_MLE_PHASE);
-	delete theMleScheduler;
+    printf("Executing 2 with {B, B}.\n");
+    fflush(stdout);
+    theItemB = theMleScheduler->insertFunc
+           (THE_MLE_PHASE, (MleSchedulerFunc)funcDelete, theString, theString );
+    theMleScheduler->go(THE_MLE_PHASE);
+    delete theMleScheduler;
 
-	// Should succeed with no functions executed if we get this far.
-	theMleScheduler = new MleScheduler(nPhases, nItems);
-	THE_MLE_PHASE = theMleScheduler->insertPhase();
-	printf("Executing 3 with {}.\n");
-	fflush(stdout);
-	theMleScheduler->go(THE_MLE_PHASE);
-	delete theMleScheduler;
+    // Should succeed with no functions executed if we get this far.
+    theMleScheduler = new MleScheduler(nPhases, nItems);
+    THE_MLE_PHASE = theMleScheduler->insertPhase();
+    printf("Executing 3 with {}.\n");
+    fflush(stdout);
+    theMleScheduler->go(THE_MLE_PHASE);
+    delete theMleScheduler;
 
-	// Cleanup
-	theMleScheduler->removePhase(THE_MLE_PHASE);
-	delete THE_MLE_PHASE;
+    // Cleanup
+    theMleScheduler->removePhase(THE_MLE_PHASE);
+    delete THE_MLE_PHASE;
 
-	if (theString) delete theString;
-	delete theItemA;
-	delete theItemB;
-	delete theItemC;
-	delete theMleScheduler;
+    if (theString) delete theString;
+    delete theItemA;
+    delete theItemB;
+    delete theItemC;
+    delete theMleScheduler;
 
-	printf("Test passed.\n");
-	fflush(stdout);
-	return 0;
+    printf("Test passed.\n");
+    fflush(stdout);
+    return 0;
 }
-	
+    
 #endif /* UNITTEST_3 */
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1125,7 +1125,7 @@ void deleteFn(void* parm)
     printf("Test String D MleScheduler.\n");
     if (deleteArg != NULL)
     {
-	((MleScheduler*)parm)->remove(deleteArg);
+    ((MleScheduler*)parm)->remove(deleteArg);
     }
 }
 
@@ -1136,7 +1136,7 @@ void deleteTagFn(void* parm)
     printf("Test String T MleScheduler.\n");
     if (deleteTagArg != NULL)
     {
-	((MleScheduler*)parm)->remove(deleteTagArg);
+    ((MleScheduler*)parm)->remove(deleteTagArg);
     }
 }
 
@@ -1211,7 +1211,7 @@ main()
     theMleScheduler->remove(theString4);
 
     for (int run=0; run<2; run++) {
-	    theMleScheduler->goAll();
+        theMleScheduler->goAll();
     }
 
     deleteTagArg = theString5;
@@ -1232,24 +1232,24 @@ main()
     MleSchedulerIterator iter(theMleScheduler);
     MleSchedulerPhase *p;
     for (p = iter.firstPhase();
-	 NULL != p;
-	 p = iter.nextPhase()) 
+     NULL != p;
+     p = iter.nextPhase()) 
     {
-	    printf(" Phase 0x%x\n", p);
+        printf(" Phase 0x%x\n", p);
     }
 
     printf(" Removing delegate and stage phases:\n\t0x%x\n\t0x%x\n\n",
-	   PHASE_DELEGATE, 
-	   PHASE_STAGE );
+       PHASE_DELEGATE, 
+       PHASE_STAGE );
 
     theMleScheduler->removePhase(PHASE_DELEGATE);
     theMleScheduler->removePhase(PHASE_STAGE);
 
     for (p = iter.firstPhase();
-	 NULL != p;
-	 p = iter.nextPhase()) 
+     NULL != p;
+     p = iter.nextPhase()) 
     {
-	    printf(" Phase 0x%x\n", p);
+        printf(" Phase 0x%x\n", p);
     }
 
     theMleScheduler->removePhase(p0);
@@ -1262,7 +1262,7 @@ main()
     delete theMleScheduler;
 
     return 0;
-}	
+}    
 #else /* MLE_DEBUG */
 
 main ()

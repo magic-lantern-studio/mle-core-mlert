@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,9 +57,9 @@
 #ifdef MLE_DIGITAL_PLAYPRINT
 
 // Include system header files.
-#ifdef WIN32
+#ifdef _WINDOWS
 #include <string.h>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 // Include Magic Lantern header files.
 #include "mle/mlFileio.h"
@@ -84,30 +84,30 @@
 MleGroup::MleGroup(int initSize) : MlePtrContainer<MleActor*>(initSize)
 {
 #ifdef MLE_DIGITAL_WORKPRINT
-	m_name = NULL;
-	m_groupClass = NULL;
+    m_name = NULL;
+    m_groupClass = NULL;
 #endif /* MLE_DIGITAL_WORKPRINT */
 }
 
 MleGroup::MleGroup(void) : MlePtrContainer<MleActor*>(8)
 {
 #ifdef MLE_DIGITAL_WORKPRINT
-	m_name = NULL;
-	m_groupClass = NULL;
+    m_name = NULL;
+    m_groupClass = NULL;
 #endif /* MLE_DIGITAL_WORKPRINT */
 }
 
 MleGroup::~MleGroup(void)
 {
-	// Delete all of our actors
-	for (int i = 0; i < getSize(); i++)
-	{
-		delete (*this)[i];
-	}
+    // Delete all of our actors
+    for (int i = 0; i < getSize(); i++)
+    {
+        delete (*this)[i];
+    }
 
 #ifdef MLE_DIGITAL_WORKPRINT
-	this->unregisterInstance();
-	if (m_name) mlFree(m_name);
+    this->unregisterInstance();
+    if (m_name) mlFree(m_name);
 #endif /* MLE_DIGITAL_WORKPRINT */
 }
   
@@ -119,14 +119,14 @@ MleGroup::init(void)
 void *
 MleGroup::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleGroup::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 MleGroup *
@@ -154,13 +154,13 @@ MleGroup::initClass(void)
     new MleGroupClass("MleGroup",_mlCreateMleGroup,"");
 }
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 MleDwpStrKeyDict MleGroup::g_instanceRegistry;
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
@@ -169,7 +169,7 @@ MleDwpStrKeyDict MleGroup::g_instanceRegistry;
 void
 MleGroup::registerInstance(const char* name)
 {
-#ifdef WIN32
+#ifdef _WINDOWS
    this->m_name = _strdup(name);
 #else
    this->m_name = strdup(name);
@@ -186,10 +186,10 @@ MleGroup::unregisterInstance()
     // or we could put a removeValue in the dict class
 
     for (MleDwpDictIter iter(g_instanceRegistry); iter.getValue(); iter.next()) {
-		if ((MleGroup*) iter.getValue() == this) {
-			g_instanceRegistry.remove(iter.getKey());
-			break;
-		}
+        if ((MleGroup*) iter.getValue() == this) {
+            g_instanceRegistry.remove(iter.getKey());
+            break;
+        }
     }
 }
 
@@ -199,14 +199,14 @@ MleGroup::unregisterInstance()
 const MleGroupClass *
 MleGroup::getClass(void)
 {
-	// If there is a cached value, return it.
-	if ( m_groupClass )
-		return m_groupClass;
-	
-	// Look it up in the registry.
-	m_groupClass = MleGroupClass::find(getTypeName());
+    // If there is a cached value, return it.
+    if ( m_groupClass )
+        return m_groupClass;
+    
+    // Look it up in the registry.
+    m_groupClass = MleGroupClass::find(getTypeName());
 
-	return m_groupClass;
+    return m_groupClass;
 }
 
 // Load the group from the relevant item in the DWP.
@@ -222,18 +222,18 @@ extern MleGroup* mlLoadGroup(const char* id);
 MleGroup *
 MleGroup::load(MleDwpGroup* wpGroup)
 {
-	if ( wpGroup == NULL ) {
-		printf("mlLoadGroup: Cant find group in workprint.\n");
-		return NULL;
-	}
+    if ( wpGroup == NULL ) {
+        printf("mlLoadGroup: Cant find group in workprint.\n");
+        return NULL;
+    }
 
-	return mlLoadGroup( wpGroup );
+    return mlLoadGroup( wpGroup );
 }
 
 MleGroup *
 MleGroup::load(const char* id)
 {
-	return mlLoadGroup( id );
+    return mlLoadGroup( id );
 }
 
 #endif /* MLE_DIGITAL_WORKPRINT */
@@ -246,7 +246,7 @@ extern MleGroup* mlLoadGroup(const int indexToPpTOC);
 MleGroup*
 MleGroup::load(const int indexToPpTOC)
 {
-	return mlLoadGroup( indexToPpTOC );
+    return mlLoadGroup( indexToPpTOC );
 }
 
 #endif /* MLE_DIGITAL_PLAYPRINT */

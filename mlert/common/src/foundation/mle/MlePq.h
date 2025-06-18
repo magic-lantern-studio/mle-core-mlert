@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -44,9 +44,9 @@
 
 // Include system header files.
 //#include <stdlib.h>
-#ifdef WIN32
+#ifdef _WINDOWS
 #include <climits>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 // Include Magic Lantern header files.
 #include "mle/mlTypes.h"
@@ -253,18 +253,18 @@ class MLE_RUNTIME_API MlePQ
      */
     void operator =(MlePQ &queue);
 
-	/**
-	 * Override operator new.
-	 *
-	 * @param tSize The size, in bytes, to allocate.
-	 */
-	void* operator new(size_t tSize);
+    /**
+     * Override operator new.
+     *
+     * @param tSize The size, in bytes, to allocate.
+     */
+    void* operator new(size_t tSize);
 
-	/**
-	 * Override operator delete.
-	 *
-	 * @param p A pointer to the memory to delete.
-	 */
+    /**
+     * Override operator delete.
+     *
+     * @param p A pointer to the memory to delete.
+     */
     void  operator delete(void *p);
 
   protected:
@@ -296,12 +296,12 @@ class MLE_RUNTIME_API MlePQ
 
 // Define some useful macros.
 
-#ifdef WIN32
+#ifdef _WINDOWS
 //#define MAXINT 32767
 #if !defined(MAXINT)
     #define MAXINT INT_MAX
 #endif
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 #if defined(__linux__) || defined(__APPLE__)
 #define MAXINT INT_MAX
 #endif /* __linux__ */

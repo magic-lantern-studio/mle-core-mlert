@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -42,9 +42,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef WIN32
+#ifdef _WINDOWS
 #include <memory.h>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 // Include Magic Lantern header files.
 #include "mle/mlAssert.h"

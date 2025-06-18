@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@
 #ifndef __MLE_KEYMAP_H_
 #define __MLE_KEYMAP_H_
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 /******************* Win32 Key Map ********************/
 
 // Mouse buttons.
@@ -159,30 +159,30 @@
 #define MLE_KEY_Divide         0x6F
 
 // Function keys (up to 24 defined) 
-#define MLE_KEY_F1				0x70
-#define MLE_KEY_F2				0x71
-#define MLE_KEY_F3				0x72
-#define MLE_KEY_F4				0x73
-#define MLE_KEY_F5				0x74
-#define MLE_KEY_F6				0x75
-#define MLE_KEY_F7				0x76
-#define MLE_KEY_F8				0x77
-#define MLE_KEY_F9				0x78
-#define MLE_KEY_F10				0x79
-#define MLE_KEY_F11				0x7A
-#define MLE_KEY_F12				0x7B
-#define MLE_KEY_F13				0x7C
-#define MLE_KEY_F14				0x7D
-#define MLE_KEY_F15				0x7E
-#define MLE_KEY_F16				0x7F
-#define MLE_KEY_F17				0x80
-#define MLE_KEY_F18				0x81
-#define MLE_KEY_F19				0x82
-#define MLE_KEY_F20				0x83
-#define MLE_KEY_F21				0x84
-#define MLE_KEY_F22				0x85
-#define MLE_KEY_F23				0x86
-#define MLE_KEY_F24				0x87
+#define MLE_KEY_F1                0x70
+#define MLE_KEY_F2                0x71
+#define MLE_KEY_F3                0x72
+#define MLE_KEY_F4                0x73
+#define MLE_KEY_F5                0x74
+#define MLE_KEY_F6                0x75
+#define MLE_KEY_F7                0x76
+#define MLE_KEY_F8                0x77
+#define MLE_KEY_F9                0x78
+#define MLE_KEY_F10                0x79
+#define MLE_KEY_F11                0x7A
+#define MLE_KEY_F12                0x7B
+#define MLE_KEY_F13                0x7C
+#define MLE_KEY_F14                0x7D
+#define MLE_KEY_F15                0x7E
+#define MLE_KEY_F16                0x7F
+#define MLE_KEY_F17                0x80
+#define MLE_KEY_F18                0x81
+#define MLE_KEY_F19                0x82
+#define MLE_KEY_F20                0x83
+#define MLE_KEY_F21                0x84
+#define MLE_KEY_F22                0x85
+#define MLE_KEY_F23                0x86
+#define MLE_KEY_F24                0x87
 
 // Locks.
 #define MLE_KEY_Num_Lock       0x90
@@ -198,43 +198,43 @@
 #define MLE_KEY_Control_L      0xA2
 #define MLE_KEY_Control_R      0xA3
 
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 #if defined(__linux__) || defined(__APPLE__)
 #if defined(MLE_XT)
 /******************* Xt Key Map ********************/
 
 // Mouse buttons.
-#define	MLE_KEY_Pointer_Button1			0xFEE9 /* left button */
-#define	MLE_KEY_Pointer_Button2			0xFEEA /* middle button */
-#define	MLE_KEY_Pointer_Button3			0xFEEB /* right button */
+#define    MLE_KEY_Pointer_Button1            0xFEE9 /* left button */
+#define    MLE_KEY_Pointer_Button2            0xFEEA /* middle button */
+#define    MLE_KEY_Pointer_Button3            0xFEEB /* right button */
 
 // Miscellaneous.
-#define MLE_KEY_Cancel		0xFF69	/* cancel, stop, abort, exit */
-#define MLE_KEY_BackSpace	0xFF08	/* back space, back char */
-#define MLE_KEY_Tab			0xFF09
-#define MLE_KEY_Clear		0xFF0B
-#define MLE_KEY_Return		0xFF0D	/* return, enter */
+#define MLE_KEY_Cancel        0xFF69    /* cancel, stop, abort, exit */
+#define MLE_KEY_BackSpace    0xFF08    /* back space, back char */
+#define MLE_KEY_Tab            0xFF09
+#define MLE_KEY_Clear        0xFF0B
+#define MLE_KEY_Return        0xFF0D    /* return, enter */
 #define MLE_KEY_Shift       0x0010
 #define MLE_KEY_Control     0x0011
-#define MLE_KEY_Menu		0xFF67
-#define MLE_KEY_Pause		0xFF13	/* pause, hold */
-#define MLE_KEY_Escape		0xFF1B
+#define MLE_KEY_Menu        0xFF67
+#define MLE_KEY_Pause        0xFF13    /* pause, hold */
+#define MLE_KEY_Escape        0xFF1B
 #define MLE_KEY_Space       0x020
-#define MLE_KEY_Prior		0xFF55	/* prior, previous */
-#define MLE_KEY_Next		0xFF56	/* next */
-#define MLE_KEY_End			0xFF57	/* EOL */
-#define MLE_KEY_Home		0xFF50
-#define MLE_KEY_Left		0xFF51	/* move left, left arrow */
-#define MLE_KEY_Up			0xFF52	/* move up, up arrow */
-#define MLE_KEY_Right		0xFF53	/* move right, right arrow */
-#define MLE_KEY_Down		0xFF54	/* move down, down arrow */
-#define MLE_KEY_Select		0xFF60	/* select, mark */
-#define MLE_KEY_Print		0xFF61
-#define MLE_KEY_Execute		0xFF62	/* execute, run, do */
-#define MLE_KEY_Insert		0xFF63	/* insert, insert here */
-#define MLE_KEY_Delete		0xFFFF	/* delete, rubout */
-#define MLE_KEY_Help		0xFF6A	/* help */
+#define MLE_KEY_Prior        0xFF55    /* prior, previous */
+#define MLE_KEY_Next        0xFF56    /* next */
+#define MLE_KEY_End            0xFF57    /* EOL */
+#define MLE_KEY_Home        0xFF50
+#define MLE_KEY_Left        0xFF51    /* move left, left arrow */
+#define MLE_KEY_Up            0xFF52    /* move up, up arrow */
+#define MLE_KEY_Right        0xFF53    /* move right, right arrow */
+#define MLE_KEY_Down        0xFF54    /* move down, down arrow */
+#define MLE_KEY_Select        0xFF60    /* select, mark */
+#define MLE_KEY_Print        0xFF61
+#define MLE_KEY_Execute        0xFF62    /* execute, run, do */
+#define MLE_KEY_Insert        0xFF63    /* insert, insert here */
+#define MLE_KEY_Delete        0xFFFF    /* delete, rubout */
+#define MLE_KEY_Help        0xFF6A    /* help */
 
 // Standard alphanumeric character set.
 #define MLE_KEY_0           0x030
@@ -301,62 +301,62 @@
 #define MLE_KEY_z           0x07a
 
 // Keypad.
-#define MLE_KEY_KP_0		0xFFB0
-#define MLE_KEY_KP_1		0xFFB1
-#define MLE_KEY_KP_2		0xFFB2
-#define MLE_KEY_KP_3		0xFFB3
-#define MLE_KEY_KP_4		0xFFB4
-#define MLE_KEY_KP_5		0xFFB5
-#define MLE_KEY_KP_6		0xFFB6
-#define MLE_KEY_KP_7		0xFFB7
-#define MLE_KEY_KP_8		0xFFB8
-#define MLE_KEY_KP_9		0xFFB9
+#define MLE_KEY_KP_0        0xFFB0
+#define MLE_KEY_KP_1        0xFFB1
+#define MLE_KEY_KP_2        0xFFB2
+#define MLE_KEY_KP_3        0xFFB3
+#define MLE_KEY_KP_4        0xFFB4
+#define MLE_KEY_KP_5        0xFFB5
+#define MLE_KEY_KP_6        0xFFB6
+#define MLE_KEY_KP_7        0xFFB7
+#define MLE_KEY_KP_8        0xFFB8
+#define MLE_KEY_KP_9        0xFFB9
 #define MLE_KEY_Multiply    0x0d7
-#define MLE_KEY_Add			0xFFAB
-#define MLE_KEY_Separator	0xFFAC	/* separator, often comma */
-#define MLE_KEY_Subtract	0xFFAD
-#define MLE_KEY_Decimal   	0xFFAE
-#define MLE_KEY_Divide	    0xFFAF
+#define MLE_KEY_Add         0xFFAB
+#define MLE_KEY_Separator   0xFFAC    /* separator, often comma */
+#define MLE_KEY_Subtract    0xFFAD
+#define MLE_KEY_Decimal     0xFFAE
+#define MLE_KEY_Divide      0xFFAF
 
 // Function keys (up to 24 defined).
-#define MLE_KEY_F1			0xFFBE
-#define MLE_KEY_F2			0xFFBF
-#define MLE_KEY_F3			0xFFC0
-#define MLE_KEY_F4			0xFFC1
-#define MLE_KEY_F5			0xFFC2
-#define MLE_KEY_F6			0xFFC3
-#define MLE_KEY_F7			0xFFC4
-#define MLE_KEY_F8			0xFFC5
-#define MLE_KEY_F9			0xFFC6
-#define MLE_KEY_F10			0xFFC7
-#define MLE_KEY_F11			0xFFC8
+#define MLE_KEY_F1            0xFFBE
+#define MLE_KEY_F2            0xFFBF
+#define MLE_KEY_F3            0xFFC0
+#define MLE_KEY_F4            0xFFC1
+#define MLE_KEY_F5            0xFFC2
+#define MLE_KEY_F6            0xFFC3
+#define MLE_KEY_F7            0xFFC4
+#define MLE_KEY_F8            0xFFC5
+#define MLE_KEY_F9            0xFFC6
+#define MLE_KEY_F10            0xFFC7
+#define MLE_KEY_F11            0xFFC8
 #define MLE_KEY_F12         0xFFC9
-#define MLE_KEY_F13			0xFFCA
-#define MLE_KEY_F14			0xFFCB
-#define MLE_KEY_F15			0xFFCC
-#define MLE_KEY_F16			0xFFCD
-#define MLE_KEY_F17			0xFFCE
-#define MLE_KEY_F18			0xFFCF
-#define MLE_KEY_F19			0xFFD0
-#define MLE_KEY_F20			0xFFD1
-#define MLE_KEY_F21			0xFFD2
-#define MLE_KEY_F22			0xFFD3
-#define MLE_KEY_F23			0xFFD4
-#define MLE_KEY_F24			0xFFD5
+#define MLE_KEY_F13            0xFFCA
+#define MLE_KEY_F14            0xFFCB
+#define MLE_KEY_F15            0xFFCC
+#define MLE_KEY_F16            0xFFCD
+#define MLE_KEY_F17            0xFFCE
+#define MLE_KEY_F18            0xFFCF
+#define MLE_KEY_F19            0xFFD0
+#define MLE_KEY_F20            0xFFD1
+#define MLE_KEY_F21            0xFFD2
+#define MLE_KEY_F22            0xFFD3
+#define MLE_KEY_F23            0xFFD4
+#define MLE_KEY_F24            0xFFD5
 
 // Locks.
-#define MLE_KEY_Num_Lock	0xFF7F
-#define MLE_KEY_Scroll_Lock	0xFF14
+#define MLE_KEY_Num_Lock    0xFF7F
+#define MLE_KEY_Scroll_Lock    0xFF14
 
 /*
  * Used only as parameters to a future MleKeyboardSynch class which would
  * use direct, synchronous input from the keyboard. MleKeyboardPolled
  * and MleKeyboardEvent are not sensitive to these key symbols.
  */
-#define MLE_KEY_Shift_L		0xFFE1	/* left shift */
-#define MLE_KEY_Shift_R		0xFFE2	/* right shift */
-#define MLE_KEY_Control_L	0xFFE3	/* left control */
-#define MLE_KEY_Control_R	0xFFE4	/* right control */
+#define MLE_KEY_Shift_L        0xFFE1    /* left shift */
+#define MLE_KEY_Shift_R        0xFFE2    /* right shift */
+#define MLE_KEY_Control_L      0xFFE3    /* left control */
+#define MLE_KEY_Control_R      0xFFE4    /* right control */
 
 #endif /* MLE_XT */
 #if defined(MLE_QT)
@@ -367,31 +367,31 @@
 #define MLE_KEY_Pointer_Button3 0x00000002  /* right button */
 
 // Miscellaneous.
-#define MLE_KEY_Cancel		0xFF69	// 0x01000063
-#define MLE_KEY_BackSpace	0xFF08	// 0x01000003
-#define MLE_KEY_Tab			0xFF09  // 0x01000001
-#define MLE_KEY_Clear		0xFF0B  // 0x0100000b
-#define MLE_KEY_Return		0xFF0D	// 0x01000004
-#define MLE_KEY_Shift       0x0010  // 0x01000020
-#define MLE_KEY_Control     0x0011  // 0x01000021
-#define MLE_KEY_Menu		0xFF67  // 0x01000055
-#define MLE_KEY_Pause		0xFF13	// 0x01000008
-#define MLE_KEY_Escape		0xFF1B  // 0x01000000
-#define MLE_KEY_Space       0x20
-#define MLE_KEY_Prior		0xFF55	// 0x01000017
-#define MLE_KEY_Next		0xFF56	// 0x01000016
-#define MLE_KEY_End			0xFF57	// 0x01000011
-#define MLE_KEY_Home		0xFF50  // 0x01000010
-#define MLE_KEY_Left		0xFF51	// 0x01000012
-#define MLE_KEY_Up			0xFF52	// 0x01000013
-#define MLE_KEY_Right		0xFF53	// 0x01000014
-#define MLE_KEY_Down		0xFF54	// 0x01000015
-#define MLE_KEY_Select		0xFF60	// 0x01010000
-#define MLE_KEY_Print		0xFF61  // 0x01000009
-#define MLE_KEY_Execute		0xFF62	// 0x01020003
-#define MLE_KEY_Insert		0xFF63	// 0x01000006
-#define MLE_KEY_Delete		0xFFFF	// 0x01000007
-#define MLE_KEY_Help		0xFF6A	// 0x01000058
+#define MLE_KEY_Cancel         0xFF69    // 0x01000063
+#define MLE_KEY_BackSpace      0xFF08    // 0x01000003
+#define MLE_KEY_Tab            0xFF09    // 0x01000001
+#define MLE_KEY_Clear          0xFF0B    // 0x0100000b
+#define MLE_KEY_Return         0xFF0D    // 0x01000004
+#define MLE_KEY_Shift          0x0010    // 0x01000020
+#define MLE_KEY_Control        0x0011    // 0x01000021
+#define MLE_KEY_Menu           0xFF67    // 0x01000055
+#define MLE_KEY_Pause          0xFF13    // 0x01000008
+#define MLE_KEY_Escape         0xFF1B    // 0x01000000
+#define MLE_KEY_Space          0x20
+#define MLE_KEY_Prior          0xFF55    // 0x01000017
+#define MLE_KEY_Next           0xFF56    // 0x01000016
+#define MLE_KEY_End            0xFF57    // 0x01000011
+#define MLE_KEY_Home           0xFF50    // 0x01000010
+#define MLE_KEY_Left           0xFF51    // 0x01000012
+#define MLE_KEY_Up             0xFF52    // 0x01000013
+#define MLE_KEY_Right          0xFF53    // 0x01000014
+#define MLE_KEY_Down           0xFF54    // 0x01000015
+#define MLE_KEY_Select         0xFF60    // 0x01010000
+#define MLE_KEY_Print          0xFF61    // 0x01000009
+#define MLE_KEY_Execute        0xFF62    // 0x01020003
+#define MLE_KEY_Insert         0xFF63    // 0x01000006
+#define MLE_KEY_Delete         0xFFFF    // 0x01000007
+#define MLE_KEY_Help           0xFF6A    // 0x01000058
 
 // Standard alphanumeric character set.
 #define MLE_KEY_0           0x30
@@ -458,62 +458,62 @@
 #define MLE_KEY_z           0x7a  /* No direct mapping to Qt Key namespace. */
 
 // Keypad.
-#define MLE_KEY_KP_0		0x30
-#define MLE_KEY_KP_1		0x31
-#define MLE_KEY_KP_2		0x32
-#define MLE_KEY_KP_3		0x33
-#define MLE_KEY_KP_4		0x34
-#define MLE_KEY_KP_5		0x35
-#define MLE_KEY_KP_6		0x36
-#define MLE_KEY_KP_7		0x37
-#define MLE_KEY_KP_8		0x38
-#define MLE_KEY_KP_9		0x39
+#define MLE_KEY_KP_0        0x30
+#define MLE_KEY_KP_1        0x31
+#define MLE_KEY_KP_2        0x32
+#define MLE_KEY_KP_3        0x33
+#define MLE_KEY_KP_4        0x34
+#define MLE_KEY_KP_5        0x35
+#define MLE_KEY_KP_6        0x36
+#define MLE_KEY_KP_7        0x37
+#define MLE_KEY_KP_8        0x38
+#define MLE_KEY_KP_9        0x39
 #define MLE_KEY_Multiply    0x2a  /* asterix */
-#define MLE_KEY_Add			0x2b  /* plus */
-#define MLE_KEY_Separator	0x2c  /* separator, often comma */
-#define MLE_KEY_Subtract	0x2d  /* minus */
-#define MLE_KEY_Decimal   	0x2e  /* period */
-#define MLE_KEY_Divide	    0x2f  /* slash */
+#define MLE_KEY_Add         0x2b  /* plus */
+#define MLE_KEY_Separator   0x2c  /* separator, often comma */
+#define MLE_KEY_Subtract    0x2d  /* minus */
+#define MLE_KEY_Decimal     0x2e  /* period */
+#define MLE_KEY_Divide      0x2f  /* slash */
 
 // Function keys (up to 24 defined).
-#define MLE_KEY_F1			0xFFBE  // 0x01000030
-#define MLE_KEY_F2			0xFFBF  // 0x01000031
-#define MLE_KEY_F3			0xFFC0  // 0x01000032
-#define MLE_KEY_F4			0xFFC1  // 0x01000033
-#define MLE_KEY_F5			0xFFC2  // 0x01000034
-#define MLE_KEY_F6			0xFFC3  // 0x01000035
-#define MLE_KEY_F7			0xFFC4  // 0x01000036
-#define MLE_KEY_F8			0xFFC5  // 0x01000037
-#define MLE_KEY_F9			0xFFC6  // 0x01000038
-#define MLE_KEY_F10			0xFFC7  // 0x01000039
-#define MLE_KEY_F11			0xFFC8  // 0x0100003a
-#define MLE_KEY_F12         0xFFC9  // 0x0100003b
-#define MLE_KEY_F13			0xFFCA  // 0x0100003c
-#define MLE_KEY_F14			0xFFCB  // 0x0100003d
-#define MLE_KEY_F15			0xFFCC  // 0x0100003e
-#define MLE_KEY_F16			0xFFCD  // 0x01000034
-#define MLE_KEY_F17			0xFFCE  // 0x01000040
-#define MLE_KEY_F18			0xFFCF  // 0x01000041
-#define MLE_KEY_F19			0xFFD0  // 0x01000042
-#define MLE_KEY_F20			0xFFD1  // 0x01000043
-#define MLE_KEY_F21			0xFFD2  // 0x01000044
-#define MLE_KEY_F22			0xFFD3  // 0x01000045
-#define MLE_KEY_F23			0xFFD4  // 0x01000046
-#define MLE_KEY_F24			0xFFD5  // 0x01000047
+#define MLE_KEY_F1             0xFFBE  // 0x01000030
+#define MLE_KEY_F2             0xFFBF  // 0x01000031
+#define MLE_KEY_F3             0xFFC0  // 0x01000032
+#define MLE_KEY_F4             0xFFC1  // 0x01000033
+#define MLE_KEY_F5             0xFFC2  // 0x01000034
+#define MLE_KEY_F6             0xFFC3  // 0x01000035
+#define MLE_KEY_F7             0xFFC4  // 0x01000036
+#define MLE_KEY_F8             0xFFC5  // 0x01000037
+#define MLE_KEY_F9             0xFFC6  // 0x01000038
+#define MLE_KEY_F10            0xFFC7  // 0x01000039
+#define MLE_KEY_F11            0xFFC8  // 0x0100003a
+#define MLE_KEY_F12            0xFFC9  // 0x0100003b
+#define MLE_KEY_F13            0xFFCA  // 0x0100003c
+#define MLE_KEY_F14            0xFFCB  // 0x0100003d
+#define MLE_KEY_F15            0xFFCC  // 0x0100003e
+#define MLE_KEY_F16            0xFFCD  // 0x01000034
+#define MLE_KEY_F17            0xFFCE  // 0x01000040
+#define MLE_KEY_F18            0xFFCF  // 0x01000041
+#define MLE_KEY_F19            0xFFD0  // 0x01000042
+#define MLE_KEY_F20            0xFFD1  // 0x01000043
+#define MLE_KEY_F21            0xFFD2  // 0x01000044
+#define MLE_KEY_F22            0xFFD3  // 0x01000045
+#define MLE_KEY_F23            0xFFD4  // 0x01000046
+#define MLE_KEY_F24            0xFFD5  // 0x01000047
 
 // Locks.
-#define MLE_KEY_Num_Lock	0xFF7F  // 0x01000025
-#define MLE_KEY_Scroll_Lock	0xFF14  // 0x01000026
+#define MLE_KEY_Num_Lock       0xFF7F  // 0x01000025
+#define MLE_KEY_Scroll_Lock    0xFF14  // 0x01000026
 
 /*
  * Used only as parameters to a future MleKeyboardSynch class which would
  * use direct, synchronous input from the keyboard. MleKeyboardPolled
  * and MleKeyboardEvent are not sensitive to these key symbols.
  */
-#define MLE_KEY_Shift_L		0x01000020	/* left shift */
-#define MLE_KEY_Shift_R		0x01000020	/* right shift */
-#define MLE_KEY_Control_L	0x01000021	/* left control */
-#define MLE_KEY_Control_R	0x01000021	/* right control */
+#define MLE_KEY_Shift_L        0x01000020    /* left shift */
+#define MLE_KEY_Shift_R        0x01000020    /* right shift */
+#define MLE_KEY_Control_L      0x01000021    /* left control */
+#define MLE_KEY_Control_R      0x01000021    /* right control */
 
 #endif /* MLE_QT */
 #endif /* __linux__ */

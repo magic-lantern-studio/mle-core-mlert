@@ -42,10 +42,10 @@
 #define __MLE_IV_PLATFORMDATA_H_
 
 // Include system header files.
-#if defined(WIN32)
-#define WIN32_LEAN_AND_MEAN
+#if defined(_WINDOWS)
+#define _WINDOWS_LEAN_AND_MEAN
 #include <windows.h>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 #if defined(__linux__) || defined(__APPLE__)
 #if defined(MLE_QT)
 #include <QWidget>
@@ -87,7 +87,7 @@ class MleIvPlatformData : public MlePlatformData
     XtAppContext m_appContext; /** Application context for player window. */
 #endif
 #endif
-#if defined(WIN32)
+#if defined(_WINDOWS)
     HWND m_widget;                    /** Windows widget for player window's render area. */
 #endif
     int m_focusEventHandlerRefCount;  /** Input event mgmt: Count of managers relying on focus events. */

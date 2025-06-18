@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -42,9 +42,9 @@
 #define __MLE_EVENTDISPATCHER_H_
 
 // include system header files
-#ifdef WIN32
+#ifdef _WINDOWS
 #include <windows.h>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 // Include Magic Lantern header files.
 #include "mle/mlMalloc.h"
@@ -266,7 +266,7 @@ class MLE_RUNTIME_API MleEventDispatcher
     unsigned int _findEventCBNode(MleEventNode *node,MleCallbackId id);
 };
 
-#ifdef WIN32
+#ifdef _WINDOWS
 // Define Win32 event callData.
 typedef struct _Win32CallData {
     HWND hwnd;                      // window instance handle
@@ -274,7 +274,7 @@ typedef struct _Win32CallData {
     WPARAM wParam;                  // message parameter
     LPARAM lParam;                  // message parameter
 } Win32CallData;
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 
 // Define event dispatcher flags.
@@ -291,9 +291,9 @@ typedef struct _Win32CallData {
 #define MLE_EVMGR_ENABLED    0x00000002  /**< Event callback is enabled. */
 
 
-#ifdef WIN32
+#ifdef _WINDOWS
 LRESULT CALLBACK MleWndProc(HWND hwnd,UINT uMessage,WPARAM wparam,LPARAM lparam);
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 
 #endif /* __MLE_EVENTDISPATCHER_H_ */

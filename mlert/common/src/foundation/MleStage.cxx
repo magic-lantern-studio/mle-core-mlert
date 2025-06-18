@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -41,9 +41,9 @@
 // Include standard header files.
 #include <stdio.h>
 //#include <sys/time.h>
-#ifndef WIN32
+#ifndef _WINDOWS
 #include <unistd.h>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 // Include Magic Lantern header files.
 #include "mle/mlMalloc.h"
@@ -58,13 +58,13 @@
 #endif /* MLE_DIGITAL_WORKPRINT */
 
 // Implement the static stage pointer.
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the stage can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 MleStage *MleStage::g_theStage = NULL;
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
@@ -77,7 +77,7 @@ MleStage::MleStage(void)
     g_theStage = this;
 
 #if defined(MLE_REHEARSAL)
-	// Initialize variables.
+    // Initialize variables.
     pickCB = NULL;
     openCB = NULL;
     launchCB = NULL;
@@ -106,15 +106,15 @@ MleStage::~MleStage()
 void *
 MleStage::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 
 void
 MleStage::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 
@@ -176,7 +176,7 @@ MleStage::getClass(void)
 {
     // If there is a cached value, return it.
     if ( m_stageClass )
-		return m_stageClass;
+        return m_stageClass;
 
     // Look it up in the registry.
     m_stageClass = MleStageClass::find(getTypeName());
@@ -192,15 +192,15 @@ MleStage::poke(const char *property,MleDwpDataUnion *value)
 
     // Make sure the stage class is present.
     if ( getClass() == NULL )
-	    return 0;
+        return 0;
 
     // Get the member corresponding to the property name.
     const MleStageMember *member = m_stageClass->findMember(property);
     if ( member == NULL )
     {
-	    printf("property %s not present on %s.\n",
-		    property,getTypeName());
-	    return 1;
+        printf("property %s not present on %s.\n",
+            property,getTypeName());
+        return 1;
     }
 
     // Transfer the value.
@@ -208,11 +208,11 @@ MleStage::poke(const char *property,MleDwpDataUnion *value)
 
     if ( value->m_datatype != member->getType() )
     {
-		printf("type mismatch in setting property %s on %s (%s and %s).\n",
-			property,getTypeName(),
-			value->m_datatype->getName(),
-			member->getType()->getName());
-		return 1;
+        printf("type mismatch in setting property %s on %s (%s and %s).\n",
+            property,getTypeName(),
+            value->m_datatype->getName(),
+            member->getType()->getName());
+        return 1;
     }
 
     //value->m_datatype->get(value,(char *)this + member->getOffset());
@@ -233,9 +233,9 @@ void
 MleStage::setName(char *newName)
 {
     if (m_name)
-		mlFree(m_name);
+        mlFree(m_name);
 
-#ifdef WIN32
+#ifdef _WINDOWS
     m_name = _strdup(newName);
 #else
     m_name = strdup(newName);
@@ -247,7 +247,7 @@ MleStage::setName(char *newName)
 // is so that particular stages, such as ones that use inventor,
 // can control the select blocking in the main loop.
 int MleStage::doSelect(int nfds, fd_set *readfds, fd_set *writefds,
-	fd_set *exceptfds, struct timeval *userTimeOut)
+    fd_set *exceptfds, struct timeval *userTimeOut)
 {
     // Default is to just call select.
     return select(nfds, readfds, writefds, exceptfds, userTimeOut);
@@ -316,13 +316,13 @@ MleStage::getDisplay(void)
 }
 #endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
-#if defined(WIN32)
+#if defined(_WINDOWS)
 HWND
 MleStage::getWindow(void)
 {
     return NULL;
 }
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 void
 MleStage::setOffscreen(int)
@@ -502,13 +502,13 @@ MleStage::reparentWindow(Window parentWindow)
 }
 #endif /* ! Q_OS_UNIX */
 #endif  /* __linux__ */
-#if defined(WIN32)
+#if defined(_WINDOWS)
 void
 MleStage::reparentWindow(HWND parentWindow)
 {
-	MLE_ASSERT(0);
+    MLE_ASSERT(0);
 }
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 #endif /* MLE_REHEARSAL configuration functions */
 
@@ -654,14 +654,14 @@ MleStage::setRightMouseCallback(void (*cb)(XEvent *e, void *client),void *client
 }
 #endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
-#if defined(WIN32)
+#if defined(_WINDOWS)
 void
 MleStage::setRightMouseCallback(void (*cb)(MSG *e, void *client),void *client)
 {
     rightMouseCB = cb;
     m_rightMouseClientData = client;
 }
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 #endif /* MLE_REHEARSAL callback management */
 
@@ -698,13 +698,13 @@ MleStage::checkForDoubleClick(XButtonEvent* event)
     // Make sure time and distance is within the correct amount.
     int ret = 0;
     if ((posDiffX >= -MAX_X_DISTANCE ) && (posDiffX <= MAX_X_DISTANCE))
-	{
+    {
         if ((posDiffY >= -MAX_Y_DISTANCE) && (posDiffY <= MAX_Y_DISTANCE)) 
-		{
-			if (timeDiff <= DOUBLE_CLICK_MSECS)
-			{
-				ret = 1;
-			}
+        {
+            if (timeDiff <= DOUBLE_CLICK_MSECS)
+            {
+                ret = 1;
+            }
         }
     }
 
@@ -718,7 +718,7 @@ MleStage::checkForDoubleClick(XButtonEvent* event)
 }
 #endif /* ! Q_OS_UNIX */
 #endif /* __linux__ */
-#if defined(WIN32)
+#if defined(_WINDOWS)
 int 
 MleStage::checkForDoubleClick(MSG* event)
 {
@@ -736,13 +736,13 @@ MleStage::checkForDoubleClick(MSG* event)
     // Make sure time and distance is within the correct amount.
     int ret = 0;
     if ((posDiffX >= -MAX_X_DISTANCE ) && (posDiffX <= MAX_X_DISTANCE))
-	{
+    {
         if ((posDiffY >= -MAX_Y_DISTANCE) && (posDiffY <= MAX_Y_DISTANCE)) 
-		{
-			if (timeDiff <= DOUBLE_CLICK_MSECS)
-			{
-				ret = 1;
-			}
+        {
+            if (timeDiff <= DOUBLE_CLICK_MSECS)
+            {
+                ret = 1;
+            }
         }
     }
 
@@ -754,6 +754,6 @@ MleStage::checkForDoubleClick(MSG* event)
     // Return the value.
     return(ret);
 }
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 #endif /* MLE_REHEARSAL utility for subclasses */

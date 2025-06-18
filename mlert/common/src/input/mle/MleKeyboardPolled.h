@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2000-2021 Wizzer Works
+// Copyright (c) 2000-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -55,9 +55,9 @@
 #endif /* MLE_XT */
 #endif /* __linux__ */
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #include <windows.h>
-#endif /* WIN32 */
+#endif /* _WINDOWS */
 
 
 /**
@@ -87,73 +87,73 @@ class MLE_RUNTIME_API MleKeyboardPolled
   public:
 
     /**
-	 * @brief Creates a keyboard manager with which to poll
+     * @brief Creates a keyboard manager with which to poll
      * the state of the keyboard.
-	 *
-	 * Only one keyboard manager
+     *
+     * Only one keyboard manager
      * instance is allowed in a title at any one time. The
      * current keyboard manager object can be accessed through
      * this class's static member variable g_keyboardManager. It
      * is possible to dynamically change the type of keyboard manager
      * by deleting any existing keyboard manager and then creating a new one.
      * This object should be deleted when the title no longer needs it.
-	 */
+     */
     MleKeyboardPolled(void);
  
     /**
-	 * @brief Releases all resources used to monitor keyboard device.
-	 *
+     * @brief Releases all resources used to monitor keyboard device.
+     *
      * This also clears the static g_keyboardManager and signals
      * the system that there's no current keyboard manager (or any type).
-	 */
+     */
     ~MleKeyboardPolled(void);
 
     /**
-	 * @brief Determine if keyboard is active.
-	 *
-	 * @return Returns TRUE when the keyboard is "active". A keyboard
+     * @brief Determine if keyboard is active.
+     *
+     * @return Returns TRUE when the keyboard is "active". A keyboard
      * is said to be active when the title is the target
      * of keyboard user events.
-	 */
+     */
     MlBoolean keyboardIsActive(void);
 
     /**
-	 * @brief Determine if a key is down.
-	 *
-	 * @return Returns TRUE if the given key is down.
+     * @brief Determine if a key is down.
+     *
+     * @return Returns TRUE if the given key is down.
      * The key must be a Magic Lantern key symbol obtainable
      * from MleKeyMap.h. The key is guaranteed to be down 
      * since the last time the platform's operating system 
      * sent a key event to the title.
-	 */
+     */
     MlBoolean keyDown(unsigned int keysym);
 
     /**
-	 * @brief Waits for and returns a keyboard input string.
-	 *
-	 * @param buffer Must be a character buffer that will be filled
+     * @brief Waits for and returns a keyboard input string.
+     *
+     * @param buffer Must be a character buffer that will be filled
      * with the string.
-	 * @param bufferSize The size of the buffer.
- 	 * @param eoc Must be a terminating character;
+     * @param bufferSize The size of the buffer.
+      * @param eoc Must be a terminating character;
      * that is, a character which signals the end of the string.
      * @param timeout Must be the amount of time in milliseconds
      * after which no keyboard input will be accepted. If the timeout
      * is exceeded, the getInputString() returns FALSE; else TRUE.
-	 */
+     */
     MlBoolean getInputString(char *buffer, int bufferSize, int eoc, int timeout);
 
-	/**
-	 * Override operator new.
-	 *
-	 * @param tSize The size, in bytes, to allocate.
-	 */
-	void* operator new(size_t tSize);
+    /**
+     * Override operator new.
+     *
+     * @param tSize The size, in bytes, to allocate.
+     */
+    void* operator new(size_t tSize);
 
-	/**
-	 * Override operator delete.
-	 *
-	 * @param p A pointer to the memory to delete.
-	 */
+    /**
+     * Override operator delete.
+     *
+     * @param p A pointer to the memory to delete.
+     */
     void  operator delete(void *p);
 
   private:
@@ -168,11 +168,11 @@ class MLE_RUNTIME_API MleKeyboardPolled
 #ifdef MLE_XT
     // Handles X11 FocusIn, FocusOut, EnterNotify and LeaveNotify events
     static void MleFocusChange(Widget /* widget */,
-		XPointer /* clientData */, XEvent *event);
+        XPointer /* clientData */, XEvent *event);
 
     // Handles X11 KeyPress and KeyReleased events
     static void MleKeyboardPolledEventHandler(Widget w,
-		XPointer keyboardManager, XEvent *event);
+        XPointer keyboardManager, XEvent *event);
 #endif /* MLE_XT */
 #ifdef MLE_QT
     // Handles QKeyEvent events.
@@ -185,27 +185,27 @@ class MLE_RUNTIME_API MleKeyboardPolled
 #endif /* MLE_QT */
 #endif /* __linux__ */
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
     // Handles Win32 WM_KEYDOWN events.
     static void WM_KEYDOWN_EventHandler(MleEvent event,
-		void *callData, void *clientData);
+        void *callData, void *clientData);
 
     // Handles Win32 WM_KEYUP events.
     static void WM_KEYUP_EventHandler(MleEvent event,
-		void *callData, void *clientData);
+        void *callData, void *clientData);
 
     // Handles Win32 WM_CHAR events.
     static void WM_CHAR_EventHandler(MleEvent event,
-		void *callData, void *clientData);
-#endif // WIN32
+        void *callData, void *clientData);
+#endif // _WINDOWS
 
   public:
 
     /**
-	 * This global can be used to access the current polled 
+     * This global can be used to access the current polled 
      * keyboard manager object, if any. This is cleared
      * by this class's destructor when the object is deleted.
-	 */
+     */
     static MleKeyboardPolled *g_keyboardManager;
 
   private:

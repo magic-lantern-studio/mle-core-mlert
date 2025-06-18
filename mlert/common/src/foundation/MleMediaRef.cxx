@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -81,26 +81,26 @@ MleMediaRef::~MleMediaRef(void)
 void *
 MleMediaRef::operator new(size_t tSize)
 {
-	void *p = mlMalloc(tSize);
-	return p;
+    void *p = mlMalloc(tSize);
+    return p;
 }
 
 void
 MleMediaRef::operator delete(void *p)
 {
-	mlFree(p);
+    mlFree(p);
 }
 
 #ifdef MLE_DIGITAL_WORKPRINT
 
-#if defined(WIN32)
+#if defined(_WINDOWS)
 // Make sure that the registry can be shared if the library is
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
 const char *MleMediaRef::g_rehearsal = "rehearsal";
 MleDwpStrKeyDict MleMediaRef::g_registry(32);  // Argument is hash table size.
-#if defined(WIN32)
+#if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
 #endif
@@ -143,7 +143,7 @@ MleMediaRef::deleteConverter(void)
     // Might like to make this use mleFree, but that will 
     // depend on overriding new and delete.
     if (m_converter)
-	{
+    {
         delete m_converter;
     }
 }
@@ -174,7 +174,7 @@ MleMediaRef::load(unsigned long numEntries,void *usrData)
     MleDwpMediaRefTargetMedia *entries = (MleDwpMediaRefTargetMedia *)usrData;
 
     for (unsigned int i = 0; i < numEntries; i++)
-	{
+    {
         // Allocate a new reference.
         newReference = (MleMediaLoadReference *)mlMalloc(
             sizeof(MleMediaLoadReference));
@@ -204,7 +204,7 @@ MleMediaRef::load(unsigned long numEntries,void *usrData)
     MleDppInput* pp = (MleDppInput *)usrData;
 
     for (unsigned int i = 0; i < numEntries; i++)
-	{
+    {
         // Allocate a new reference.
         newReference = (MleMediaLoadReference *) mlMalloc(
             sizeof(MleMediaLoadReference));
@@ -217,11 +217,11 @@ MleMediaRef::load(unsigned long numEntries,void *usrData)
         // Attach next reference.
         nextReference = m_references;
         if (! nextReference)
-		{
+        {
             // First entry on the list.
             m_references = newReference;
         } else
-		{
+        {
             // Add entry to end of list.
             while (nextReference->next != NULL)
                 nextReference = nextReference->next;
@@ -244,7 +244,7 @@ MleMediaRef::unload(void)
 
     nextReference = m_references;
     for (unsigned int i = 0; i < m_numReferences; i++)
-	{
+    {
         tmp = nextReference->next;
         mlFree(nextReference->buffer);
         mlFree(nextReference);
