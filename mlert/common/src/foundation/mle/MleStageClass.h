@@ -155,9 +155,9 @@ class MLE_RUNTIME_API MleStageClass : public MleDwpStrKeyDict
 
 
 /**
- * This is an object that contains MleActorClass pointers.  It needs
+ * This is an object that contains MleStageClass pointers.  It needs
  * to be a distinguished object so it can create dictionary entries
- * that will delete the MleActorClass objects when the dictionary
+ * that will delete the MleStageClass objects when the dictionary
  * goes away.
  */
 class MLE_RUNTIME_API MleStageClassDict : public MleDwpStrKeyDict

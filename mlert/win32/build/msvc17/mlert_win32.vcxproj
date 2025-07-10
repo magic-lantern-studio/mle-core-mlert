@@ -291,7 +291,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <StructMemberAlignment>Default</StructMemberAlignment>
       <PrecompiledHeaderOutputFile>$(Platform)\$(Configuration)/mlertd.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(Platform)\$(Configuration)/</AssemblerListingLocation>
       <ObjectFileName>$(Platform)\$(Configuration)/</ObjectFileName>
@@ -316,13 +316,13 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
     </Bscmake>
     <PostBuildEvent>
       <Message>Install Library</Message>
-      <Command>mkdir $(MLE_HOME)\lib64\runtime\stdcall
-copy x64\FloatDebug\mlertd.lib $(MLE_HOME)\lib64\runtime\stdcall\mlertd.lib
-mkdir $(MLE_HOME)\include\mle
-xcopy /y $(MLE_HOME)\Core\mlert\common\src\foundation\mle\* $(MLE_HOME)\include\mle
-xcopy /y $(MLE_HOME)\Core\mlert\common\src\input\mle\* $(MLE_HOME)\include\mle
-mkdir $(MLE_HOME)\include\runtime\mle
-xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\mle
+      <Command>mkdir $(MLE_ROOT)\lib64\runtime\stdcall
+copy x64\FloatDebug\mlertd.lib $(MLE_ROOT)\lib64\runtime\stdcall\mlertd.lib
+mkdir $(MLE_ROOT)\include\mle
+xcopy /y $(MLE_ROOT)\Core\mlert\common\src\foundation\mle\* $(MLE_ROOT)\include\mle
+xcopy /y $(MLE_ROOT)\Core\mlert\common\src\input\mle\* $(MLE_ROOT)\include\mle
+mkdir $(MLE_ROOT)\include\runtime\mle
+xcopy /y $(MLE_ROOT)\Core\mlert\win32\include\mle\* $(MLE_ROOT)\include\runtime\mle
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -463,7 +463,7 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <PreprocessorDefinitions>MLE_NOT_RUNTIME_DLL;MLE_NOT_UTIL_DLL;MLE_NOT_MATH_DLL;MLE_DIGITAL_PLAYPRINT;NDEBUG;_WINDOWS;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <StructMemberAlignment>Default</StructMemberAlignment>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>$(Platform)\$(Configuration)/mlert.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(Platform)\$(Configuration)/</AssemblerListingLocation>
@@ -488,13 +488,13 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
     </Bscmake>
     <PostBuildEvent>
       <Message>Install Library</Message>
-      <Command>mkdir $(MLE_HOME)\lib64\runtime\stdcall
-copy x64\FloatRelease\mlert.lib $(MLE_HOME)\lib64\runtime\stdcall\mlert.lib
-mkdir $(MLE_HOME)\include\mle
-xcopy /y $(MLE_HOME)\Core\mlert\common\src\foundation\mle\* $(MLE_HOME)\include\mle
-xcopy /y $(MLE_HOME)\Core\mlert\common\src\input\mle\* $(MLE_HOME)\include\mle
-mkdir $(MLE_HOME)\include\runtime\mle
-xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\mle
+      <Command>mkdir $(MLE_ROOT)\lib64\runtime\stdcall
+copy x64\FloatRelease\mlert.lib $(MLE_ROOT)\lib64\runtime\stdcall\mlert.lib
+mkdir $(MLE_ROOT)\include\mle
+xcopy /y $(MLE_ROOT)\Core\mlert\common\src\foundation\mle\* $(MLE_ROOT)\include\mle
+xcopy /y $(MLE_ROOT)\Core\mlert\common\src\input\mle\* $(MLE_ROOT)\include\mle
+mkdir $(MLE_ROOT)\include\runtime\mle
+xcopy /y $(MLE_ROOT)\Core\mlert\win32\include\mle\* $(MLE_ROOT)\include\runtime\mle
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

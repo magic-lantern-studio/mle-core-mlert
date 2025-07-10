@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36202.13 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mlert_win32", "mlert_win32.vcxproj", "{9B9593AC-F906-40B7-B300-D1DE16238114}"
 EndProject
@@ -60,6 +60,7 @@ Global
 		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.Debug|Win32.ActiveCfg = Debug|Win32
 		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.Debug|Win32.Build.0 = Debug|Win32
 		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.Debug|x64.ActiveCfg = Debug|x64
+		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.Debug|x64.Build.0 = Debug|x64
 		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.FloatDebug|Win32.ActiveCfg = Debug|Win32
 		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.FloatDebug|Win32.Build.0 = Debug|Win32
 		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.FloatDebug|x64.ActiveCfg = Debug|x64
@@ -71,6 +72,7 @@ Global
 		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.Release|Win32.ActiveCfg = Release|Win32
 		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.Release|Win32.Build.0 = Release|Win32
 		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.Release|x64.ActiveCfg = Release|x64
+		{93A5408D-699D-4DD7-959F-1DBBE5065D9F}.Release|x64.Build.0 = Release|x64
 		{DFBD406E-845D-4D7F-B968-35F6E20C5A9F}.CDECL FloatDebug|Win32.ActiveCfg = Debug|Win32
 		{DFBD406E-845D-4D7F-B968-35F6E20C5A9F}.CDECL FloatDebug|Win32.Build.0 = Debug|Win32
 		{DFBD406E-845D-4D7F-B968-35F6E20C5A9F}.CDECL FloatDebug|x64.ActiveCfg = Debug|x64

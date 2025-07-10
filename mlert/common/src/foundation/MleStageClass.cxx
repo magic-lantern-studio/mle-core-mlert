@@ -63,7 +63,7 @@
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
-MleStageClassDict MleStageClass::g_registry(16);
+MleStageClassDict MleStageClass::g_registry(20);
 #if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")

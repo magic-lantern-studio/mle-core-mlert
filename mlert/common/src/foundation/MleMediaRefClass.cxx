@@ -56,7 +56,7 @@
 // included as part of a DLL.
 #pragma data_seg( ".GLOBALS" )
 #endif
-MleDwpStrKeyDict MleMediaRefClass::g_registry(16);
+MleDwpStrKeyDict MleMediaRefClass::g_registry(20);
 #if defined(_WINDOWS)
 #pragma data_seg()
 #pragma comment(linker, "/section:.GLOBALS,rws")
