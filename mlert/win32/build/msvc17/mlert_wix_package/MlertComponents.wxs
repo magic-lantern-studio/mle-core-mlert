@@ -1,0 +1,63 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Fragment>
+		<DirectoryRef Id="HEADERS_INCLUDE_MLE">
+			<Component Id="HeaderFiles" Guid="{97C4FCB3-8B22-461D-A939-FC404692EA2D}">
+				<File Id="HeaderFile1" Source="..\..\..\..\common\src\foundation\mle\3danim.h" />
+				<File Id="HeaderFile2" Source="..\..\..\..\common\src\foundation\mle\3dchar.h" />
+				<File Id="HeaderFile3" Source="..\..\..\include\mle\dib.h" />
+				<File Id="HeaderFile4" Source="..\..\..\include\mle\dibpal.h" />
+				<File Id="HeaderFile5" Source="..\..\..\..\common\src\foundation\mle\MleActor.h" />
+				<File Id="HeaderFile6" Source="..\..\..\..\common\src\foundation\mle\MleActorGC.h" />
+				<File Id="HeaderFile7" Source="..\..\..\..\common\src\foundation\mle\MleDirector.h" />
+				<File Id="HeaderFile8" Source="..\..\..\..\common\src\foundation\mle\MleEventDispatcher.h" />
+				<File Id="HeaderFile9" Source="..\..\..\..\common\src\foundation\mle\MleGroup.h" />
+				<File Id="HeaderFile10" Source="..\..\..\..\common\src\input\mle\MleKeyboardPolled.h" />
+				<File Id="HeaderFile11" Source="..\..\..\..\common\src\input\mle\MleKeyMap.h" />
+				<File Id="HeaderFile12" Source="..\..\..\..\common\src\foundation\mle\MleLoad.h" />
+				<File Id="HeaderFile13" Source="..\..\..\..\common\src\foundation\mle\MleMediaRef.h" />
+				<File Id="HeaderFile14" Source="..\..\..\..\common\src\foundation\mle\MleMediaRefConverter.h" />
+				<File Id="HeaderFile15" Source="..\..\..\..\common\src\foundation\mle\MleMonitor.h" />
+				<File Id="HeaderFile16" Source="..\..\..\..\common\src\input\mle\MleMouseEvent.h" />
+				<File Id="HeaderFile17" Source="..\..\..\..\common\src\input\mle\MleMousePolled.h" />
+				<File Id="HeaderFile18" Source="..\..\..\..\common\src\foundation\mle\MleObject.h" />
+				<File Id="HeaderFile19" Source="..\..\..\..\common\src\foundation\mle\MleOpcode.h" />
+				<File Id="HeaderFile20" Source="..\..\..\..\common\src\foundation\mle\MlePQ.h" />
+				<File Id="HeaderFile21" Source="..\..\..\..\common\src\foundation\mle\MlePropDataset.h" />
+				<File Id="HeaderFile22" Source="..\..\..\..\common\src\foundation\mle\MleProperty.h" />
+				<File Id="HeaderFile23" Source="..\..\..\..\common\src\foundation\mle\MlePtrArray.h" />
+				<File Id="HeaderFile24" Source="..\..\..\..\common\src\foundation\mle\MlePtrContainer.h" />
+				<File Id="HeaderFile25" Source="..\..\..\..\common\src\foundation\mle\MlePtrDict.h" />
+				<File Id="HeaderFile26" Source="..\..\..\..\common\src\foundation\mle\MleRole.h" />
+				<File Id="HeaderFile27" Source="..\..\..\..\common\src\foundation\mle\MleSet.h" />
+				<File Id="HeaderFile28" Source="..\..\..\..\common\src\foundation\mle\MleStage.h" />
+				<File Id="HeaderFile29" Source="..\..\..\..\common\src\foundation\mle\MleStageFuncs.h" />
+				<File Id="HeaderFile30" Source="..\..\..\..\common\src\foundation\mle\MleTables.h" />
+				<File Id="HeaderFile31" Source="..\..\..\include\mle\palette.h" />
+				<File Id="HeaderFile32" Source="..\..\..\include\mle\palmgr.h" />
+			</Component>
+		</DirectoryRef>
+		<ComponentGroup Id="MlertComponents" Directory="MLEROOT">
+			<Component Id="rehearsal" Directory="BIN64">
+				<File Id="mlert_rehearsal" Source="$(var.mlert_rehearsal.TargetPath)"/>
+			</Component>
+			<?if $(var.Configuration) = Debug ?>
+				<!-- Debug Package -->
+				<Component Id="rehearsal_lib" Directory="LIB64_REHEARSAL">
+					<File Id="mlert_rehearsal_lib" Source="$(var.mlert_rehearsal.TargetDir)\mlertd.lib"/>
+				</Component>
+			<?else?>
+				<!-- Release Package -->
+				<Component Id="rehearsal_lib" Directory="LIB64_REHEARSAL">
+					<File Id="mlert_rehearsal_lib" Source="$(var.mlert_rehearsal.TargetDir)\mlert.lib"/>
+				</Component>
+			<?endif?>
+			<Component Id="tools" Directory="LIB64_TOOLS">
+				<File Id="mlert_tools" Source="$(var.mlert_tools.TargetPath)"/>
+			</Component>
+			<Component Id="runtime" Directory="LIB64_RUNTIME_CDECL">
+				<File Id="mlert_runtime" Source="$(var.mlert_win32.TargetPath)"/>
+			</Component>
+			<ComponentRef Id="HeaderFiles" />
+		</ComponentGroup>
+	</Fragment>
+</Wix>

@@ -319,10 +319,10 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <Command>mkdir $(MLE_ROOT)\lib64\runtime\stdcall
 copy x64\FloatDebug\mlertd.lib $(MLE_ROOT)\lib64\runtime\stdcall\mlertd.lib
 mkdir $(MLE_ROOT)\include\mle
-xcopy /y $(MLE_ROOT)\Core\mlert\common\src\foundation\mle\* $(MLE_ROOT)\include\mle
-xcopy /y $(MLE_ROOT)\Core\mlert\common\src\input\mle\* $(MLE_ROOT)\include\mle
+xcopy /y $(MLE_HOME)\Core\mlert\common\src\foundation\mle\* $(MLE_ROOT)\include\mle
+xcopy /y $(MLE_HOME)\Core\mlert\common\src\input\mle\* $(MLE_ROOT)\include\mle
 mkdir $(MLE_ROOT)\include\runtime\mle
-xcopy /y $(MLE_ROOT)\Core\mlert\win32\include\mle\* $(MLE_ROOT)\include\runtime\mle
+xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_ROOT)\include\runtime\mle
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -491,10 +491,10 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_HOME)\include\runtime\
       <Command>mkdir $(MLE_ROOT)\lib64\runtime\stdcall
 copy x64\FloatRelease\mlert.lib $(MLE_ROOT)\lib64\runtime\stdcall\mlert.lib
 mkdir $(MLE_ROOT)\include\mle
-xcopy /y $(MLE_ROOT)\Core\mlert\common\src\foundation\mle\* $(MLE_ROOT)\include\mle
-xcopy /y $(MLE_ROOT)\Core\mlert\common\src\input\mle\* $(MLE_ROOT)\include\mle
+xcopy /y $(MLE_HOME)\Core\mlert\common\src\foundation\mle\* $(MLE_ROOT)\include\mle
+xcopy /y $(MLE_HOME)\Core\mlert\common\src\input\mle\* $(MLE_ROOT)\include\mle
 mkdir $(MLE_ROOT)\include\runtime\mle
-xcopy /y $(MLE_ROOT)\Core\mlert\win32\include\mle\* $(MLE_ROOT)\include\runtime\mle
+xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_ROOT)\include\runtime\mle
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
