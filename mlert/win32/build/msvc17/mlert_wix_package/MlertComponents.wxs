@@ -37,7 +37,7 @@
 			</Component>
 		</DirectoryRef>
 		<ComponentGroup Id="MlertComponents" Directory="MLEROOT">
-			<Component Id="rehearsal" Directory="BIN64">
+			<Component Id="rehearsal" Directory="BIN64_REHEARSAL">
 				<File Id="mlert_rehearsal" Source="$(var.mlert_rehearsal.TargetPath)"/>
 			</Component>
 			<?if $(var.Configuration) = Debug ?>
