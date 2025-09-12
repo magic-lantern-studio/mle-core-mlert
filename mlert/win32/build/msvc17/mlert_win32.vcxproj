@@ -994,9 +994,6 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_ROOT)\include\runtime\
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleProperty.h" />
     <ClInclude Include="..\..\include\mle\dib.h" />
     <ClInclude Include="..\..\include\mle\dibpal.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlArray.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlAssert.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlDebug.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleActor.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleActorGC.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleDirector.h" />
@@ -1018,20 +1015,13 @@ xcopy /y $(MLE_HOME)\Core\mlert\win32\include\mle\* $(MLE_ROOT)\include\runtime\
     <ClInclude Include="..\..\..\common\src\foundation\mle\MlePtrContainer.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MlePtrDict.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleRole.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlErrno.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleScene.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleScheduler.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleSet.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleStage.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleStageFuncs.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleTables.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlFileio.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlLogFile.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlMacros.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlMalloc.h" />
-    <ClInclude Include="..\include\mle\mlPlatformData.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlToken.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlTypes.h" />
+    <ClInclude Include="..\..\include\mle\mlPlatformData.h" />
     <ClInclude Include="..\..\include\mle\palette.h" />
     <ClInclude Include="..\..\include\mle\palmgr.h" />
   </ItemGroup>

@@ -622,7 +622,6 @@ xcopy /y $(MLE_HOME)\Core\mlert\rehearsal\include\mle\* $(MLE_ROOT)\include\rehe
   <ItemGroup>
     <ClInclude Include="..\..\..\common\src\foundation\mle\3danim.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\3dchar.h" />
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlArray.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleActor.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleActorClass.h" />
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleDirector.h" />

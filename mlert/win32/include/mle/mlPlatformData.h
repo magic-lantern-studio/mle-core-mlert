@@ -3,16 +3,13 @@
 /**
  * @file mlPlatformData.h
  * @ingroup MleRteWin32
- *
- * @author Mark S. Millard
- * @date May 1, 2003
  */
 
 // COPYRIGHT_BEGIN
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2017 Wizzer Works
+// Copyright (c) 2017-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -69,6 +66,8 @@ class MleWin32PlatformData : public MlePlatformData
     DWORD     m_winStyle;          /* Initialized in main      */
     int       m_defaultWinWidth;   /* Initialized in main      */
     int       m_defaultWinHeight;  /* Initialized in main      */
+
+	HWND      m_widget;            /* The main window handle   */
 
     void setKeyboardManager(MlBoolean flag)
     { m_keyboardManager = flag; }

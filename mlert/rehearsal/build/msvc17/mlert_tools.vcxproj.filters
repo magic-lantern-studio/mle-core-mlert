@@ -102,9 +102,6 @@
     <ClInclude Include="..\..\..\common\src\foundation\mle\3dchar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlArray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleActor.h">
       <Filter>Header Files</Filter>
     </ClInclude>

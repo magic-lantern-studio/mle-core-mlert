@@ -96,15 +96,6 @@
     <ClInclude Include="..\..\include\mle\dibpal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlArray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlAssert.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlDebug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleActor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -177,9 +168,6 @@
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleRole.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlErrno.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -198,31 +186,13 @@
     <ClInclude Include="..\..\..\common\src\foundation\mle\MleTables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlFileio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlLogFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlMacros.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlMalloc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\mle\mlPlatformData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlToken.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\util\common\include\mle\mlTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\mle\palette.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\mle\palmgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\mle\mlPlatformData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
