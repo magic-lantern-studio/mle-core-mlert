@@ -69,6 +69,8 @@ class MleWin32PlatformData : public MlePlatformData
 
 	HWND      m_widget;            /* The main window handle   */
 
+    int m_focusEventHandlerRefCount;  /** Input event mgmt: Count of managers relying on focus events. */
+
     void setKeyboardManager(MlBoolean flag)
     { m_keyboardManager = flag; }
 
