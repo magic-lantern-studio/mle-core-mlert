@@ -81,17 +81,9 @@ printf ( const char * format, ... )
 }
 #endif /* _WINDOWS and MLE_KEY_DEBUG */
 
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif /* _WINDOWS */
 // Holds global keyboard manager (polled).
-MleKeyboardPolled *MleKeyboardPolled::g_keyboardManager = NULL;
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif /* _WINDOWS */
+MleKeyboardPolled *MleKeyboardPolled::g_keyboardManager = nullptr;
+
 
 MleKeyboardPolled::MleKeyboardPolled(void)
 {

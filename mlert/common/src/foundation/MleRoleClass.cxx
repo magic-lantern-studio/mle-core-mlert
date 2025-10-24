@@ -47,16 +47,8 @@
 // Include Runtime Engine header files.
 #include "mle/MleRoleClass.h"
 
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
+// The Role class registry.
 MleDwpStrKeyDict MleRoleClass::g_registry(20);
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
 
 void
 MleRoleClass::add(const char *name,MleRole *(*create)(MleActor *))

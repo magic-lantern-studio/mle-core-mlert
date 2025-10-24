@@ -53,16 +53,9 @@
 // instantiated from a group may refer to this variable in their
 // constructor to get a handle to the set that contains them.
 
-#if defined(_WINDOWS)
-// Make sure that the current Set can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
-MleSet *MleSet::g_currentSet;
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
+
+// The current Set being loaded.
+MleSet *MleSet::g_currentSet = nullptr;
 
 void MleSet::getProperty(MleObject * /*object*/, const char * /*name*/, unsigned char **value)
 { value = 0; }
@@ -92,13 +85,6 @@ MleSet::~MleSet(void)
 }
 
 
-void
-MleSet::init(void)
-{
-    // The base class does nothing.
-}
-
-
 void *
 MleSet::operator new(size_t tSize)
 {
@@ -120,10 +106,25 @@ MleSet::attach(MleRole * /* parent */, MleRole * /* child */)
     // Does nothing in the base class.
 }
 
+class FactorySet : public MleSet {
+public:
+
+    FactorySet() : MleSet()
+    { /* Do nothing extra; */
+    }
+
+    virtual ~FactorySet()
+    { /* Do nothing extra; */
+    }
+
+    virtual void init(void)
+    { /* Do nothing extra. */
+    }
+};
 
 MleSet *_mlCreateMleSet(void)
 {
-    return new MleSet;
+    return new FactorySet;
 }
 
 // Include system header files.
@@ -141,16 +142,10 @@ MleSet::isa(const char *type) const
 #include "mle/DwpDataUnion.h"
 #include "mle/DwpDatatype.h"
 
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
+
+// The Set instance registry.
 MleDwpStrKeyDict MleSet::g_instanceRegistry;
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
+
 
 const char *
 MleSet::getTypeName(void) const

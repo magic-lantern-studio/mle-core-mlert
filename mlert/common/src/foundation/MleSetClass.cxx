@@ -52,18 +52,10 @@
 // Include Digital Workprint header files.
 #include "mle/DwpDatatype.h"
 
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
+// Declare the static registry of Set classes.
 MleSetClassDict MleSetClass::g_registry(20);
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
 
-// declare the DSO loader for forum classes.
+// Declare the DSO loader for Set classes.
 MleDSOLoader MleSetClass::g_loader;
 
 MleSetClass::MleSetClass(const char *name,

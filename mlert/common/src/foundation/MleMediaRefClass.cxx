@@ -47,22 +47,12 @@
 // Include Runtime Engine header files.
 #include "mle/MleMediaRefClass.h"
 
-// Declare the registry for mediaref classes.
-// This registry is indexed by mediaref class names and holds a pointer
-// to a function that creates an instance of the mediaref class.
-//
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
+// Declare the registry for MediaRef classes.
+// This registry is indexed by MediaRef class names and holds a pointer
+// to a function that creates an instance of the MediaRef class.
 MleDwpStrKeyDict MleMediaRefClass::g_registry(20);
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
 
-// Declare the DSO loader for mediaref classes.
+// Declare the DSO loader for MediaRef classes.
 MleDSOLoader MleMediaRefClass::g_loader;
 
 // This function adds a new entry to the mediaref class registry.  The

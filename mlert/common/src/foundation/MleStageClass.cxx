@@ -54,20 +54,10 @@
 #include "mle/DwpDatatype.h"
 
 //
-// Declare the registry for stage classes.  This registry is indexed by
-// stage class names and holds a pointer to a function that creates an
-// instance of the stage class.
-//
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
+// Declare the registry for Stage classes.  This registry is indexed by
+// Stage class names and holds a pointer to a function that creates an
+// instance of the Stage class.
 MleStageClassDict MleStageClass::g_registry(20);
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
 
 //
 // Declare the DSO loader for stage classes.

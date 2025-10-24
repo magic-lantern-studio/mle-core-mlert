@@ -54,18 +54,8 @@
 
 // Initialize dictionaries to work off a pool of 256 entries
 // (classes + members) and a hash table of 20 for both
-// scene classes and scene members
-//
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
+// Scene classes and Scene members
 MleSceneClassDict MleSceneClass::g_registry(20);
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
 
 // Declare the DSO loader for scene classes.
 MleDSOLoader MleSceneClass::g_loader;

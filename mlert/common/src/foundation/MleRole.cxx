@@ -39,7 +39,7 @@
 // COPYRIGHT_END
 
 
-// Include Magic Lanter header files.
+// Include Magic Lantern header files.
 #include "mle/mlTypes.h"
 #include "mle/mlMalloc.h"
 
@@ -49,18 +49,26 @@
 
 // Declare creation function used by runtime engine.
 #ifdef MLE_DIGITAL_PLAYPRINT
+
+class FactoryRole : public MleRole {
+  public:
+
+    FactoryRole(MleActor* theActor) : MleRole(theActor)
+    { /* Do nothing extra; */ }
+
+    virtual ~FactoryRole()
+    { /* Do nothing extra; */ }
+
+    virtual void init(void)
+    { /* Do nothing extra. */ }
+};
+
 extern MleRole *_mleCreateMleRole(MleActor *actor)
 {
-    return new MleRole(actor);
+    return new FactoryRole(actor);
 }
+
 #endif /* MLE_DIGITAL_PLAYPRINT */
-
-
-void MleRole::init(void)
-{
-    // Do nothing in the base class.
-}
-
 
 // When an role is destroyed, we ensure the attached actor knows 
 // about the deletion.  However, if the actor is already being 
@@ -79,7 +87,6 @@ MleRole::~MleRole()
     }
 }
 
-
 void *
 MleRole::operator new(size_t tSize)
 {
@@ -87,13 +94,11 @@ MleRole::operator new(size_t tSize)
     return p;
 }
 
-
 void
 MleRole::operator delete(void *p)
 {
     mlFree(p);
 }
-
 
 void
 MleRole::addChild(MleRole * /* child */)
@@ -127,16 +132,8 @@ MleRole::isa(const char *type) const
     return !strcmp(type,"MleRole");
 }
 
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
+// The Role pick registry.
 MleDwpDict MleRole::g_pickRegistry;
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
 
 void 
 MleRole::setIdentifier(const char* /*id*/)

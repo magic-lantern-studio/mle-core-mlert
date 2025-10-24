@@ -57,17 +57,9 @@
 #include "mle/DwpDatatype.h"
 #endif /* MLE_DIGITAL_WORKPRINT */
 
-// Implement the static stage pointer.
-#if defined(_WINDOWS)
-// Make sure that the stage can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
-MleStage *MleStage::g_theStage = NULL;
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
+
+// Declare the static Stage pointer.
+MleStage *MleStage::g_theStage = nullptr;
 
 
 MleStage::MleStage(void)

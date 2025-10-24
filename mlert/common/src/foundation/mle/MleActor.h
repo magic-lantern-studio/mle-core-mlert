@@ -466,7 +466,7 @@ class MLE_RUNTIME_API MleActor : public MleObject
      * values are inserted into the actor when the actor is directly loaded
      * by mleLoadGroup() or indirectly by mleLoadScene().
      * Typically, the actor may schedule itself or initialize its
-     * role here.  The base init() function does nothing.
+     * role here.  Sub-classes must implement this method.
      * Use init() to initialize the actor after the actor's
      * member variables (i.e., properties) have been
      * loaded by mleLoadGroup() or mleLoadScene(). 
@@ -475,7 +475,7 @@ class MLE_RUNTIME_API MleActor : public MleObject
      * time to perform initialization and synchronization
      * with the rest of the environment.
 	 */
-    virtual void init(void);
+    virtual void init(void) = 0;
     
 #ifdef MLE_DIGITAL_WORKPRINT
 

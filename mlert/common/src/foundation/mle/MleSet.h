@@ -299,7 +299,7 @@ class MLE_RUNTIME_API MleSet : public MleObject
      * Typically, the set may schedule itself here.
      * The base class implementation does nothing.
 	 */
-    virtual void init(void);
+    virtual void init(void) = 0;
 
 	/**
 	 * Override operator new.

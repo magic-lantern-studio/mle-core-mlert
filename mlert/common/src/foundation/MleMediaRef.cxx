@@ -93,17 +93,11 @@ MleMediaRef::operator delete(void *p)
 
 #ifdef MLE_DIGITAL_WORKPRINT
 
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
 const char *MleMediaRef::g_rehearsal = "rehearsal";
+
+// The registry of media references.
 MleDwpStrKeyDict MleMediaRef::g_registry(32);  // Argument is hash table size.
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
+
 
 const char *
 MleMediaRef::getTypeName(void) const

@@ -72,8 +72,8 @@
 
 
 // Static member variables
-MleScene* MleScene::g_currentScene = 0;
-MleScene* MleScene::g_globalScene = 0;
+MleScene* MleScene::g_currentScene = nullptr;
+MleScene* MleScene::g_globalScene = nullptr;
 
 
 // Constructors and destructors
@@ -156,16 +156,10 @@ MleScene::initClass(void)
     new MleSceneClass("MleScene",_mlCreateMleScene,"");
 }
 
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
+
+// The Scene instance registry.
 MleDwpStrKeyDict MleScene::g_instanceRegistry;
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
+
 
 // Registering the instance with rehearsal player.
 void

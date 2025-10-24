@@ -97,15 +97,6 @@ MleActor::~MleActor()
 #endif /* MLE_DIGITAL_WORKPRINT */
 }
 
-// This is the virtual init function that is called after property values
-// are poked into actor memory.  This does nothing in the base class;
-// subclasses should override to make the state consistent.
-void
-MleActor::init(void)
-{
-    // Does nothing in base class.
-}
-
 void *
 MleActor::operator new(size_t tSize)
 {
@@ -132,10 +123,22 @@ void MleActor::removeRole()
     m_role = NULL;
 }
 
+class FactoryActor : public MleActor {
+public:
+
+    FactoryActor() : MleActor()
+    { /* Do nothing extra; */ }
+
+    virtual ~FactoryActor()
+    { /* Do nothing extra; */ }
+
+    virtual void init(void)
+    { /* Do nothing extra. */ }
+};
 
 MleActor *_mleCreateMleActor(void)
 {
-    return new MleActor;
+    return new FactoryActor;
 }
 
 #ifdef MLE_DIGITAL_WORKPRINT
@@ -176,16 +179,8 @@ MleActor::initClass(void)
 #include "math/vector.h"
 #include "math/transfrm.h"
 
-#if defined(_WINDOWS)
-// Make sure that the registry can be shared if the library is
-// included as part of a DLL.
-#pragma data_seg( ".GLOBALS" )
-#endif
+// The Actor instance registry.
 MleDwpStrKeyDict MleActor::g_instanceRegistry;
-#if defined(_WINDOWS)
-#pragma data_seg()
-#pragma comment(linker, "/section:.GLOBALS,rws")
-#endif
 
 // Registering the instance with rehearsal player.
 void

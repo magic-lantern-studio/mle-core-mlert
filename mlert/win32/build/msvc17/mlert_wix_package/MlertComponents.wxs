@@ -37,24 +37,24 @@
 			</Component>
 		</DirectoryRef>
 		<ComponentGroup Id="MlertComponents" Directory="MLEROOT">
-			<Component Id="rehearsal" Directory="BIN64_REHEARSAL">
+			<Component Id="rehearsal_loc" Directory="BIN64_REHEARSAL">
 				<File Id="mlert_rehearsal" Source="$(var.mlert_rehearsal.TargetPath)"/>
 			</Component>
 			<?if $(var.Configuration) = Debug ?>
 				<!-- Debug Package -->
-				<Component Id="rehearsal_lib" Directory="LIB64_REHEARSAL">
+				<Component Id="rehearsal_lib_loc" Directory="LIB64_REHEARSAL">
 					<File Id="mlert_rehearsal_lib" Source="$(var.mlert_rehearsal.TargetDir)\mlertd.lib"/>
 				</Component>
 			<?else?>
 				<!-- Release Package -->
-				<Component Id="rehearsal_lib" Directory="LIB64_REHEARSAL">
+				<Component Id="rehearsal_lib_loc" Directory="LIB64_REHEARSAL">
 					<File Id="mlert_rehearsal_lib" Source="$(var.mlert_rehearsal.TargetDir)\mlert.lib"/>
 				</Component>
 			<?endif?>
-			<Component Id="tools" Directory="LIB64_TOOLS">
+			<Component Id="tools_loc" Directory="LIB64_TOOLS">
 				<File Id="mlert_tools" Source="$(var.mlert_tools.TargetPath)"/>
 			</Component>
-			<Component Id="runtime" Directory="LIB64_RUNTIME_CDECL">
+			<Component Id="runtime_loc" Directory="LIB64_RUNTIME_CDECL">
 				<File Id="mlert_runtime" Source="$(var.mlert_win32.TargetPath)"/>
 			</Component>
 			<ComponentRef Id="HeaderFiles" />

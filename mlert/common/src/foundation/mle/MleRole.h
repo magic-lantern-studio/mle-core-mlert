@@ -9,7 +9,7 @@
 //
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Wizzer Works
+// Copyright (c) 2015-2025 Wizzer Works
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -75,7 +75,7 @@
  * 
  *   <li>The values of the actor's properties
  *       in the workprint (or playprint) are inserted into the
- *       appropiate actor member variable locations in memory.</li>
+ *       appropriate actor member variable locations in memory.</li>
  * 
  *   <li> If the workprint (or playprint) has a
  *        role class binding for the actor, then an
@@ -85,7 +85,7 @@
  *   <li>The role instance is bound to its actor.</li>
  * 
  *   <li>The role is attached either to another
- *       role or to the current forum, depending
+ *       role or to the current set, depending
  *       on whether the role class supports
  *       role-to-role attachment. addChild() is
  *       used to add a role to another role
@@ -99,8 +99,8 @@
  *       point call the role's init() function.</li>
  * </ol>
  * <p>
- * MleRole's instance variable forum points to the
- * role instance's forum (i.e., the forum to which
+ * MleRole's instance variable set points to the
+ * role instance's set (i.e., the set to which
  * it is directly or indirectly attached).
  * <p>
  * REHEARSAL PLAYER
@@ -142,7 +142,7 @@ class MLE_RUNTIME_API MleRole
   public:
 
     /**
-	 * @brief A constructor that attaches a role to the specifed actor.
+	 * @brief A constructor that attaches a role to the specified actor.
 	 *
      * MleRole constructor sets the actor to point to this role  
      * because both sides of the link must be maintained at all times.
@@ -238,11 +238,11 @@ class MLE_RUNTIME_API MleRole
     /**
 	 * @brief Initialize the role.
 	 *
-     * init() is a virtual to initialize the role.  This may
+     * init() is a pure virtual method to initialize the role.  This may
      * involve initial data "pull" from the actor, scheduling, etc.
-     * The base class implementation does nothing.
+     * Sub-classes must implement this method.
 	 */
-    virtual void init(void);
+    virtual void init(void) = 0;
 
     /**
 	 * @brief Add a child to this role.
@@ -288,7 +288,7 @@ class MLE_RUNTIME_API MleRole
   private:
 
 	  // Hide the default constructor.
-	  MleRole() : m_actor(NULL) {};
+	  MleRole() : m_actor(NULL) { m_set = nullptr; };
 };
 
 #ifdef MLE_DIGITAL_WORKPRINT
