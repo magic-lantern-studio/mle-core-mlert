@@ -31,8 +31,8 @@
 #
 # COPYRIGHT_END
 
-# Stop if cmake version is below 3.0
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+# Stop if cmake version is below 3.10
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
 # Project name and enable C++ support
 project(mlert VERSION 1.0.0 LANGUAGES CXX)
@@ -75,7 +75,7 @@ if (DEFINED ENV{MLE_WORKPRINTS})
   message(STATUS "MLE_WORKPRINTS=" $ENV{MLE_WORKPRINTS})
 else()
   message(STATUS "MLE_WORKPRINTS NOT SET")
-  set(ENV{MLE_ROOT} "/opt/MagicLantern/include/workprints")
+  set(ENV{MLE_WORKPRINTS} "/opt/MagicLantern/include/workprints")
   message(STATUS "Using " $ENV{MLE_WORKPRINTS})
 endif()
 

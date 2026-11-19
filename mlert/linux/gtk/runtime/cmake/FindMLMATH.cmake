@@ -45,7 +45,7 @@ endif()
 find_path(
   MLMATH_INCLUDE_DIR
   NAMES mlmath.h
-  PATHS $ENV{MLE_ROOT}/include/mle
+  PATHS $ENV{MLE_ROOT}/include/math
   NO_CACHE)
 
 find_library(
