@@ -26,15 +26,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential cmake pkg-config
 
-      # Download the latest mle-core-dwp artifact into $MLE_ROOT. It contains
-      # the mle-core-dwp, mle-core-math and mle-core-util libraries and headers.
-      - name: Download mle-core-dwp artifacts
+      # Download the latest mle-core-dpp artifact into $MLE_ROOT. It contains
+      # the mle-core-dpp (including the playprint headers), mle-core-dwp,
+      # mle-core-math and mle-core-util libraries and headers.
+      - name: Download mle-core-dpp artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh run download \
-            --repo magic-lantern-studio/mle-core-dwp \
-            --name mle-core-dwp-ubuntu-24.04-${{ matrix.build_type }} \
+            --repo magic-lantern-studio/mle-core-dpp \
+            --name mle-core-dpp-ubuntu-24.04-${{ matrix.build_type }} \
             --dir "$MLE_ROOT"
           ls -R "$MLE_ROOT"
 

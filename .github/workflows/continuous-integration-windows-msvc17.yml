@@ -23,15 +23,16 @@ jobs:
         uses: microsoft/setup-msbuild@v2
         with:
             msbuild-architecture: x64
-      # Download the latest mle-core-dwp artifact into %MLE_ROOT%. It contains
-      # the mle-core-dwp, mle-core-math and mle-core-util libraries and headers.
-      - name: Download mle-core-dwp artifacts
+      # Download the latest mle-core-dpp artifact into %MLE_ROOT%. It contains
+      # the mle-core-dpp (including the playprint headers), mle-core-dwp,
+      # mle-core-math and mle-core-util libraries and headers.
+      - name: Download mle-core-dpp artifacts
         shell: cmd
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir %MLE_ROOT%
-          gh run download --repo magic-lantern-studio/mle-core-dwp --name mle-core-dwp-windows-Release --dir %MLE_ROOT%
+          gh run download --repo magic-lantern-studio/mle-core-dpp --name mle-core-dpp-windows-Release --dir %MLE_ROOT%
           dir /s /b %MLE_ROOT%
       # Recreate the %MLE_HOME%\Core\mlert layout that the projects expect.
       - name: Create MLE_HOME layout
