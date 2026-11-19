@@ -1,0 +1,62 @@
+name: Continuous Integration Build (Ubuntu 24.04)
+
+on:
+  workflow_dispatch:  # Allow manual triggers
+  push:
+    branches: [ "master" ]
+
+env:
+  MLE_ROOT: ${{ github.workspace }}/MagicLantern
+
+jobs:
+  ubuntu-build:
+    name: Ubuntu 24.04 Build (${{ matrix.build_type }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [ Release, Debug ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake pkg-config
+
+      # Download the latest mle-core-dwp artifact into $MLE_ROOT. It contains
+      # the mle-core-dwp, mle-core-math and mle-core-util libraries and headers.
+      - name: Download mle-core-dwp artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download \
+            --repo magic-lantern-studio/mle-core-dwp \
+            --name mle-core-dwp-ubuntu-24.04-${{ matrix.build_type }} \
+            --dir "$MLE_ROOT"
+          ls -R "$MLE_ROOT"
+
+      # The rehearsal, runtime and inventor player libraries are each a
+      # separate CMake project. They install into lib/rehearsal, lib/runtime
+      # and lib/inventor under $MLE_ROOT. (The GTK runtime needs GTK2 and
+      # gtkgl-2.0, which Ubuntu 24.04 does not provide, so it is not built.)
+      - name: Build and install libraries
+        run: |
+          set -e
+          for lib in rehearsal runtime inventor; do
+            build=build/$lib
+            cmake -S mlert/linux/$lib -B "$build" -G "Unix Makefiles" \
+              -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+              -DCMAKE_INSTALL_PREFIX="$MLE_ROOT" \
+              -DCMAKE_PREFIX_PATH="$MLE_ROOT"
+            cmake --build "$build" --parallel
+            cmake --install "$build"
+          done
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mle-core-mlert-ubuntu-24.04-${{ matrix.build_type }}
+          path: ${{ env.MLE_ROOT }}
