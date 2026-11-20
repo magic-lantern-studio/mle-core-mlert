@@ -3,10 +3,16 @@ Magic Lantern Core Runtime Engine Library
 
 The Runtime Engine is the module used in a Magic Lantern title for scheduling an Actor's behavior and processing events.
 
-Documentation for the [Magic Lantern Runtime Engine](https://github.com/magic-lantern-studio/mle-documentation/wiki/Runtime-Engine-Library#api-for-c++-libraries) can be fund on the [mle-documentation](https://github.com/magic-lantern-studio/mle-documentation/wiki) wiki.
-
 # Build Status
-AppVeyor CI for Ubuntu 22.04 LTS 64-bit: <img src="https://ci.appveyor.com/api/projects/status/nom8udqubcruhshh?svg=true" alt="Project Badge">
+Actions CI for Ubuntu 24.04 LTS 64bit: 
+<a href="https://github.com/magic-lantern-studio/mle-core-mlert/actions/workflows/continuous-integration-ubuntu-24.04.yml">
+  <img src="https://github.com/magic-lantern-studio/mle-core-mlert/actions/workflows/continuous-integration-ubuntu-24.04.yml/badge.svg" alt="Ubuntu 24.04 build">
+</a>
+
+Actions CI for Visual Studio 2022: 
+<a href="https://github.com/magic-lantern-studio/mle-core-mlert/actions/workflows/continuous-integration-windows-msvc17.yml">
+  <img src="https://github.com/magic-lantern-studio/mle-core-mlert/actions/workflows/continuous-integration-windows-msvc17.yml/badge.svg" alt="Windows build">
+</a>
 
 # Documentation
 Documentation on the Magic Lantern Runtime Engine library can be found at:
