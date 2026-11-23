@@ -422,7 +422,7 @@ void parseStream(unsigned char *&streamPtrRef,
         
                 int numElements = readInt(streamPtrRef, streamStart, streamEnd);
                 int bytesToCopy = numElements * propertyLength;
-                char * buf = new char[bytesToCopy];
+                char * buf = (char *) mlMalloc(bytesToCopy);
                 MleArray<char> charArray(numElements,buf);
                 while (--bytesToCopy >= 0)
                 {
